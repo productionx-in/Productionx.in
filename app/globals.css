@@ -1175,3 +1175,105 @@ footer {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   .hero-video-bg { display: none; }
 }
+
+/* ============================================================
+   LIGHT THEME
+   The page opens into warm light so it reads as optimistic and
+   open rather than closed. The hero keeps the dark treatment —
+   it carries the video, and one dark moment up top makes the
+   light that follows feel deliberate instead of default.
+   ============================================================ */
+:root {
+  --black:   #F7F4EE;  /* page ground */
+  --dark:    #F1EDE5;  /* alternating section */
+  --surface: #FFFFFF;  /* cards */
+  --border:  #E6E0D6;
+  --white:   #14121A;  /* now the ink colour — used as foreground throughout */
+  --grey:    #5B5560;
+  --grey-lt: #7A737F;
+  --gold:    #E4B94F;  /* fills only: 1.69:1 on cream, unreadable as text */
+  --gold-dk: #8A6410;  /* the readable gold: 4.89:1 on cream */
+  --ink:     #14121A;
+  --shadow:  0 1px 2px rgba(20,18,26,0.04), 0 8px 24px rgba(20,18,26,0.06);
+}
+
+body { background: var(--black); color: var(--ink); }
+::selection { background: var(--gold); color: var(--ink); }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold-dk); }
+
+/* Anything sitting on a gold fill needs ink, not the page ground. */
+.btn-primary, .nav-cta, .form-submit, .cs-badge, .build-kind, .package-badge { color: var(--ink) !important; }
+.btn-primary::before, .nav-cta::before, .form-submit::before { background: var(--ink); }
+.btn-primary:hover, .nav-cta:hover span, .form-submit:hover span { color: #FFF; }
+
+/* Soft elevation replaces hairline borders — the single biggest brochure tell. */
+.service-card, .build-card, .cs-card, .credential, .process-step, .aiclip, .package-card {
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+}
+.service-card:hover, .build-card:hover { box-shadow: 0 2px 4px rgba(20,18,26,0.05), 0 18px 48px rgba(20,18,26,0.10); }
+
+/* Gold used as text has to become the deep gold everywhere. */
+.section-eyebrow, .hero-eyebrow, .build-client, .aiclip-badge, .service-num,
+.pcard-category, .credential-brand, .package-name, .cs-result-highlight,
+.portfolio-cta a, .footer-col-title, .brand-branch-type, .pstat-num,
+.step-num, .process-num, .nav-logo-sub, .footer-brand-sub, .reel-dot,
+.ticker-dot, .cred-dot, .packages-custom a { color: var(--gold-dk) !important; }
+.aiclip-badge { border-color: var(--gold-dk); }
+.section-title em, .hero-headline em, .hl-em { color: var(--gold-dk); }
+
+/* Section grounds */
+#services, #process, #book, #case-study { background: var(--black); }
+#reel, #about, #builds, .stats, footer { background: var(--dark); }
+.ticker-section::before { background: linear-gradient(to right, var(--dark), transparent); }
+.ticker-section::after  { background: linear-gradient(to left,  var(--dark), transparent); }
+.ticker-section { background: var(--dark); }
+
+/* Nav pill inverts to light glass */
+.nav-links { background: rgba(255,255,255,0.72); border-color: var(--border); }
+nav.scrolled .nav-links { background: rgba(255,255,255,0.94); }
+.nav-logo-name, .nav-links a { color: var(--ink); }
+.nav-links a { opacity: 0.72; }
+.nav-links a:hover { opacity: 1; color: var(--ink); }
+
+/* Body copy that was hardcoded for a dark ground */
+.section-sub, .service-desc, .cs-card-desc, .process-desc, .hero-sub,
+.build-note, .about-body, .aiclips-sub { color: var(--grey) !important; }
+
+/* Form fields read as inset wells on light */
+.form-input, .form-select, .form-textarea {
+  background: #FFF; border: 1px solid var(--border); color: var(--ink);
+  border-radius: var(--r-sm);
+}
+.form-input::placeholder { color: var(--grey-lt); }
+.book-contact-item { background: var(--surface); border-radius: var(--r-md); box-shadow: var(--shadow); }
+
+/* Custom cursor needs to be visible against light */
+#cursor-dot { background: var(--gold-dk); }
+#cursor-ring { border-color: var(--gold-dk); }
+
+/* The WebGL field was tuned for a dark ground; on light it only adds haze. */
+.gl-backdrop { display: none; }
+
+/* ── HERO STAYS DARK ─────────────────────────────────────────
+   Scoped island: the video needs a dark ground to read, and the
+   contrast against the light body is the point. */
+#hero {
+  background: #0B0A0E;
+  color: #F2EFE9;
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+}
+#hero .hero-headline, #hero .hl-word { color: #F2EFE9; }
+#hero .hero-headline em, #hero .hl-em { color: #E4B94F; }
+#hero .hero-eyebrow { color: #E4B94F !important; }
+#hero .hero-sub { color: #C9C4CE !important; }
+#hero .btn-secondary { color: #F2EFE9; border-color: rgba(242,239,233,0.28); }
+#hero .btn-secondary:hover { border-color: #E4B94F; color: #E4B94F; }
+#hero .hero-tagline { color: rgba(228,185,79,0.55); }
+#hero .scroll-text { color: #8D8798; }
+#hero .hero-ghost { color: rgba(242,239,233,0.035); }
+/* Nav sits over the dark hero at rest, so invert it back until scrolled. */
+nav:not(.scrolled) .nav-links { background: rgba(23,20,28,0.55); border-color: rgba(255,255,255,0.10); }
+nav:not(.scrolled) .nav-links a { color: #F2EFE9; }
+nav:not(.scrolled) .nav-logo-name { color: #F2EFE9; }
+nav:not(.scrolled) .nav-logo-sub { color: #E4B94F !important; }
