@@ -109,15 +109,37 @@ type LiveBuild = {
 type AiClip = { id: string; label: string; video?: string; poster?: string };
 
 const AI_CLIPS: AiClip[] = [
-  { id: "clip-1", label: "Generated sequence 01" },
-  { id: "clip-2", label: "Generated sequence 02" },
-  { id: "clip-3", label: "Generated sequence 03" },
-  { id: "clip-4", label: "Generated sequence 04" },
+  {
+    id: "clip-1",
+    label: "Rooftop pool deck at dusk",
+    video: "/builds/ai-01.webm",
+    poster: "/builds/ai-01.jpg",
+  },
+  {
+    id: "clip-2",
+    label: "Infinity edge and lounge terrace",
+    video: "/builds/ai-02.webm",
+    poster: "/builds/ai-02.jpg",
+  },
+  {
+    id: "clip-3",
+    label: "Tower facade — aerial descent",
+    video: "/builds/ai-03.webm",
+    poster: "/builds/ai-03.jpg",
+  },
+  {
+    id: "clip-4",
+    label: "Double-height living room",
+    video: "/builds/ai-04.webm",
+    poster: "/builds/ai-04.jpg",
+  },
 ];
 
 const LIVE_BUILDS: LiveBuild[] = [
   {
     title: "Sky Villa",
+    video: "/builds/sky-villa.webm",
+    poster: "/builds/sky-villa.jpg",
     client: "Ultra-luxury residential · Hyderabad",
     url: "https://sky-villa-scroll-showcase.lovable.app/",
     kind: "AI Previsualisation",
@@ -126,6 +148,8 @@ const LIVE_BUILDS: LiveBuild[] = [
   },
   {
     title: "Sattva Amora",
+    video: "/builds/sattva-amora.webm",
+    poster: "/builds/sattva-amora.jpg",
     client: "Residential development · Hyderabad",
     url: "https://sattva-amora-cine-scroll.vercel.app/",
     kind: "AI Previsualisation",
@@ -134,6 +158,8 @@ const LIVE_BUILDS: LiveBuild[] = [
   },
   {
     title: "Mahati's Stages",
+    video: "/builds/mahati.webm",
+    poster: "/builds/mahati.jpg",
     client: "Kuchipudi dancer, actor & choreographer",
     url: "https://mahatiportfoliodeck.vercel.app/",
     kind: "Interactive Portfolio",
@@ -142,6 +168,8 @@ const LIVE_BUILDS: LiveBuild[] = [
   },
   {
     title: "Aruna's Artistic Journey",
+    video: "/builds/aruna.webm",
+    poster: "/builds/aruna.jpg",
     client: "Prof. Dr. Aruna Bhikshu · classical dancer & academic",
     url: "https://aruna-bhikshu-journey.vercel.app/",
     kind: "Interactive Portfolio",
