@@ -138,6 +138,8 @@ const AI_CLIPS: AiClip[] = [
 const LIVE_BUILDS: LiveBuild[] = [
   {
     title: "Vertical Sky Residences",
+    video: "/builds/sky-villa.webm",
+    poster: "/builds/sky-villa.jpg",
     client: "Ultra-luxury residential · Hyderabad",
     url: "",
     kind: "AI Previsualisation",
@@ -146,6 +148,8 @@ const LIVE_BUILDS: LiveBuild[] = [
   },
   {
     title: "Green-Belt Villa Community",
+    video: "/builds/sattva-amora.webm",
+    poster: "/builds/sattva-amora.jpg",
     client: "Residential development · Hyderabad",
     url: "",
     kind: "AI Previsualisation",
@@ -154,6 +158,8 @@ const LIVE_BUILDS: LiveBuild[] = [
   },
   {
     title: "Classical Performer Portfolio",
+    video: "/builds/mahati.webm",
+    poster: "/builds/mahati.jpg",
     client: "Dancer, actor & choreographer",
     url: "",
     kind: "Interactive Portfolio",
@@ -162,6 +168,8 @@ const LIVE_BUILDS: LiveBuild[] = [
   },
   {
     title: "Performing Arts Archive",
+    video: "/builds/aruna.webm",
+    poster: "/builds/aruna.jpg",
     client: "Classical dancer & university academic",
     url: "",
     kind: "Interactive Portfolio",
@@ -232,6 +240,8 @@ export default function Site() {
   const progressRef = useRef<HTMLDivElement>(null);
   const heroHeadlineRef = useRef<HTMLHeadingElement>(null);
   const heroTaglineRef = useRef<HTMLParagraphElement>(null);
+  const heroBgRef = useRef<HTMLDivElement>(null);
+  const heroSpotRef = useRef<HTMLDivElement>(null);
 
   const modalRef = useRef<HTMLDivElement>(null);
   const modalIframeRef = useRef<HTMLIFrameElement>(null);
@@ -322,6 +332,40 @@ export default function Site() {
       const nav = navRef.current;
       const onNavScroll = () => nav?.classList.toggle("scrolled", window.scrollY > 60);
       window.addEventListener("scroll", onNavScroll);
+
+      // Hero depth: the video drifts slower than the page and the content
+      // outruns it. Applied to background/decorative layers only — never the
+      // copy, which stays pinned for reading comfort.
+      if (heroBgRef.current) {
+        gsap.to(heroBgRef.current, {
+          yPercent: 14,
+          scale: 1.08,
+          ease: "none",
+          scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 0.5 },
+        });
+      }
+      gsap.to(".hero-content", {
+        yPercent: -8,
+        opacity: 0.25,
+        ease: "none",
+        scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 0.5 },
+      });
+
+      // Warm light that follows the cursor across the hero, so the dark areas
+      // respond to the visitor instead of sitting flat.
+      const spot = heroSpotRef.current;
+      const heroEl = document.getElementById("hero");
+      if (spot && heroEl && window.matchMedia("(hover: hover)").matches) {
+        const quickX = gsap.quickTo(spot, "x", { duration: 0.7, ease: "power3" });
+        const quickY = gsap.quickTo(spot, "y", { duration: 0.7, ease: "power3" });
+        const onSpot = (e: MouseEvent) => {
+          const r = heroEl.getBoundingClientRect();
+          quickX(e.clientX - r.left - r.width / 2);
+          quickY(e.clientY - r.top - r.height / 2);
+        };
+        heroEl.addEventListener("mousemove", onSpot);
+        gsap.to(spot, { opacity: 1, duration: 1.2, delay: 0.6 });
+      }
 
       // Hero entrance
       const tl = gsap.timeline({ delay: 0.3 });
@@ -541,12 +585,14 @@ export default function Site() {
 
       {/* ── HERO ────────────────────────────────────── */}
       <section id="hero">
-        <div className="hero-video-bg">
-          <video autoPlay muted loop playsInline>
-            <source src="/showreel-bg.mp4" type="video/mp4" />
+        <div className="hero-video-bg" ref={heroBgRef}>
+          <video autoPlay muted loop playsInline preload="auto" poster="/hero-poster.jpg">
+            <source src="/hero-bg.webm" type="video/webm" />
+            <source src="/hero-bg.mp4" type="video/mp4" />
           </video>
         </div>
         <div className="hero-overlay" />
+        <div className="hero-spot" ref={heroSpotRef} aria-hidden="true" />
 
         <div className="hero-content">
           <p className="hero-eyebrow">Cinematic &amp; AI Content Studio · Hyderabad</p>
@@ -758,6 +804,7 @@ export default function Site() {
         <div className="builds-grid">
           {LIVE_BUILDS.map((b) => (
             <div key={b.title} className="build-card build-card--static reveal-scale">
+              <BuildPreview video={b.video} poster={b.poster} title={b.title} />
               <div className="build-card-top">
                 <span className="build-kind">{b.kind}</span>
                 <span className="build-open">Walkthrough on request</span>
