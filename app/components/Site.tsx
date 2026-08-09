@@ -370,7 +370,17 @@ export default function Site() {
       // Hero entrance
       const tl = gsap.timeline({ delay: 0.3 });
       if (heroHeadlineRef.current) {
-        tl.from(heroHeadlineRef.current, { opacity: 0, y: 40, duration: 0.9, ease: "power4.out" }, "-=0.3");
+        // Word-level rather than character-level: the headline runs to eight
+        // words across three lines, and per-character splitting would triple
+        // the DOM for no extra legibility at this size.
+        const words = heroHeadlineRef.current.querySelectorAll(".hl-word");
+        tl.to(heroHeadlineRef.current, { opacity: 1, duration: 0.01 }).from(words, {
+          yPercent: 115,
+          rotate: 3,
+          duration: 1.05,
+          ease: "expo.out",
+          stagger: 0.055,
+        });
       }
       tl.to(".hero-sub", { opacity: 1, duration: 0.7, ease: "power2.out" }, "-=0.4");
       tl.to(".hero-ctas", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.3");
@@ -478,6 +488,32 @@ export default function Site() {
           },
         });
       }
+
+      // Work gallery scrolls sideways while the section is pinned. Confined to
+      // desktop via matchMedia — pinning fights native scroll on touch, and the
+      // cards already stack cleanly there. This is the only pinned section on
+      // the page.
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 901px) and (prefers-reduced-motion: no-preference)", () => {
+        const track = document.querySelector<HTMLElement>(".builds-track");
+        const section = document.querySelector<HTMLElement>("#builds");
+        if (!track || !section) return;
+        const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + 120);
+        const tween = gsap.to(track, {
+          x: () => -distance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => `+=${distance()}`,
+            pin: true,
+            scrub: 0.8,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          },
+        });
+        return () => tween.kill();
+      });
 
       // Process line draw
       document.querySelectorAll<HTMLElement>(".process-step").forEach((step, i) => {
@@ -597,7 +633,19 @@ export default function Site() {
         <div className="hero-content">
           <p className="hero-eyebrow">Cinematic &amp; AI Content Studio · Hyderabad</p>
           <h1 className="hero-headline" ref={heroHeadlineRef}>
-            We film what exists.<br /><em>We generate<br />what doesn&rsquo;t.</em>
+            {[
+              { text: "We film what exists.", em: false },
+              { text: "We generate", em: true },
+              { text: "what doesn’t.", em: true },
+            ].map((line, li) => (
+              <span className="hl-line" key={li}>
+                {line.text.split(" ").map((word, wi) => (
+                  <span className="hl-mask" key={wi}>
+                    <span className={`hl-word${line.em ? " hl-em" : ""}`}>{word}</span>
+                  </span>
+                ))}
+              </span>
+            ))}
           </h1>
           <p className="hero-sub">
             Cinematic production and social media for brands with something to shoot —
@@ -801,7 +849,8 @@ export default function Site() {
           first brick is laid. Client work below is shown unnamed; live links are available on request.
         </p>
 
-        <div className="builds-grid">
+        <div className="builds-viewport">
+          <div className="builds-track">
           {LIVE_BUILDS.map((b) => (
             <div key={b.title} className="build-card build-card--static reveal-scale">
               <BuildPreview video={b.video} poster={b.poster} title={b.title} />
@@ -814,6 +863,7 @@ export default function Site() {
               <p className="build-note">{b.note}</p>
             </div>
           ))}
+          </div>
         </div>
 
         <p className="builds-footnote reveal">
