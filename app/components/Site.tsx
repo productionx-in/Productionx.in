@@ -740,6 +740,7 @@ export default function Site() {
         </div>
         <div className="hero-overlay" />
         <div className="hero-spot" ref={heroSpotRef} aria-hidden="true" />
+        <div className="hero-ghost" aria-hidden="true">PRODUCTION X</div>
 
         <div className="hero-content">
           <p className="hero-eyebrow">Cinematic &amp; AI Content Studio · Hyderabad</p>
