@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "headers": [
+    {
+      "//": "Preview loops and posters are large, static, and only ever replaced by a rebuild. Vercel serves /public with must-revalidate by default, which round-trips on every request; cache them hard instead.",
+      "source": "/builds/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    }
+  ]
+}
