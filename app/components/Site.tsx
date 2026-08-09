@@ -242,6 +242,7 @@ export default function Site() {
   const heroTaglineRef = useRef<HTMLParagraphElement>(null);
   const heroBgRef = useRef<HTMLDivElement>(null);
   const heroSpotRef = useRef<HTMLDivElement>(null);
+  const gridCueRef = useRef<HTMLDivElement>(null);
 
   const modalRef = useRef<HTMLDivElement>(null);
   const modalIframeRef = useRef<HTMLIFrameElement>(null);
@@ -567,6 +568,80 @@ export default function Site() {
     };
   }, []);
 
+  // Filtering animates rather than snapping: outgoing cards scale away, the
+  // grid reflows, then the survivors stagger back in.
+  useEffect(() => {
+    const items = gsap.utils.toArray<HTMLElement>(".portfolio-item");
+    if (!items.length) return;
+    const shown: HTMLElement[] = [];
+    const hidden: HTMLElement[] = [];
+    items.forEach((el) => {
+      const match = activeFilter === "all" || el.dataset.cat === activeFilter;
+      (match ? shown : hidden).push(el);
+    });
+    const tl = gsap.timeline();
+    if (hidden.length) {
+      tl.to(hidden, {
+        opacity: 0, scale: 0.94, duration: 0.28, ease: "power2.in",
+        onComplete: () => hidden.forEach((el) => (el.style.display = "none")),
+      }, 0);
+    }
+    shown.forEach((el) => (el.style.display = ""));
+    tl.fromTo(shown,
+      { opacity: 0, scale: 0.96, y: 14 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.045 },
+      hidden.length ? 0.18 : 0
+    );
+    return () => { tl.kill(); };
+  }, [activeFilter]);
+
+  // Cursor-tracked "Play" cue over the grid, plus per-card tilt. Pointer-driven,
+  // so both are skipped entirely where there is no hover.
+  useEffect(() => {
+    if (!window.matchMedia("(hover: hover)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const grid = document.querySelector<HTMLElement>(".portfolio-grid");
+    const cue = gridCueRef.current;
+    if (!grid || !cue) return;
+
+    const toX = gsap.quickTo(cue, "x", { duration: 0.35, ease: "power3" });
+    const toY = gsap.quickTo(cue, "y", { duration: 0.35, ease: "power3" });
+    const move = (e: MouseEvent) => {
+      const r = grid.getBoundingClientRect();
+      toX(e.clientX - r.left);
+      toY(e.clientY - r.top);
+    };
+    const enter = () => gsap.to(cue, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" });
+    const leave = () => gsap.to(cue, { scale: 0.4, opacity: 0, duration: 0.25 });
+    grid.addEventListener("mousemove", move);
+    grid.addEventListener("mouseenter", enter);
+    grid.addEventListener("mouseleave", leave);
+
+    const cards = gsap.utils.toArray<HTMLElement>(".portfolio-item");
+    const cleanups = cards.map((card) => {
+      const tilt = (e: MouseEvent) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(card, {
+          rotateY: px * 7, rotateX: -py * 7, transformPerspective: 900,
+          duration: 0.5, ease: "power2.out",
+        });
+      };
+      const reset = () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.7, ease: "power3.out" });
+      card.addEventListener("mousemove", tilt);
+      card.addEventListener("mouseleave", reset);
+      return () => { card.removeEventListener("mousemove", tilt); card.removeEventListener("mouseleave", reset); };
+    });
+
+    return () => {
+      grid.removeEventListener("mousemove", move);
+      grid.removeEventListener("mouseenter", enter);
+      grid.removeEventListener("mouseleave", leave);
+      cleanups.forEach((fn) => fn());
+    };
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -816,7 +891,7 @@ export default function Site() {
             <div
               key={item.videoId}
               className="portfolio-item reveal-scale"
-              style={{ display: activeFilter === "all" || activeFilter === item.cat ? undefined : "none" }}
+              data-cat={item.cat}
               onClick={() => openModal(item.videoId)}
             >
               <Image src={item.img} alt={item.alt} fill sizes="(max-width: 900px) 50vw, 33vw" style={{ objectFit: "cover" }} />
@@ -832,6 +907,7 @@ export default function Site() {
               </div>
             </div>
           ))}
+          <div className="grid-cue" ref={gridCueRef} aria-hidden="true"><span>Play</span></div>
         </div>
 
         <div className="portfolio-cta reveal">
