@@ -86,6 +86,11 @@ const PORTFOLIO_ITEMS = [
   },
 ] as const;
 
+// Real frames from real shoots. The hero leads with the work itself rather
+// than a stock-feeling backdrop.
+const HERO_STILLS = ["/thumb-mercedes.jpg", "/thumb-fashion.jpg", "/thumb-cafe.jpg", "/thumb-event.jpg"];
+const HERO_STILLS_B = ["/thumb-hotel.jpg", "/thumb-bmw.jpg", "/thumb-fashion.jpg"];
+
 const FILTERS = ["all", "automotive", "hospitality", "fashion", "corporate"] as const;
 
 // Live, publicly reachable builds. Every entry here is a real shipped project —
@@ -368,6 +373,48 @@ export default function Site() {
       const nav = navRef.current;
       const onNavScroll = () => nav?.classList.toggle("scrolled", window.scrollY > 60);
       window.addEventListener("scroll", onNavScroll);
+
+      // Hero strips drift continuously and respond to scroll: velocity speeds
+      // them up and skews them, so the page reacts to how hard you throw it
+      // rather than only to where you are.
+      gsap.utils.toArray<HTMLElement>(".strip-row").forEach((row) => {
+        const dir = Number(row.dataset.dir || 1);
+        const half = () => row.scrollWidth / 2;
+        gsap.set(row, { x: dir > 0 ? 0 : -half() });
+        const drift = gsap.to(row, {
+          x: dir > 0 ? () => -half() : 0,
+          duration: 38,
+          ease: "none",
+          repeat: -1,
+          modifiers: { x: (v) => `${parseFloat(v) % half()}px` },
+        });
+        ScrollTrigger.create({
+          onUpdate: (self) => {
+            const v = self.getVelocity();
+            drift.timeScale(gsap.utils.clamp(0.4, 6, 1 + Math.abs(v) / 900));
+            gsap.to(row, { skewX: gsap.utils.clamp(-9, 9, -v / 260), duration: 0.5, overwrite: true });
+          },
+        });
+      });
+
+      // Section headings drift against the scroll so type never sits still.
+      gsap.utils.toArray<HTMLElement>(".section-title").forEach((el) => {
+        gsap.fromTo(el, { yPercent: 14 }, {
+          yPercent: -14, ease: "none",
+          scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0.7 },
+        });
+      });
+
+      // Ticker reacts to scroll velocity too.
+      const tick = document.querySelector<HTMLElement>(".ticker-track");
+      if (tick) {
+        ScrollTrigger.create({
+          onUpdate: (self) => {
+            const v = self.getVelocity();
+            gsap.to(tick, { skewX: gsap.utils.clamp(-6, 6, -v / 400), duration: 0.5, overwrite: true });
+          },
+        });
+      }
 
       // Hero depth: the video drifts slower than the page and the content
       // outruns it. Applied to background/decorative layers only — never the
@@ -732,14 +779,6 @@ export default function Site() {
 
       {/* ── HERO ────────────────────────────────────── */}
       <section id="hero">
-        <div className="hero-video-bg" ref={heroBgRef}>
-          <video autoPlay muted loop playsInline preload="auto" poster="/hero-poster.jpg">
-            <source src="/hero-bg.webm" type="video/webm" />
-            <source src="/hero-bg.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <div className="hero-overlay" />
-        <div className="hero-spot" ref={heroSpotRef} aria-hidden="true" />
         <div className="hero-ghost" aria-hidden="true">PRODUCTION X</div>
 
         <div className="hero-content">
@@ -770,9 +809,21 @@ export default function Site() {
           <p className="hero-tagline" ref={heroTaglineRef} />
         </div>
 
-        <div className="scroll-indicator">
-          <div className="scroll-line" />
-          <span className="scroll-text">Scroll</span>
+        <div className="hero-strip" aria-hidden="true">
+          <div className="strip-row" data-dir="1">
+            {[...HERO_STILLS, ...HERO_STILLS].map((src, i) => (
+              <span className="strip-cell" key={`a${i}`}>
+                <img src={src} alt="" loading="lazy" />
+              </span>
+            ))}
+          </div>
+          <div className="strip-row" data-dir="-1">
+            {[...HERO_STILLS_B, ...HERO_STILLS_B].map((src, i) => (
+              <span className="strip-cell" key={`b${i}`}>
+                <img src={src} alt="" loading="lazy" />
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -911,16 +962,6 @@ export default function Site() {
               {f === "all" ? "All" : f.charAt(0).toUpperCase() + f.slice(1)}
             </button>
           ))}
-        </div>
-
-        <div className="showreel-wrap reveal" onClick={() => openModal("JSwBhWSN5tE")}>
-          <Image src="/reel-poster.jpg" alt="Production X Showreel 2026" fill sizes="100vw" style={{ objectFit: "cover" }} />
-          <div className="showreel-overlay">
-            <div className="play-btn">
-              <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" /></svg>
-            </div>
-            <span className="showreel-meta">Production X — Showreel 2026 &nbsp;·&nbsp; 2 min &nbsp;·&nbsp; Automotive · Hospitality · Fashion · Lifestyle</span>
-          </div>
         </div>
 
         <div className="portfolio-grid">

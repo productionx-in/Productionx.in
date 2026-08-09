@@ -1277,3 +1277,45 @@ nav:not(.scrolled) .nav-links { background: rgba(23,20,28,0.55); border-color: r
 nav:not(.scrolled) .nav-links a { color: #F2EFE9; }
 nav:not(.scrolled) .nav-logo-name { color: #F2EFE9; }
 nav:not(.scrolled) .nav-logo-sub { color: #E4B94F !important; }
+
+/* ── ONE PALETTE ─────────────────────────────────────────────
+   The dark hero island made the palette jump mid-scroll. The page
+   is light throughout now; contrast comes from scale and motion. */
+#hero {
+  background: transparent; color: var(--ink);
+  border-radius: 0; min-height: auto;
+  padding: 190px clamp(24px, 6vw, 96px) 0;
+  align-items: center; text-align: center;
+}
+#hero .hero-headline, #hero .hl-word { color: var(--ink); }
+#hero .hero-headline em, #hero .hl-em { color: var(--gold-dk); }
+#hero .hero-eyebrow { color: var(--gold-dk) !important; }
+#hero .hero-sub { color: var(--grey) !important; margin-left: auto; margin-right: auto; }
+#hero .btn-secondary { color: var(--ink); border-color: var(--border); }
+#hero .btn-secondary:hover { border-color: var(--gold-dk); color: var(--gold-dk); }
+#hero .hero-ghost { color: rgba(20,18,26,0.035); }
+.hero-content { margin: 0 auto; text-align: center; }
+.hero-ctas { justify-content: center; }
+.hero-tagline { display: none; }
+nav:not(.scrolled) .nav-links { background: rgba(255,255,255,0.72); border-color: var(--border); }
+nav:not(.scrolled) .nav-links a,
+nav:not(.scrolled) .nav-logo-name { color: var(--ink); }
+nav:not(.scrolled) .nav-logo-sub { color: var(--gold-dk) !important; }
+
+/* ── HERO WORK STRIPS ────────────────────────────────────────
+   Real frames, always moving. Two rows counter-scrolling so the
+   first thing on the page is the work itself, in motion. */
+.hero-strip {
+  margin-top: clamp(56px, 8vw, 110px);
+  display: flex; flex-direction: column; gap: 14px;
+  width: 100vw; margin-left: calc(50% - 50vw);
+  overflow: hidden; padding-bottom: 8px;
+}
+.strip-row { display: flex; gap: 14px; width: max-content; will-change: transform; }
+.strip-cell {
+  flex: 0 0 auto; width: clamp(190px, 20vw, 300px); aspect-ratio: 4/5;
+  border-radius: var(--r-md); overflow: hidden; background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.strip-cell img { width: 100%; height: 100%; object-fit: cover; }
+.strip-row[data-dir="-1"] .strip-cell { aspect-ratio: 3/2; width: clamp(220px, 24vw, 360px); }
