@@ -115,7 +115,6 @@ export default function Capabilities() {
                 onFocus={() => setActive(i)}
                 onClick={() => setActive(i)}
                 aria-expanded={i === active}
-                style={{ textAlign: "left", background: "none", border: 0, borderTop: "1px solid var(--line)", cursor: "pointer" }}
               >
                 <span className="cap__num">{String(i + 1).padStart(2, "0")}</span>
                 <span>

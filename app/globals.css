@@ -442,10 +442,16 @@ section { position: relative; }
 
 .caps__list { display: flex; flex-direction: column; }
 
+/* Each entry is a real <button>, so the browser gives it keyboard focus and
+   a role for free — the reset below only removes the chrome, not the
+   semantics. */
 .cap {
   display: grid; grid-template-columns: auto 1fr; gap: var(--s3);
-  padding-block: var(--s4);
-  border-top: 1px solid var(--line);
+  padding: var(--s4) 0;
+  background: none;
+  border: 0; border-top: 1px solid var(--line);
+  text-align: left;
+  color: inherit;
   cursor: pointer;
   transition: opacity var(--dur) var(--ease);
 }
