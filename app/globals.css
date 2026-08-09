@@ -1319,3 +1319,12 @@ nav:not(.scrolled) .nav-logo-sub { color: var(--gold-dk) !important; }
 }
 .strip-cell img { width: 100%; height: 100%; object-fit: cover; }
 .strip-row[data-dir="-1"] .strip-cell { aspect-ratio: 3/2; width: clamp(220px, 24vw, 360px); }
+
+/* The nav pill had a background but the bar did not, so page content slid
+   under the bare logo on scroll. */
+nav.scrolled {
+  background: rgba(247,244,238,0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}

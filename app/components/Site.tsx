@@ -88,8 +88,8 @@ const PORTFOLIO_ITEMS = [
 
 // Real frames from real shoots. The hero leads with the work itself rather
 // than a stock-feeling backdrop.
-const HERO_STILLS = ["/thumb-mercedes.jpg", "/thumb-fashion.jpg", "/thumb-cafe.jpg", "/thumb-event.jpg"];
-const HERO_STILLS_B = ["/thumb-hotel.jpg", "/thumb-bmw.jpg", "/thumb-fashion.jpg"];
+const HERO_STILLS = ["/thumb-mercedes.jpg", "/thumb-fashion.jpg", "/thumb-cafe.jpg"];
+const HERO_STILLS_B = ["/thumb-hotel.jpg", "/thumb-bmw.jpg", "/thumb-event.jpg"];
 
 const FILTERS = ["all", "automotive", "hospitality", "fashion", "corporate"] as const;
 
