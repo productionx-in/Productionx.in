@@ -5,6 +5,8 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
+import Lenis from "lenis";
+import Backdrop from "./Backdrop";
 
 const WA_NUMBER = "919391926846";
 const WA_INTRO_TEXT =
@@ -277,6 +279,39 @@ export default function Site() {
   // ── One-time client effects: cursor, canvas particles, nav scroll,
   //    scroll progress, hero entrance, reveals, counters, process line,
   //    magnetic buttons. Ported 1:1 from the original inline <script>.
+  // Inertia scrolling. Native scroll jumps a fixed distance per wheel tick;
+  // Lenis interpolates toward the target, which is what gives scroll-driven
+  // motion its weight. Skipped for reduced-motion so the page stays native.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      touchMultiplier: 1.6,
+    });
+    lenis.on("scroll", ScrollTrigger.update);
+    const tick = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
+    // Anchor links must go through Lenis or they fight the interpolation.
+    const onAnchor = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement).closest?.('a[href^="#"]') as HTMLAnchorElement | null;
+      if (!a) return;
+      const id = a.getAttribute("href");
+      if (!id || id === "#") return;
+      const el = document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el as HTMLElement, { offset: -20 });
+    };
+    document.addEventListener("click", onAnchor);
+    return () => {
+      document.removeEventListener("click", onAnchor);
+      gsap.ticker.remove(tick);
+      lenis.destroy();
+    };
+  }, []);
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, TextPlugin);
     let extraCleanup = () => {};
@@ -672,6 +707,7 @@ export default function Site() {
 
   return (
     <>
+      <Backdrop />
       <div id="scroll-progress" ref={progressRef} />
       <div id="cursor-dot" ref={cursorDotRef} />
       <div id="cursor-ring" ref={cursorRingRef} />

@@ -19,7 +19,18 @@
   --font-body: var(--font-sans), -apple-system, sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+/* Lenis interpolates scrolling itself; native smooth behaviour fights it. */
+html { scroll-behavior: auto; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* WebGL field behind all content. */
+.gl-backdrop {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none; opacity: 0.9;
+}
+nav, section, footer, .ticker-section { position: relative; z-index: 1; }
 
 body {
   background: var(--black);
