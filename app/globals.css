@@ -520,6 +520,12 @@ section { padding: 120px 60px; }
   transform: translateY(-4px);
   background: #1B1720;
 }
+/* Anonymised cards are not links — keep the surface treatment but drop the
+   affordances that imply somewhere to click. */
+.build-card--static { cursor: default; padding-top: 32px; }
+.build-card--static:hover { transform: none; background: var(--surface); }
+.build-card--static .build-open { color: var(--grey-lt); }
+.build-card--static:hover .build-open { color: var(--grey-lt); }
 .build-media {
   position: relative; aspect-ratio: 16/9; overflow: hidden;
   background: var(--black); margin: -36px -32px 24px;

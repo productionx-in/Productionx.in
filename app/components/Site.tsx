@@ -137,44 +137,36 @@ const AI_CLIPS: AiClip[] = [
 
 const LIVE_BUILDS: LiveBuild[] = [
   {
-    title: "Sky Villa",
-    video: "/builds/sky-villa.webm",
-    poster: "/builds/sky-villa.jpg",
+    title: "Vertical Sky Residences",
     client: "Ultra-luxury residential · Hyderabad",
-    url: "https://sky-villa-scroll-showcase.lovable.app/",
+    url: "",
     kind: "AI Previsualisation",
     note:
-      "The project had not finished construction, so there was nothing to film. Every interior, exterior and lifestyle frame is AI-generated, art-directed to the developer's spec, and delivered as a scroll-driven sales experience.",
+      "Construction was unfinished, so there was nothing to film. Every interior, exterior and lifestyle frame was generated and art-directed to the developer's spec, then delivered as a scroll-driven sales experience.",
   },
   {
-    title: "Sattva Amora",
-    video: "/builds/sattva-amora.webm",
-    poster: "/builds/sattva-amora.jpg",
+    title: "Green-Belt Villa Community",
     client: "Residential development · Hyderabad",
-    url: "https://sattva-amora-cine-scroll.vercel.app/",
+    url: "",
     kind: "AI Previsualisation",
     note:
-      "Cinematic scroll narrative for a pre-construction property. Fully AI-generated visual content standing in for a build that does not physically exist yet.",
+      "Cinematic scroll narrative for a pre-construction villa community. Fully generated visual content standing in for a build that does not physically exist yet.",
   },
   {
-    title: "Mahati's Stages",
-    video: "/builds/mahati.webm",
-    poster: "/builds/mahati.jpg",
-    client: "Kuchipudi dancer, actor & choreographer",
-    url: "https://mahatiportfoliodeck.vercel.app/",
+    title: "Classical Performer Portfolio",
+    client: "Dancer, actor & choreographer",
+    url: "",
     kind: "Interactive Portfolio",
     note:
-      "Editorial single-page portfolio, translated from an approved print/Figma layout into a motion-led web experience.",
+      "Editorial single-page portfolio, translated from an approved print layout into a motion-led web experience.",
   },
   {
-    title: "Aruna's Artistic Journey",
-    video: "/builds/aruna.webm",
-    poster: "/builds/aruna.jpg",
-    client: "Prof. Dr. Aruna Bhikshu · classical dancer & academic",
-    url: "https://aruna-bhikshu-journey.vercel.app/",
+    title: "Performing Arts Archive",
+    client: "Classical dancer & university academic",
+    url: "",
     kind: "Interactive Portfolio",
     note:
-      "Premium editorial portfolio spanning a five-decade career in Kuchipudi, academia and Telugu cinema.",
+      "Premium editorial portfolio spanning a five-decade career across performance, academia and cinema.",
   },
 ];
 
@@ -755,31 +747,24 @@ export default function Site() {
       {/* ── LIVE BUILDS / AI PREVIZ ─────────────────── */}
       <section id="builds">
         <span className="section-eyebrow reveal">Interactive &amp; AI</span>
-        <h2 className="section-title reveal">Sites you can open.<br /><em>Work you can verify.</em></h2>
+        <h2 className="section-title reveal">Built for what<br /><em>doesn&rsquo;t exist yet.</em></h2>
         <p className="section-sub reveal">
-          When a property has not been built yet, there is nothing to photograph. We generate it —
+          When a property has not been built, there is nothing to photograph. We generate it —
           art-directed, on-brand, and wrapped in a scroll experience that sells the space before the
-          first brick is laid. Every project below is live. Open them.
+          first brick is laid. Client work below is shown unnamed; live links are available on request.
         </p>
 
         <div className="builds-grid">
           {LIVE_BUILDS.map((b) => (
-            <a
-              key={b.url}
-              href={b.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="build-card reveal-scale"
-            >
-              <BuildPreview video={b.video} poster={b.poster} title={b.title} />
+            <div key={b.title} className="build-card build-card--static reveal-scale">
               <div className="build-card-top">
                 <span className="build-kind">{b.kind}</span>
-                <span className="build-open">Open live ↗</span>
+                <span className="build-open">Walkthrough on request</span>
               </div>
               <h3 className="build-title">{b.title}</h3>
               <span className="build-client">{b.client}</span>
               <p className="build-note">{b.note}</p>
-            </a>
+            </div>
           ))}
         </div>
 
