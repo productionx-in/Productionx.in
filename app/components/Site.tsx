@@ -549,16 +549,17 @@ export default function Site() {
         <div className="hero-overlay" />
 
         <div className="hero-content">
+          <p className="hero-eyebrow">Cinematic &amp; AI Content Studio · Hyderabad</p>
           <h1 className="hero-headline" ref={heroHeadlineRef}>
-            We make brands&nbsp;<br /><em>impossible to&nbsp;<br />scroll past.</em>
+            We film what exists.<br /><em>We generate<br />what doesn&rsquo;t.</em>
           </h1>
           <p className="hero-sub">
-            Cinematic Content Production &amp; Social Media Management<br />
-            for premium brands across Hyderabad, Vizag &amp; all India.
+            Cinematic production and social media for brands with something to shoot —
+            AI previsualisation for the ones without. Hyderabad, Vizag &amp; all India.
           </p>
           <div className="hero-ctas">
-            <a href="#reel" className="btn-primary"><span>Watch Our Work</span></a>
-            <a href="#book" className="btn-secondary">Book a Free Call</a>
+            <a href="#book" className="btn-primary"><span>Book a Free Call</span></a>
+            <a href="#builds" className="btn-secondary">See What We Generate</a>
           </div>
           <p className="hero-tagline" ref={heroTaglineRef} />
         </div>

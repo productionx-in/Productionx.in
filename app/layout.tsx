@@ -21,34 +21,36 @@ const siteUrl = "https://productionx.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Production X Creative — Every Frame Earns Its Place",
+  title: "Production X Creative — Cinematic & AI Content Studio, Hyderabad",
   description:
-    "Production X Creative — Premium cinematic content studio and social media management agency. Serving automotive, hospitality, fashion and lifestyle brands across Hyderabad and Vizag.",
+    "Cinematic content production, social media management and AI previsualisation for premium brands and property developers across Hyderabad, Vizag and India. We film what exists and generate what doesn't.",
   keywords: [
+    "AI previsualisation Hyderabad",
+    "real estate previsualisation India",
+    "AI content creation for brands",
     "content production Hyderabad",
     "social media management Hyderabad",
     "cinematic content",
     "brand films",
     "Production X",
-    "premium content agency",
   ],
   icons: {
     icon: "/favicon.ico",
     apple: "/logo.png",
   },
   openGraph: {
-    title: "Production X Creative — Every Frame Earns Its Place",
+    title: "Production X Creative — Cinematic & AI Content Studio, Hyderabad",
     description:
-      "Cinematic content production and social media management for premium brands across South India.",
+      "We film what exists and generate what doesn't. Cinematic production, social media and AI previsualisation for premium brands across India.",
     url: siteUrl,
     type: "website",
     images: [{ url: "/og-image.jpg" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Production X Creative — Every Frame Earns Its Place",
+    title: "Production X Creative — Cinematic & AI Content Studio, Hyderabad",
     description:
-      "Cinematic content production and social media management for premium brands across South India.",
+      "We film what exists and generate what doesn't. Cinematic production, social media and AI previsualisation for premium brands across India.",
     images: ["/og-image.jpg"],
   },
 };
