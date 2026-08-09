@@ -2,20 +2,37 @@
 
 Official site for **Production X Creative** — a cinematic content studio in Hyderabad, serving automotive, hospitality, fashion and lifestyle brands across Hyderabad, Vizag and all India.
 
-Static HTML/CSS/JS, hosted on GitHub Pages at [productionx.in](https://productionx.in) (see `CNAME`).
+Next.js 15 (App Router) + TypeScript, deployed on Vercel at [productionx.in](https://productionx.in).
 
-## Files
+## Stack
 
-- `index.html`, `style.css`, `script.js` — the live site
-- `index_backup.html` — prior version, kept for rollback
-- `brief.html` — internal creative brief, not part of the deployed site
-- `CNAME` — custom domain binding for GitHub Pages
-- `DEPLOYMENT_GUIDE.md` — full step-by-step GitHub Pages + GoDaddy DNS setup
+- Next.js 15 / React 19 / TypeScript
+- GSAP + ScrollTrigger for scroll-driven motion
+- `next/image` for optimized portfolio/hero imagery
+- `next/font` for Cormorant Garamond + Montserrat
+
+## Structure
+
+- `app/layout.tsx` — fonts, metadata (title/description/OG/Twitter), root shell
+- `app/page.tsx` — renders the home page
+- `app/components/Site.tsx` — the full page: nav, hero, ticker, services, portfolio, case study, about, process, booking, footer, video modal
+- `app/api/book/route.ts` — booking form submission endpoint
+- `app/globals.css` — design tokens (color, type) and all page styling
+- `legacy/` — retired GitHub Pages artifacts (`CNAME`, `DEPLOYMENT_GUIDE.md`, `brief.html`) kept for reference only, not part of the build
 
 ## Booking form
 
-No backend — the contact form collects details client-side and opens WhatsApp with a pre-filled message (see `script.js`, `wa.me/919391926846`).
+Submits to `/api/book`, which validates and logs the lead server-side (so a submission is never lost even if a visitor's WhatsApp client fails to open). The WhatsApp deep link remains as a secondary contact channel throughout the page.
+
+To wire up real email delivery, add a `RESEND_API_KEY` (or similar) environment variable in the Vercel project and extend `app/api/book/route.ts`.
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
 
 ## Deploy
 
-Push to `main`. GitHub Pages rebuilds from the branch root automatically (1–5 min). Full setup steps, including DNS, are in [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md).
+Connect this repo to a Vercel project (framework preset: Next.js) and set the production domain to `productionx.in` in Vercel's Domains settings. Every push to `main` deploys to production; other branches get preview deployments.
