@@ -102,6 +102,19 @@ type LiveBuild = {
   poster?: string;
 };
 
+// Generated sequences produced in-house. These are shown as what they are —
+// AI output — which is the whole point: the generation itself is the service.
+// Captions stay factual until the clips are reviewed; `video`/`poster` fill in
+// once the encodes land in /public, same pattern as the build cards.
+type AiClip = { id: string; label: string; video?: string; poster?: string };
+
+const AI_CLIPS: AiClip[] = [
+  { id: "clip-1", label: "Generated sequence 01" },
+  { id: "clip-2", label: "Generated sequence 02" },
+  { id: "clip-3", label: "Generated sequence 03" },
+  { id: "clip-4", label: "Generated sequence 04" },
+];
+
 const LIVE_BUILDS: LiveBuild[] = [
   {
     title: "Sky Villa",
@@ -746,6 +759,33 @@ export default function Site() {
           AI previsualisation lets a developer market a property through its entire construction
           window — not just after handover.
         </p>
+
+        <div className="aiclips">
+          <div className="aiclips-head reveal">
+            <h3 className="aiclips-title">Generated in-house.</h3>
+            <p className="aiclips-sub">
+              Every frame below was generated, not filmed — the same pipeline we use to previsualise
+              unbuilt property and to produce AI content for brands with no existing footage library.
+            </p>
+          </div>
+          <div className="aiclips-grid">
+            {AI_CLIPS.map((c) => (
+              <figure key={c.id} className="aiclip reveal-scale">
+                <div className="aiclip-media">
+                  {c.video ? (
+                    <BuildPreview video={c.video} poster={c.poster} title={c.label} />
+                  ) : (
+                    <div className="aiclip-placeholder" aria-hidden="true" />
+                  )}
+                </div>
+                <figcaption className="aiclip-cap">
+                  <span className="aiclip-badge">AI generated</span>
+                  {c.label}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ── CASE STUDY ──────────────────────────────── */}
