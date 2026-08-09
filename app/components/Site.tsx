@@ -44,7 +44,7 @@ const PORTFOLIO_ITEMS = [
     videoId: "ZrH5rOXm8io",
     alt: "BMW Showroom Content",
     duration: "0:58",
-    title: "BMW — Showroom Content",
+    title: "Krishna Motors — BMW Showroom Films",
   },
   {
     cat: "hospitality",
@@ -85,6 +85,43 @@ const PORTFOLIO_ITEMS = [
 ] as const;
 
 const FILTERS = ["all", "automotive", "hospitality", "fashion", "corporate"] as const;
+
+// Live, publicly reachable builds. Every entry here is a real shipped project —
+// these double as the proof for the AI previsualisation and interactive-web services.
+const LIVE_BUILDS = [
+  {
+    title: "Sky Villa",
+    client: "Ultra-luxury residential · Hyderabad",
+    url: "https://sky-villa-scroll-showcase.lovable.app/",
+    kind: "AI Previsualisation",
+    note:
+      "The project had not finished construction, so there was nothing to film. Every interior, exterior and lifestyle frame is AI-generated, art-directed to the developer's spec, and delivered as a scroll-driven sales experience.",
+  },
+  {
+    title: "Sattva Amora",
+    client: "Residential development · Hyderabad",
+    url: "https://sattva-amora-cine-scroll.vercel.app/",
+    kind: "AI Previsualisation",
+    note:
+      "Cinematic scroll narrative for a pre-construction property. Fully AI-generated visual content standing in for a build that does not physically exist yet.",
+  },
+  {
+    title: "Mahati's Stages",
+    client: "Kuchipudi dancer, actor & choreographer",
+    url: "https://mahatiportfoliodeck.vercel.app/",
+    kind: "Interactive Portfolio",
+    note:
+      "Editorial single-page portfolio, translated from an approved print/Figma layout into a motion-led web experience.",
+  },
+  {
+    title: "Aruna's Artistic Journey",
+    client: "Prof. Dr. Aruna Bhikshu · classical dancer & academic",
+    url: "https://aruna-bhikshu-journey.vercel.app/",
+    kind: "Interactive Portfolio",
+    note:
+      "Premium editorial portfolio spanning a five-decade career in Kuchipudi, academia and Telugu cinema.",
+  },
+] as const;
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -279,19 +316,19 @@ export default function Site() {
         });
       });
 
-      const enquiryEl = document.getElementById("enquiry-count");
-      if (enquiryEl) {
+      const brandCountEl = document.getElementById("brand-count");
+      if (brandCountEl) {
         ScrollTrigger.create({
-          trigger: enquiryEl,
+          trigger: brandCountEl,
           start: "top 80%",
           onEnter: () => {
             const counter = { val: 0 };
             gsap.to(counter, {
-              val: 300,
-              duration: 2.2,
+              val: 3,
+              duration: 1.4,
               ease: "power2.out",
               onUpdate: () => {
-                enquiryEl.textContent = `${Math.round(counter.val)}+`;
+                brandCountEl.textContent = `${Math.round(counter.val)}`;
               },
             });
           },
@@ -396,6 +433,7 @@ export default function Site() {
         <ul className="nav-links">
           <li><a href="#services">Services</a></li>
           <li><a href="#reel">Our Work</a></li>
+          <li><a href="#builds">Interactive &amp; AI</a></li>
           <li><a href="#about">About</a></li>
         </ul>
         <a href="#book" className="nav-cta"><span>Book a Call</span></a>
@@ -518,15 +556,15 @@ export default function Site() {
               </svg>
             </div>
             <span className="service-num">03</span>
-            <h3 className="service-title">Website Development</h3>
-            <p className="service-desc">We build cinematic, conversion-focused websites for premium brands — static, dynamic, or full e-commerce. Fast, mobile-first, and delivered on schedule.</p>
+            <h3 className="service-title">Interactive Web &amp; AI Previsualisation</h3>
+            <p className="service-desc">We build cinematic, conversion-focused websites — and when there is nothing to photograph yet, we generate it. AI previsualisation lets property and product brands market what does not physically exist.</p>
             <ul className="service-list">
-              <li>Static &amp; Business Websites</li>
-              <li>Dynamic Websites (CMS)</li>
+              <li>AI Previsualisation (Real Estate)</li>
+              <li>AI Content Generation for Brands</li>
+              <li>Scroll-Driven Interactive Sites</li>
               <li>E-Commerce Stores</li>
               <li>WhatsApp &amp; Booking Integration</li>
               <li>Full SEO Setup</li>
-              <li>Google Analytics Integration</li>
               <li>Domain Connection &amp; Deployment</li>
             </ul>
           </div>
@@ -606,6 +644,42 @@ export default function Site() {
         </div>
       </section>
 
+      {/* ── LIVE BUILDS / AI PREVIZ ─────────────────── */}
+      <section id="builds">
+        <span className="section-eyebrow reveal">Interactive &amp; AI</span>
+        <h2 className="section-title reveal">Sites you can open.<br /><em>Work you can verify.</em></h2>
+        <p className="section-sub reveal">
+          When a property has not been built yet, there is nothing to photograph. We generate it —
+          art-directed, on-brand, and wrapped in a scroll experience that sells the space before the
+          first brick is laid. Every project below is live. Open them.
+        </p>
+
+        <div className="builds-grid">
+          {LIVE_BUILDS.map((b) => (
+            <a
+              key={b.url}
+              href={b.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="build-card reveal-scale"
+            >
+              <div className="build-card-top">
+                <span className="build-kind">{b.kind}</span>
+                <span className="build-open">Open live ↗</span>
+              </div>
+              <h3 className="build-title">{b.title}</h3>
+              <span className="build-client">{b.client}</span>
+              <p className="build-note">{b.note}</p>
+            </a>
+          ))}
+        </div>
+
+        <p className="builds-footnote reveal">
+          AI previsualisation lets a developer market a property through its entire construction
+          window — not just after handover.
+        </p>
+      </section>
+
       {/* ── CASE STUDY ──────────────────────────────── */}
       <section id="case-study">
         <span className="section-eyebrow reveal">Case Study</span>
@@ -617,12 +691,12 @@ export default function Site() {
               Ujwala Group came to Production X with three brands, zero digital presence, and a vision.
               We built everything from the ground up — brand identity, digital infrastructure, cinematic production, campaigns, and e-commerce. Here&rsquo;s what that looked like.
             </p>
-            <span className="cs-result-highlight reveal" id="enquiry-count">0</span>
-            <span className="cs-result-label reveal">enquiries and walk-ins per month<br />generated from zero — through organic social, campaigns &amp; e-commerce</span>
+            <span className="cs-result-highlight reveal" id="brand-count">0</span>
+            <span className="cs-result-label reveal">brands built from zero — identity, content, campaigns,<br />storefront and e-commerce, all under one roof</span>
           </div>
           <div className="cs-right-text reveal">
             <strong>What Production X delivered:</strong>
-            Every brand asset, every digital property, every piece of content — conceived, designed, produced, and launched by Production X. Logo to e-commerce. Idea to execution. Zero to 300 enquiries a month.
+            Every brand asset, every digital property, every piece of content — conceived, designed, produced, and launched by Production X. Logo to e-commerce. Idea to execution.
             <br /><br />
             This is what a full brand build looks like. Not a rebrand. Not a refresh.
             A complete brand built from an idea.
@@ -641,9 +715,9 @@ export default function Site() {
           <div className="brand-tree-branches">
             <div className="brand-branch">
               <span className="brand-branch-name">
-                <a href="https://1ujfashion.com" target="_blank" rel="noopener noreferrer" className="brand-branch-link">1UJ Fashion</a>
+                <a href="https://instagram.com/1ujfashion" target="_blank" rel="noopener noreferrer" className="brand-branch-link">1UJ Fashion</a>
               </span>
-              <span className="brand-branch-type">Fashion &amp; Apparel · 1ujfashion.com</span>
+              <span className="brand-branch-type">Fashion &amp; Apparel · @1ujfashion</span>
             </div>
             <div className="brand-branch">
               <span className="brand-branch-name">1UJ Lifestyle &amp; Luxury</span>
@@ -651,9 +725,9 @@ export default function Site() {
             </div>
             <div className="brand-branch">
               <span className="brand-branch-name">
-                <a href="https://oneuj.com" target="_blank" rel="noopener noreferrer" className="brand-branch-link">Smart Living OneUJ</a>
+                <a href="https://instagram.com/1uj_theinternationalhub" target="_blank" rel="noopener noreferrer" className="brand-branch-link">Smart Living OneUJ</a>
               </span>
-              <span className="brand-branch-type">E-Commerce · oneuj.com</span>
+              <span className="brand-branch-type">E-Commerce · @1uj_theinternationalhub</span>
             </div>
           </div>
         </div>
@@ -741,7 +815,7 @@ export default function Site() {
               </svg>
             </div>
             <h4 className="cs-card-title">Two Websites — Static &amp; E-Commerce</h4>
-            <p className="cs-card-desc">1UJ Fashion — cinematic brand website. Smart Living OneUJ (oneuj.com) — fully functional e-commerce with Razorpay integration, product catalogue, WhatsApp notifications, and mobile-first design. Both built and launched end-to-end.</p>
+            <p className="cs-card-desc">1UJ Fashion — cinematic brand website. Smart Living OneUJ — fully functional e-commerce with Razorpay integration, product catalogue, WhatsApp notifications, and mobile-first design. Both built and launched end-to-end during our engagement.</p>
             <div className="cs-card-check">
               <svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" strokeWidth="1.5" strokeLinecap="round" /></svg>
             </div>
