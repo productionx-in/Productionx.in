@@ -88,7 +88,21 @@ const FILTERS = ["all", "automotive", "hospitality", "fashion", "corporate"] as 
 
 // Live, publicly reachable builds. Every entry here is a real shipped project —
 // these double as the proof for the AI previsualisation and interactive-web services.
-const LIVE_BUILDS = [
+//
+// `video`/`poster` are optional: a card renders as text-only until its scroll-
+// capture loop is added to /public, then upgrades to a hover-to-play preview
+// with no other change needed.
+type LiveBuild = {
+  title: string;
+  client: string;
+  url: string;
+  kind: string;
+  note: string;
+  video?: string;
+  poster?: string;
+};
+
+const LIVE_BUILDS: LiveBuild[] = [
   {
     title: "Sky Villa",
     client: "Ultra-luxury residential · Hyderabad",
@@ -121,9 +135,62 @@ const LIVE_BUILDS = [
     note:
       "Premium editorial portfolio spanning a five-decade career in Kuchipudi, academia and Telugu cinema.",
   },
-] as const;
+];
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
+
+/**
+ * Scroll-capture preview for a live build. Desktop plays on hover; touch
+ * devices (no hover) play once the card scrolls into view, since there is no
+ * hover to trigger on. Honours prefers-reduced-motion by staying on the poster.
+ * Renders nothing when the build has no capture yet.
+ */
+function BuildPreview({ video, poster, title }: { video?: string; poster?: string; title: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Only auto-play in view where there is no hover affordance.
+    if (window.matchMedia("(hover: hover)").matches) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) el.play().catch(() => {});
+        else el.pause();
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  if (!video) return null;
+
+  return (
+    <div className="build-media">
+      <video
+        ref={ref}
+        className="build-video"
+        muted
+        loop
+        playsInline
+        preload="none"
+        poster={poster}
+        aria-label={`${title} — scroll preview`}
+        onMouseEnter={(e) => {
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          e.currentTarget.play().catch(() => {});
+        }}
+        onMouseLeave={(e) => e.currentTarget.pause()}
+      >
+        <source src={video} type="video/webm" />
+        <source src={video.replace(/\.webm$/, ".mp4")} type="video/mp4" />
+      </video>
+    </div>
+  );
+}
 
 export default function Site() {
   const cursorDotRef = useRef<HTMLDivElement>(null);
@@ -663,6 +730,7 @@ export default function Site() {
               rel="noopener noreferrer"
               className="build-card reveal-scale"
             >
+              <BuildPreview video={b.video} poster={b.poster} title={b.title} />
               <div className="build-card-top">
                 <span className="build-kind">{b.kind}</span>
                 <span className="build-open">Open live ↗</span>
