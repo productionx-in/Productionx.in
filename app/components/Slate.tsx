@@ -115,34 +115,31 @@ export default function Slate() {
           <div className="slate__copy">
             <div className="slate__eyebrow">
               <span className="rule" aria-hidden="true" />
-              <span className="label">Hyderabad · Production + AI previz</span>
+              <span className="label">Hyderabad · Vizag · Pan India</span>
             </div>
 
             <h1>
-              <Line text="Content that looks" />
-              <Line text="shot." accent={{ word: "shot", tone: "em" }} />
-              <Line text="Built at the speed" />
-              <Line text="of AI." accent={{ word: "AI", tone: "mint" }} />
+              <Line text="We build the brand," />
+              <Line text="then make it impossible" accent={{ word: "impossible", tone: "em" }} />
+              <Line text="to scroll past." />
             </h1>
 
             <p className="lead slate__lead">
-              ProductionX is a content studio. We produce brand films and campaign
-              content with a real crew — and previsualise unbuilt property so buyers
-              can walk a space that does not exist yet.
+              ProductionX is a brand and marketing studio. Strategy, website, content,
+              social and paid — with the crew and the AI pipeline that make them, under
+              one roof and one monthly retainer.
             </p>
 
             <div className="slate__foot">
               <a href="#contact" className="btn">
-                Start a project
+                Book a free call
                 <Arrow className="arrow" />
               </a>
               <a href="#work" className="btn btn--ghost">
                 See the work
                 <Arrow className="arrow" />
               </a>
-              <span className="label">
-                Films · Ads · Previz · Web
-              </span>
+              <span className="label">Every frame earns its place</span>
             </div>
           </div>
 

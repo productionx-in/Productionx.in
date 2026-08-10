@@ -4,11 +4,12 @@ import { useState } from "react";
 import { Arrow } from "./graphics";
 
 const SERVICES = [
-  "Brand film",
-  "Campaign & social",
-  "AI content",
-  "Real-estate previz",
-  "Website",
+  "Brand strategy & positioning",
+  "Content production",
+  "Social media management",
+  "Website & search",
+  "AI content or previz",
+  "Full retainer — all of it",
   "Not sure yet",
 ];
 
@@ -54,18 +55,19 @@ export default function Contact() {
     <section className="band contact" id="contact">
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">05 — Start</span>
+          <span className="label idx">08 — Start</span>
           <h2>
-            Tell us the date it has to <span className="em">land</span>.
+            Let&rsquo;s build something your audience <span className="em">remembers</span>.
           </h2>
         </header>
 
         <div className="contact__layout">
           <div className="contact__aside" data-reveal>
             <p className="lead">
-              Send the brief, however rough. You will hear back within one working
-              day with a direction, a rough number, and whether we are the right
-              studio for it — including when we are not.
+              Fill this in and we will come back within 24 hours to schedule a free
+              30-minute discovery call. You will get a direction, a rough number and
+              an honest read on whether we are the right studio — including when we
+              are not.
             </p>
 
             <div className="contact__direct">
@@ -74,7 +76,7 @@ export default function Contact() {
               <a className="ulink" href="https://wa.me/919391926846" target="_blank" rel="noopener noreferrer">
                 WhatsApp the studio
               </a>
-              <span className="label" style={{ marginTop: "var(--s3)" }}>Based in Hyderabad · Working anywhere</span>
+              <span className="label" style={{ marginTop: "var(--s3)" }}>Hyderabad · Vizag · Pan India</span>
             </div>
           </div>
 
@@ -103,7 +105,7 @@ export default function Contact() {
             </div>
 
             <div className="field">
-              <label htmlFor="f-service">What do you need</label>
+              <label htmlFor="f-service">What are you looking for</label>
               <select id="f-service" name="service" defaultValue={SERVICES[0]}>
                 {SERVICES.map((s) => <option key={s}>{s}</option>)}
               </select>
@@ -112,21 +114,21 @@ export default function Contact() {
             <div className="field">
               <label htmlFor="f-budget">Rough budget</label>
               <input id="f-budget" name="budget" placeholder="₹ range, or leave blank" />
-              <span className="hint">A range is enough. It only decides scope, not whether we reply.</span>
+              <span className="hint">A range is enough. It shapes scope, not whether we reply.</span>
             </div>
 
             <div className="field">
-              <label htmlFor="f-message">The brief</label>
+              <label htmlFor="f-message">Tell us about the brand</label>
               <textarea id="f-message" name="message" placeholder="What it is, who it's for, when it has to land." />
             </div>
 
             <button className="btn" type="submit" disabled={state === "sending"}>
-              {state === "sending" ? "Sending…" : "Send the brief"}
+              {state === "sending" ? "Sending…" : "Book a free call"}
               <Arrow className="arrow" />
             </button>
 
             <p className="form__status" aria-live="polite">
-              {state === "sent" && <span className="ok">Received. We will reply within one working day.</span>}
+              {state === "sent" && <span className="ok">Received. We will come back within 24 hours to book your call.</span>}
               {state === "error" && (
                 <span className="bad">
                   That did not go through. Email{" "}

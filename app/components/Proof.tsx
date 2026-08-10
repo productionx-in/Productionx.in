@@ -3,21 +3,25 @@
 import { useEffect, useRef } from "react";
 import { initGsap, gsap, prefersReducedMotion } from "../lib/motion";
 
-/**
- * Deliberately not a track record.
- *
- * The studio has never published project or client counts, so inventing them
- * here would put a false claim on the homepage. Every figure below is either
- * structurally true of the site itself or a promise made elsewhere in the
- * copy. Swap in real totals once they are confirmed.
- */
+/** The studio's own published record. */
 const STATS = [
-  { n: 5, suffix: "", l: "Services under one roof" },
-  { n: 24, suffix: "h", l: "Reply to every brief" },
-  { n: 2, suffix: "", l: "Ways to make it — crew or pipeline" },
-  { n: 4, suffix: "K", l: "Delivery standard" },
+  { n: 50, suffix: "+", l: "Brand films produced" },
+  { n: 300, suffix: "+", l: "Reels edited" },
+  { n: 8, suffix: "+", l: "Premium brands" },
+  { n: 3, suffix: "+", l: "Years of experience" },
 ];
 
+const CREDENTIALS = [
+  { role: "Content Producer", org: "Mercedes-Benz · AP & Telangana" },
+  { role: "Head of Creative & Marketing", org: "Ujwala Group · 1UJ Fashion & Lifestyle" },
+  { role: "International production partner", org: "Media agencies in the UK" },
+];
+
+/**
+ * Numbers alone do not close a marketing brief — the buyer wants to know who
+ * is behind them. This band pairs the record with the founder's brand-side
+ * experience, which is the studio's strongest and least replicable argument.
+ */
 export default function Proof() {
   const root = useRef<HTMLElement>(null);
 
@@ -42,7 +46,7 @@ export default function Proof() {
   }, []);
 
   return (
-    <section className="band proof" ref={root}>
+    <section className="band proof" id="about" ref={root}>
       <div className="shell wrap">
         <div className="proof__grid" data-reveal data-reveal-group>
           {STATS.map((s) => (
@@ -54,6 +58,36 @@ export default function Proof() {
               <div className="label stat__l">{s.l}</div>
             </div>
           ))}
+        </div>
+
+        <div className="founder">
+          <div data-reveal>
+            <span className="label idx">Why us</span>
+            <h2 style={{ margin: "var(--s3) 0" }}>
+              We were on your <span className="em">side</span> of the table.
+            </h2>
+            <p className="lead">
+              Kiran Basa spent three years brand-side before starting ProductionX.
+              As Content Producer at Mercedes-Benz across AP &amp; Telangana, and Head
+              of Creative &amp; Marketing at Ujwala Group, he knows what a brand
+              manager actually needs, what frustrates them about agencies, and what
+              makes marketing perform rather than merely look good.
+            </p>
+            <p className="muted" style={{ marginTop: "var(--s3)" }}>
+              That perspective is what the studio is built on. We do not just shoot
+              and deliver — we think like the brand, plan like the strategist, and
+              execute like the studio.
+            </p>
+          </div>
+
+          <ul className="creds" data-reveal data-reveal-group>
+            {CREDENTIALS.map((c) => (
+              <li key={c.role}>
+                <span className="creds__role">{c.role}</span>
+                <span className="label">{c.org}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

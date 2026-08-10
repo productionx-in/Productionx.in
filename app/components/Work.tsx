@@ -8,30 +8,23 @@ type Item = {
   name: string;
   kind: string;
   note: string;
+  roster: string;
   src: string;
-  video?: string;
   shape?: "tall" | "wide";
 };
 
 /**
- * Two naming rules, applied consistently.
- *
- * Commissioned production work carries a prototype name — those films belong
- * to the brands that paid for them and are not ours to credit. Websites we
- * built are already published under the client's own name, so they are shown
- * and credited as they appear in public.
+ * The verticals the studio actually works in, named as the studio names them,
+ * with the client roster it has published for each. No invented project titles
+ * and no photograph tied to a client it may not belong to.
  */
 const ITEMS: Item[] = [
-  { code: "PX·01", name: "Marque", kind: "Automotive", note: "Launch film for a luxury sedan — night unit, four locations, single day.", src: "/thumb-mercedes.jpg", shape: "wide" },
-  { code: "PX·02", name: "Atelier", kind: "Fashion", note: "Lookbook campaign cut to a hero film plus twenty verticals.", src: "/thumb-fashion.jpg", shape: "tall" },
-  { code: "PX·03", name: "Sonder", kind: "Hospitality", note: "Property film for a boutique hotel — rooms, kitchen, and the quiet hours.", src: "/thumb-hotel.jpg" },
-  { code: "PX·04", name: "Roast", kind: "Food & beverage", note: "A month of café social from one morning of coverage.", src: "/thumb-cafe.jpg", shape: "tall" },
-  { code: "PX·05", name: "Apex", kind: "Automotive", note: "Performance drive edit — tracking vehicle, gimbal, and a closed road.", src: "/thumb-bmw.jpg", shape: "wide" },
-  { code: "PX·06", name: "Assembly", kind: "Live", note: "Multi-camera event coverage with same-night social delivery.", src: "/thumb-event.jpg" },
-
-  { code: "WB·01", name: "Mahati Bhikshu", kind: "Website", note: "Portfolio site for a Kuchipudi artist and screen actor — film, gallery, press.", src: "/builds/mahati.jpg", video: "/builds/mahati", shape: "wide" },
-  { code: "WB·02", name: "Aruna Bhikshu", kind: "Website", note: "Practitioner site built around teaching, repertoire and enquiry.", src: "/builds/aruna.jpg", video: "/builds/aruna", shape: "wide" },
-  { code: "WB·03", name: "Sattva Amora", kind: "Website", note: "Launch microsite for a residential project — narrative scroll, enquiry capture.", src: "/builds/sattva-amora.jpg", video: "/builds/sattva-amora", shape: "wide" },
+  { code: "01", name: "Automotive", kind: "Launch & showroom", note: "Delivery reels, showroom content and launch films. We led content for India’s first Mercedes-Maybach showroom in Hyderabad.", roster: "Mercedes-Benz · Silver Star Hyderabad", src: "/thumb-mercedes.jpg", shape: "wide" },
+  { code: "02", name: "Automotive", kind: "Drive & performance", note: "Tracking-vehicle and gimbal work for premium auto retail, cut for launch and for the feed.", roster: "BMW · Krishna Motors · Premium auto", src: "/thumb-bmw.jpg" },
+  { code: "03", name: "Fashion & lifestyle", kind: "Campaign & editorial", note: "Editorial content for premium fashion and lifestyle. As Head of Creative at Ujwala Group we built the visual language for 1UJ.", roster: "1UJ Fashion · 1UJ Lifestyle · Premium retail", src: "/thumb-fashion.jpg", shape: "tall" },
+  { code: "04", name: "Hospitality", kind: "Property films", note: "Cinematic content for hotels and resorts — rooms, ambience, service, and the quiet hours nobody photographs.", roster: "Hotels · Resorts · Bars", src: "/thumb-hotel.jpg", shape: "wide" },
+  { code: "05", name: "Food & beverage", kind: "Always-on social", note: "A month of café and restaurant content from one morning of coverage — food styling, ambience, staff, stills.", roster: "Hole in the Wall · Cafés · Restaurants", src: "/thumb-cafe.jpg", shape: "tall" },
+  { code: "06", name: "Corporate & events", kind: "Launches & coverage", note: "Brand launches, corporate films, product reveals and multi-camera event coverage, delivered on schedule.", roster: "IRDAI · Everest Abercorn · Pit Stop Group", src: "/thumb-event.jpg", shape: "wide" },
 ];
 
 export default function Work() {
@@ -69,7 +62,7 @@ export default function Work() {
 
         // Cards drift on a second, slower axis so the row has parallax depth
         // instead of sliding as one rigid plane.
-        const cards = gsap.utils.toArray<HTMLElement>(".wcard__media img, .wcard__media video");
+        const cards = gsap.utils.toArray<HTMLElement>(".wcard__media img");
         cards.forEach((img, i) => {
           gsap.fromTo(
             img,
@@ -101,26 +94,7 @@ export default function Work() {
       return () => mm.revert();
     }, root);
 
-    // Touch has no hover, so the website walkthroughs play when they are on
-    // screen and stop as soon as they leave it.
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const v = entry.target as HTMLVideoElement;
-          if (entry.isIntersecting) v.play().catch(() => {});
-          else v.pause();
-        });
-      },
-      { threshold: 0.55 }
-    );
-    if (window.matchMedia("(hover: none)").matches) {
-      root.current?.querySelectorAll("video").forEach((v) => io.observe(v));
-    }
-
-    return () => {
-      io.disconnect();
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -128,7 +102,7 @@ export default function Work() {
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
           <span className="label idx">02 — Selected work</span>
-          <h2>Nine jobs, nine problems, one crew.</h2>
+          <h2>Premium brands. Every vertical.</h2>
         </header>
       </div>
 
@@ -138,30 +112,15 @@ export default function Work() {
             <article className={`wcard${it.shape ? ` wcard--${it.shape}` : ""}`} key={it.code}>
               <div className="wcard__media">
                 <span className="wcard__badge">{it.kind}</span>
-                {it.video ? (
-                  <video
-                    poster={it.src}
-                    muted
-                    loop
-                    playsInline
-                    preload="none"
-                    aria-label={`${it.name} — website walkthrough`}
-                    onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
-                    onMouseLeave={(e) => e.currentTarget.pause()}
-                  >
-                    <source src={`${it.video}.webm`} type="video/webm" />
-                    <source src={`${it.video}.mp4`} type="video/mp4" />
-                  </video>
-                ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={it.src} alt={`${it.name} — ${it.kind.toLowerCase()} project still`} loading="lazy" />
-                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={it.src} alt={`${it.name} — ${it.kind.toLowerCase()} still`} loading="lazy" />
               </div>
               <div className="wcard__row">
                 <h3>{it.name}</h3>
                 <span className="label">{it.code}</span>
               </div>
               <p>{it.note}</p>
+              <span className="wcard__roster label">{it.roster}</span>
             </article>
           ))}
         </div>

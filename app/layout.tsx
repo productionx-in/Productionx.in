@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 /**
@@ -7,8 +7,9 @@ import "./globals.css";
  *
  * Instrument Serif is a high-contrast titling face — it reads as a film title
  * card at large sizes, which is the whole point; it is never used for body.
- * Inter Tight carries every word a visitor actually reads. JetBrains Mono is
- * the slate: codes, timecodes, labels and figures, always tabular.
+ * Inter carries every word a visitor actually reads: it was chosen over the
+ * Tight cut because condensed body text read as cramped at paragraph length.
+ * JetBrains Mono is the slate — codes, labels and figures, always tabular.
  */
 const display = Instrument_Serif({
   subsets: ["latin"],
@@ -18,7 +19,7 @@ const display = Instrument_Serif({
   display: "swap",
 });
 
-const sans = Inter_Tight({
+const sans = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-sans",
@@ -33,21 +34,22 @@ const mono = JetBrains_Mono({
 });
 
 const siteUrl = "https://productionx.in";
-const title = "ProductionX — Content Studio & AI Previsualisation, Hyderabad";
+const title = "ProductionX — Brand, Marketing & Content Studio, Hyderabad";
 const description =
-  "A Hyderabad content studio. Brand films, campaign and social content shot with a real crew — plus AI previsualisation that lets property buyers walk a building before it is built.";
+  "A brand and marketing studio in Hyderabad, Vizag and across India. Brand strategy, content production, social media management, websites and search, plus AI content and real-estate previsualisation — one team, one monthly retainer.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title,
   description,
   keywords: [
+    "brand marketing agency Hyderabad",
+    "social media management Hyderabad",
     "content production Hyderabad",
     "brand film production Hyderabad",
+    "digital marketing agency Vizag",
+    "website design and SEO Hyderabad",
     "AI previsualisation real estate India",
-    "architectural walkthrough Hyderabad",
-    "AI content creation for brands",
-    "social media content production",
     "ProductionX",
   ],
   alternates: { canonical: siteUrl },
@@ -83,15 +85,18 @@ const jsonLd = {
   image: `${siteUrl}/og-image.jpg`,
   email: "info@productionx.in",
   telephone: "+91-93919-26846",
-  areaServed: "IN",
   address: { "@type": "PostalAddress", addressLocality: "Hyderabad", addressRegion: "Telangana", addressCountry: "IN" },
   sameAs: ["https://instagram.com/productionx.in"],
+  slogan: "Every frame earns its place.",
+  founder: { "@type": "Person", name: "Kiran Basa" },
+  areaServed: ["Hyderabad", "Visakhapatnam", "India"],
   makesOffer: [
-    "Brand film production",
-    "Campaign and social content",
+    "Brand strategy and positioning",
+    "Content production",
+    "Social media management",
+    "Website design, build and SEO",
     "AI content generation",
     "Real-estate previsualisation",
-    "Website design and build",
   ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
 };
 

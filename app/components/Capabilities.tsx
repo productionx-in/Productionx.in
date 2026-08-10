@@ -11,39 +11,44 @@ type Cap = {
   video?: string;
 };
 
+/**
+ * Five services, ordered the way a client buys them — the thinking first, the
+ * filming in the middle. The studio is hired for brand building and marketing,
+ * not for camera hire, so production sits inside that story rather than being
+ * the whole of it.
+ */
 const CAPS: Cap[] = [
   {
-    title: "Brand films",
-    body: "Concept, crew, camera, grade. The film a brand puts at the top of its site and keeps for three years.",
+    title: "Brand strategy",
+    body: "Discovery, competitor study, positioning and a twelve-month roadmap. We agree what success looks like — enquiries, rankings, recognition — before anyone books a camera.",
+    meta: "Discovery · Positioning · Roadmap",
+    poster: "/thumb-event.jpg",
+  },
+  {
+    title: "Content production",
+    body: "Brand films, reels, product and fashion shoots, events and podcasts. Planned, shot, directed and edited in house — every frame earns its place.",
     meta: "Film · Direction · Post",
     poster: "/thumb-mercedes.jpg",
   },
   {
-    title: "Campaign & social",
-    body: "A shoot day cut into a month of verticals, stills and paid variants — built for the platform, not resized for it.",
-    meta: "Campaign · Vertical · Paid",
+    title: "Social media management",
+    body: "We own the presence end to end: content calendar, captions, scheduling, growth, competitor analysis, monthly analytics and paid integration.",
+    meta: "Calendar · Growth · Paid",
     poster: "/thumb-fashion.jpg",
   },
   {
-    title: "AI content",
-    body: "Generated footage, product scenes and concept frames for work that has no budget for a unit — or no time for one.",
-    meta: "Generative · Iteration",
-    poster: "/builds/ai-01.jpg",
-    video: "/builds/ai-01",
-  },
-  {
-    title: "Real-estate previz",
-    body: "Walkthroughs and hero frames of a building that is still a drawing, so sales can start before the slab is poured.",
-    meta: "Previz · Architectural",
-    poster: "/builds/ai-03.jpg",
-    video: "/builds/ai-03",
-  },
-  {
-    title: "Web presence",
-    body: "The site the film points to. Designed and built here, so the campaign and the landing page are one piece of work.",
-    meta: "Design · Build",
+    title: "Website & search",
+    body: "Sites built to convert the audience the content earns, plus the search work behind them — keywords, Google Business Profile, local ranking.",
+    meta: "Design · Build · SEO",
     poster: "/builds/mahati.jpg",
     video: "/builds/mahati",
+  },
+  {
+    title: "AI content & previz",
+    body: "Generated footage for work with no budget for a unit, and walkthroughs of property that is still a drawing — so sales can start before the slab is poured.",
+    meta: "Generative · Architectural",
+    poster: "/builds/ai-03.jpg",
+    video: "/builds/ai-03",
   },
 ];
 
@@ -100,8 +105,8 @@ export default function Capabilities() {
     <section className="band" id="capabilities" ref={root}>
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">01 — Capabilities</span>
-          <h2>Five things we are actually good at.</h2>
+          <span className="label idx">01 — What we do</span>
+          <h2>Five services. One studio. One retainer.</h2>
         </header>
 
         <div className="caps__layout">

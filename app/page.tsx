@@ -1,14 +1,21 @@
 import Chrome from "./components/Chrome";
 import Slate from "./components/Slate";
-import Kinetic from "./components/Kinetic";
+import Clients from "./components/Clients";
 import Capabilities from "./components/Capabilities";
 import Work from "./components/Work";
+import WebWork from "./components/WebWork";
 import Previz from "./components/Previz";
 import Process from "./components/Process";
 import Proof from "./components/Proof";
+import Packages from "./components/Packages";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
+/**
+ * Ordered the way a brand-building enquiry actually forms: who you are → who
+ * trusts you → what you do → proof you have done it → how it runs → who is
+ * behind it → what it costs → how to start.
+ */
 export default function Page() {
   return (
     <>
@@ -16,12 +23,14 @@ export default function Page() {
       <Chrome />
       <main id="main">
         <Slate />
-        <Kinetic />
+        <Clients />
         <Capabilities />
         <Work />
+        <WebWork />
         <Previz />
         <Process />
         <Proof />
+        <Packages />
         <Contact />
       </main>
       <Footer />

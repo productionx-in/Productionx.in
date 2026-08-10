@@ -11,8 +11,11 @@ export default function Footer() {
               <span className="nav__word">ProductionX</span>
             </div>
             <p className="muted" style={{ fontSize: "var(--t-sm)" }}>
-              A content studio in Hyderabad making brand films, campaign content
-              and previsualisation for property that is not built yet.
+              A brand and marketing studio in Hyderabad. Strategy, content, social,
+              websites and AI previsualisation — under one roof.
+            </p>
+            <p className="italic-note" style={{ marginTop: "var(--s2)" }}>
+              Every frame earns its place.
             </p>
           </div>
 
@@ -20,18 +23,22 @@ export default function Footer() {
             <div className="footer__col">
               <span className="label">Studio</span>
               <a href="#work">Work</a>
-              <a href="#capabilities">Capabilities</a>
-              <a href="#process">Process</a>
+              <a href="#about">About</a>
+              <a href="#process">How we work</a>
+              <a href="#packages">Pricing</a>
             </div>
             <div className="footer__col">
               <span className="label">Services</span>
-              <a href="#capabilities">Brand films</a>
-              <a href="#capabilities">Campaign &amp; social</a>
-              <a href="#previz">Real-estate previz</a>
+              <a href="#capabilities">Brand strategy</a>
+              <a href="#capabilities">Content production</a>
+              <a href="#capabilities">Social media</a>
+              <a href="#web">Websites &amp; search</a>
+              <a href="#previz">AI &amp; previz</a>
             </div>
             <div className="footer__col">
               <span className="label">Contact</span>
               <a href="mailto:info@productionx.in">info@productionx.in</a>
+              <a href="tel:+919391926846">+91 93919 26846</a>
               <a href="https://wa.me/919391926846" target="_blank" rel="noopener noreferrer">WhatsApp</a>
               <a href="https://instagram.com/productionx.in" target="_blank" rel="noopener noreferrer">Instagram</a>
             </div>
@@ -44,7 +51,7 @@ export default function Footer() {
 
         <div className="footer__bar">
           <span className="label">© {year} ProductionX · Hyderabad, India</span>
-          <span className="label">Films · Ads · AI previz · Web</span>
+          <span className="label">Hyderabad · Vizag · Pan India</span>
         </div>
       </div>
     </footer>

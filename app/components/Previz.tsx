@@ -5,9 +5,10 @@ import { Tick, ArtTopo } from "./graphics";
 import { initGsap, gsap, ScrollTrigger, prefersReducedMotion } from "../lib/motion";
 
 const POINTS = [
-  "Hero frames and walkthroughs from drawings, before a slab is poured.",
-  "Interior options — finishes, light, time of day — changed in hours, not site visits.",
-  "Sales collateral that matches the built result, so buyers are not surprised at handover.",
+  "Walkthroughs and hero frames straight from drawings, before a slab is poured.",
+  "Finishes, light and time of day changed in hours, not in site visits.",
+  "Generated footage for brands with no budget for a full unit — product scenes, concept frames, campaign cutaways.",
+  "Collateral that matches the built result, so buyers are not surprised at handover.",
 ];
 
 function timecode(seconds: number) {
@@ -97,7 +98,7 @@ export default function Previz() {
     <section className="band previz" id="previz" ref={root}>
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">03 — Previsualisation</span>
+          <span className="label idx">05 — AI & previsualisation</span>
           <h2>
             Sell the building <span className="mint">before</span> it exists.
           </h2>
@@ -106,9 +107,10 @@ export default function Previz() {
         <div className="previz__layout">
           <div data-reveal>
             <p className="lead">
-              Developers lose months waiting for a show flat. We build the space in
-              a render pipeline instead, and hand sales a walkthrough while the site
-              is still soil.
+              A show flat takes months and costs a fortune. We build the space in a
+              render pipeline instead and hand your sales team a walkthrough while
+              the site is still soil — then feed the same frames into the brochure,
+              the ads and the launch campaign.
             </p>
 
             <ul className="previz__points">

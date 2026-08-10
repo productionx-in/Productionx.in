@@ -6,10 +6,11 @@ import { GRAIN_URI, Arrow } from "./graphics";
 import { initGsap, revealAll, gsap, ScrollTrigger, prefersReducedMotion } from "../lib/motion";
 
 const LINKS = [
+  { href: "#capabilities", label: "Services" },
   { href: "#work", label: "Work" },
-  { href: "#capabilities", label: "Capabilities" },
-  { href: "#previz", label: "Previz" },
-  { href: "#process", label: "Process" },
+  { href: "#web", label: "Websites" },
+  { href: "#about", label: "About" },
+  { href: "#packages", label: "Pricing" },
 ];
 
 /**
@@ -96,7 +97,7 @@ export default function Chrome() {
 
         <div className="nav__cta">
           <a href="#contact" className="btn">
-            Start a project
+            Book a call
             <Arrow className="arrow" />
           </a>
         </div>

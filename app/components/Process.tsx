@@ -4,12 +4,13 @@ import { useEffect, useRef } from "react";
 import { ArtSlate, ArtLens, ArtNodes, ArtWave, ArtDeliver } from "./graphics";
 import { initGsap, gsap, prefersReducedMotion } from "../lib/motion";
 
+/** The studio's own five steps, as it has always described them. */
 const STEPS = [
-  { k: "01", t: "Brief", d: "One call. What the work has to achieve, who it is for, and the date it has to land by.", Art: ArtSlate },
-  { k: "02", t: "Direction", d: "Treatment, references, shot list or prompt board. You approve the look before anything is booked.", Art: ArtLens },
-  { k: "03", t: "Make", d: "Crew and camera, a render pipeline, or both — chosen on what the job needs, not what we prefer.", Art: ArtNodes },
-  { k: "04", t: "Post", d: "Edit, sound, grade, versions. You see cuts, not a black box, and notes are welcome mid-flight.", Art: ArtWave },
-  { k: "05", t: "Deliver", d: "Masters, platform crops, stills and captions — packaged so your team can publish without asking us.", Art: ArtDeliver },
+  { k: "01", t: "Brief & discovery", d: "A 30-minute call to understand your brand, your market and what the next twelve months have to deliver. No templates. A real conversation.", Art: ArtSlate },
+  { k: "02", t: "Strategy & planning", d: "We study your competitors and build the plan: positioning, monthly content calendar, shoot dates, formats and the social management approach.", Art: ArtLens },
+  { k: "03", t: "Production", d: "Our team handles the full shoot — or the render pipeline, when that is the faster route. You show up. We take care of everything else.", Art: ArtNodes },
+  { k: "04", t: "Edit & review", d: "Content edited to your brand, with one round of feedback through our review platform. You see cuts, not a black box.", Art: ArtWave },
+  { k: "05", t: "Delivery", d: "Files delivered, or posted straight to your channels — on schedule, every time, with a monthly analytics report behind it.", Art: ArtDeliver },
 ];
 
 /**
@@ -54,8 +55,8 @@ export default function Process() {
     <section className="band proc" id="process" ref={root}>
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">04 — How it runs</span>
-          <h2>No mystery, no drift, no surprise invoice.</h2>
+          <span className="label idx">06 — How we work</span>
+          <h2>Simple. Transparent. Always delivered.</h2>
         </header>
 
         <div className="proc__body">
