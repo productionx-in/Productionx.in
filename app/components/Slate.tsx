@@ -1,22 +1,26 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
-import { Arrow } from "./graphics";
+import { Arrow, Icon } from "./graphics";
 import { initGsap, gsap, ScrollTrigger, prefersReducedMotion, EASE } from "../lib/motion";
 
 /**
- * Six distinct frames, brightest first so the strip reads immediately.
- * The list is repeated once to close the loop; the clone never shares the
- * viewport with its original at this frame height.
+ * What the studio makes, drawn rather than photographed.
+ *
+ * The strip used to run six stills. They were shot on different days for
+ * different clients and, above the fold, read as a slideshow of stock rather
+ * than a statement of capability. Six marks in the house icon family say what
+ * is on offer immediately, cost nothing to load, and stay crisp at any size —
+ * the real footage still carries the work gallery further down, where a
+ * visitor has asked to see it.
  */
-const FRAMES = [
-  { src: "/thumb-fashion.jpg", tag: "Campaign" },
-  { src: "/thumb-hotel.jpg", tag: "Hospitality" },
-  { src: "/thumb-bmw.jpg", tag: "Automotive" },
-  { src: "/thumb-cafe.jpg", tag: "Food & bev" },
-  { src: "/thumb-event.jpg", tag: "Live" },
-  { src: "/thumb-mercedes.jpg", tag: "Night unit" },
+const MARKS = [
+  { icon: "strategy", label: "Brand strategy", pillar: "Marketing", tone: "ember" },
+  { icon: "film", label: "Brand & ad films", pillar: "Production", tone: "ink" },
+  { icon: "social", label: "Social management", pillar: "Marketing", tone: "ember" },
+  { icon: "reel", label: "Reels & shorts", pillar: "Production", tone: "ink" },
+  { icon: "website", label: "Websites & search", pillar: "Digital", tone: "mint" },
+  { icon: "previz", label: "AI & previz", pillar: "Digital", tone: "mint" },
 ];
 
 /**
@@ -108,16 +112,25 @@ export default function Slate() {
     return () => ctx.revert();
   }, []);
 
-  const loop = [...FRAMES, ...FRAMES];
+  const loop = [...MARKS, ...MARKS];
 
   return (
     <section className="slate" id="top" ref={root}>
       <div className="shell wrap">
         <div className="slate__grid">
           <div className="slate__copy">
+            {/*
+              This line used to list cities. Where the studio works is already
+              in the contact block, the footer and the structured data — above
+              the headline it was spending the most valuable line on the page
+              saying nothing a visitor could act on. It now carries the one
+              fact no competitor can copy.
+            */}
             <div className="slate__eyebrow">
               <span className="rule" aria-hidden="true" />
-              <span className="label">Hyderabad · Vizag · Pan India</span>
+              <span className="label">
+                Brand-side experience · Mercedes-Benz, Ujwala Group, 1UJ
+              </span>
             </div>
 
             {/* One line per discipline, each closing on an italic accent in
@@ -151,17 +164,12 @@ export default function Slate() {
 
           <div className="strip" aria-hidden="true">
             <div className="strip__track">
-              {loop.map((f, i) => (
-                <figure className="frame" key={`${f.src}-${i}`}>
-                  <Image
-                    src={f.src}
-                    alt=""
-                    width={380}
-                    height={475}
-                    priority={i < 2}
-                    sizes="(max-width: 1000px) 240px, 380px"
-                  />
-                  <figcaption className="frame__tag">{f.tag}</figcaption>
+              {loop.map((m, i) => (
+                <figure className={`mark mark--${m.tone}`} key={`${m.label}-${i}`}>
+                  <span className="mark__pillar">{m.pillar}</span>
+                  <Icon name={m.icon} size={62} className="mark__ico" />
+                  <figcaption className="mark__label">{m.label}</figcaption>
+                  <span className="bracket br" />
                 </figure>
               ))}
             </div>
