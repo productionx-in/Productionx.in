@@ -13,25 +13,25 @@ const POINTS = [
 
 function timecode(seconds: number) {
   const s = Math.max(0, seconds);
-  const mm = String(Math.floor(s / 60)).padStart(2, "0");
-  const ss = String(Math.floor(s % 60)).padStart(2, "0");
+  const ss = String(Math.floor(s)).padStart(2, "0");
   const ff = String(Math.floor((s % 1) * 24)).padStart(2, "0");
-  return `${mm}:${ss}:${ff}`;
+  return `${ss}:${ff}`;
 }
 
 /**
  * The previsualisation section, shown by letting the visitor drive the shot.
  *
  * Scroll position maps onto the clip's playhead, so moving down the page walks
- * the camera through the space; the timeline underneath can also be dragged.
- * It demonstrates the service rather than describing it, and it degrades to a
- * plain looping clip when the browser cannot seek smoothly or motion is off.
+ * the camera through the space. It demonstrates the service rather than
+ * describing it, and it degrades to a plain looping clip whenever the browser
+ * cannot seek smoothly or the visitor has asked for reduced motion.
  */
 export default function Previz() {
   const root = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [tc, setTc] = useState("00:00:00");
-  const [ready, setReady] = useState(false);
+  const tcRef = useRef<HTMLSpanElement>(null);
+  const headRef = useRef<HTMLElement>(null);
+  const [mode, setMode] = useState<"loading" | "scrub" | "play">("loading");
 
   useEffect(() => {
     initGsap();
@@ -41,55 +41,90 @@ export default function Previz() {
     if (prefersReducedMotion()) {
       video.loop = true;
       video.play().catch(() => {});
+      setMode("play");
       return;
     }
 
     let duration = 0;
     let target = 0;
-    let current = 0;
-    let raf = 0;
+    let seeking = false;
+    let landed = false;
+    let alive = true;
+    let fallbackTimer = 0;
 
-    // Easing the playhead toward the scroll target keeps seeking smooth even
-    // when the decoder lags a frame or two behind.
-    const loop = () => {
-      raf = requestAnimationFrame(loop);
-      if (!duration) return;
-      current += (target - current) * 0.12;
-      if (Math.abs(target - current) < 0.002) return;
-      try {
-        video.currentTime = current;
-      } catch {
-        /* seek not ready yet */
-      }
-      setTc(timecode(current));
+    const paint = () => {
+      if (tcRef.current) tcRef.current.textContent = timecode(video.currentTime);
     };
 
-    const onMeta = () => {
+    /**
+     * Assigning `currentTime` while a seek is already in flight cancels that
+     * seek. Driving it straight from a scroll handler therefore throws away
+     * almost every request and the picture crawls. Issue one seek at a time
+     * and let the `seeked` event release the next — the playhead then tracks
+     * the scroll instead of fighting it.
+     */
+    const pump = () => {
+      if (!alive || seeking || !duration) return;
+      if (Math.abs(video.currentTime - target) < 0.04) return;
+      seeking = true;
+      try {
+        video.currentTime = target;
+      } catch {
+        seeking = false;
+      }
+    };
+
+    const onSeeked = () => {
+      seeking = false;
+      landed = true;
+      paint();
+      pump();
+    };
+    video.addEventListener("seeked", onSeeked);
+
+    const start = () => {
       duration = video.duration || 0;
       if (!duration || !isFinite(duration)) return;
-      setReady(true);
-      raf = requestAnimationFrame(loop);
+      video.pause();
+      setMode("scrub");
+      paint();
+      ScrollTrigger.refresh();
+
+      // If no seek has completed shortly after load, this browser cannot scrub
+      // this encode. Rather than leave a dead frame under a "scroll to walk
+      // through" label, let the clip simply play.
+      fallbackTimer = window.setTimeout(() => {
+        if (alive && !landed) {
+          video.loop = true;
+          video.play().catch(() => {});
+          setMode("play");
+        }
+      }, 3500);
     };
-    video.addEventListener("loadedmetadata", onMeta);
-    video.load();
+
+    video.addEventListener("loadedmetadata", start);
+    if (video.readyState >= 1) start();
+    else video.load();
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: root.current,
-        start: "top 75%",
-        end: "bottom 25%",
-        scrub: true,
+        start: "top 80%",
+        end: "bottom 20%",
         onUpdate: (self) => {
-          if (!duration) return;
+          if (headRef.current) headRef.current.style.left = `${self.progress * 100}%`;
+          if (!duration || video.loop) return;
           target = gsap.utils.clamp(0, duration - 0.05, self.progress * duration);
-          gsap.set(".scrub__head", { left: `${self.progress * 100}%` });
+          pump();
         },
       });
     }, root);
 
     return () => {
-      cancelAnimationFrame(raf);
-      video.removeEventListener("loadedmetadata", onMeta);
+      alive = false;
+      clearTimeout(fallbackTimer);
+      video.removeEventListener("seeked", onSeeked);
+      video.removeEventListener("loadedmetadata", start);
       ctx.revert();
     };
   }, []);
@@ -98,7 +133,10 @@ export default function Previz() {
     <section className="band previz" id="previz" ref={root}>
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx idx--digital"><Icon name="ai" size={15} />04 — Digital · AI & previsualisation</span>
+          <span className="label idx idx--digital">
+            <Icon name="ai" size={15} />
+            04 — Digital · AI &amp; previsualisation
+          </span>
           <h2>
             Sell the building <span className="mint">before</span> it exists.
           </h2>
@@ -143,12 +181,18 @@ export default function Previz() {
             <span className="bracket tr" aria-hidden="true" />
 
             <figcaption className="scrub__hud">
-              <span className="label label--mint">{ready ? "Scroll to walk through" : "Loading"}</span>
-              <span className="label">{tc}</span>
+              <span className="label label--mint">
+                {mode === "loading"
+                  ? "Loading"
+                  : mode === "scrub"
+                  ? "Scroll to walk through"
+                  : "Previsualisation"}
+              </span>
+              <span className="label" ref={tcRef}>00:00</span>
             </figcaption>
 
             <span className="scrub__rail" aria-hidden="true">
-              <i className="scrub__head" />
+              <i className="scrub__head" ref={headRef} />
             </span>
           </figure>
         </div>

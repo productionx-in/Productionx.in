@@ -25,7 +25,6 @@ export default function Footer() {
               <a href="#work">Work</a>
               <a href="#about">About</a>
               <a href="#process">How we work</a>
-              <a href="#packages">Pricing</a>
             </div>
             <div className="footer__col">
               <span className="label">Services</span>

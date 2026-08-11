@@ -721,7 +721,7 @@ section { position: relative; }
 /* --- 14. Proof ----------------------------------------------------------- */
 
 .proof { border-top: 1px solid var(--line); }
-.proof__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s4); }
+.proof__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--s5); }
 @media (max-width: 860px) { .proof__grid { grid-template-columns: repeat(2, 1fr); gap: var(--s5); } }
 
 .stat__n {
@@ -753,48 +753,6 @@ section { position: relative; }
 }
 .creds li:last-child { border-bottom: 1px solid var(--line); }
 .creds__role { font-family: var(--f-display); font-size: var(--t-h3); line-height: 1.25; }
-
-/* --- 14c. Packages -------------------------------------------------------- */
-
-.packs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); align-items: stretch; }
-@media (max-width: 1000px) { .packs__grid { grid-template-columns: 1fr; gap: var(--s4); } }
-
-.pack {
-  position: relative;
-  display: flex; flex-direction: column; gap: var(--s2);
-  padding: var(--s5) var(--s4) var(--s4);
-  border: 1px solid var(--line);
-  border-radius: var(--r3);
-  background: var(--surface);
-}
-.pack--featured { border-color: var(--ember); background: var(--raised); }
-.pack__flag {
-  position: absolute; top: -10px; left: var(--s4);
-  padding: 3px 10px; border-radius: var(--r-pill);
-  background: var(--ember); color: #0B0A0C; font-weight: 600;
-}
-.pack__note { font-size: var(--t-sm); color: var(--ink-2); max-width: 34ch; min-height: 3.2em; }
-.pack__price {
-  font-family: var(--f-display);
-  font-size: clamp(2.25rem, 3.6vw, 3rem);
-  line-height: 1.1; letter-spacing: -0.012em;
-  font-variant-numeric: tabular-nums;
-  margin-block: var(--s2) var(--s1);
-}
-.pack__price .label { color: var(--ink-3); }
-.pack__from { display: block; margin-bottom: 2px; }
-.pack__items { list-style: none; padding: 0; display: grid; gap: 10px; margin-block: var(--s2) var(--s4); }
-.pack__items li {
-  display: grid; grid-template-columns: auto 1fr; gap: 10px;
-  font-size: var(--t-sm); line-height: 1.5; color: var(--ink-2);
-}
-.pack__items svg { margin-top: 5px; color: var(--ember); }
-.pack .btn { margin-top: auto; justify-content: center; }
-.packs__foot {
-  margin-top: var(--s5);
-  font-family: var(--f-sans); font-size: var(--t-sm);
-  letter-spacing: 0; text-transform: none; color: var(--ink-2);
-}
 
 /* --- 15. Contact --------------------------------------------------------- */
 

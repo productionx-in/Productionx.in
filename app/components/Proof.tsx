@@ -13,7 +13,6 @@ import { initGsap, gsap, prefersReducedMotion } from "../lib/motion";
  */
 const STATS = [
   { n: 50, suffix: "+", l: "Brand films produced" },
-  { n: 300, suffix: "+", l: "Reels edited" },
   { n: 8, suffix: "+", l: "Premium brands" },
   { n: 24, suffix: "h", l: "Reply to every brief" },
 ];

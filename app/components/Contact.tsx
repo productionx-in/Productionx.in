@@ -55,7 +55,7 @@ export default function Contact() {
     <section className="band contact" id="contact">
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">08 — Start</span>
+          <span className="label idx">07 — Start</span>
           <h2>
             Let&rsquo;s build something your audience <span className="em">remembers</span>.
           </h2>
