@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ArtSlate, ArtLens, ArtNodes, ArtWave, ArtDeliver } from "./graphics";
+import { ArtSlate, ArtLens, ArtNodes, ArtWave, ArtDeliver, Icon } from "./graphics";
 import { initGsap, gsap, prefersReducedMotion } from "../lib/motion";
 
 /** The studio's own five steps, as it has always described them. */
@@ -55,7 +55,7 @@ export default function Process() {
     <section className="band proc" id="process" ref={root}>
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">06 — How we work</span>
+          <span className="label idx"><Icon name="analytics" size={15} />05 — How we work</span>
           <h2>Simple. Transparent. Always delivered.</h2>
         </header>
 

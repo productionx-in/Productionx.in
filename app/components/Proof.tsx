@@ -69,7 +69,7 @@ export default function Proof() {
 
         <div className="founder">
           <div data-reveal>
-            <span className="label idx">Why us</span>
+            <span className="label idx">06 — Why us</span>
             <h2 style={{ margin: "var(--s3) 0" }}>
               We were on your <span className="em">side</span> of the table.
             </h2>

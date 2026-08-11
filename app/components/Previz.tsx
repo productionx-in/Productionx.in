@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Tick, ArtTopo } from "./graphics";
+import { Tick, ArtTopo, Icon } from "./graphics";
 import { initGsap, gsap, ScrollTrigger, prefersReducedMotion } from "../lib/motion";
 
 const POINTS = [
@@ -98,7 +98,7 @@ export default function Previz() {
     <section className="band previz" id="previz" ref={root}>
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">05 — AI & previsualisation</span>
+          <span className="label idx idx--digital"><Icon name="ai" size={15} />04 — Digital · AI & previsualisation</span>
           <h2>
             Sell the building <span className="mint">before</span> it exists.
           </h2>

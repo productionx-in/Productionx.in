@@ -35,7 +35,7 @@
   --f-sans:    var(--font-sans), system-ui, -apple-system, sans-serif;
   --f-mono:    var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
 
-  --t-hero:    clamp(2.5rem, 5.6vw, 5.25rem);
+  --t-hero:    clamp(2.125rem, 5.2vw, 4.875rem);
   --t-display: clamp(2rem, 4.4vw, 3.75rem);
   --t-h2:      clamp(1.5rem, 2.8vw, 2.5rem);
   --t-h3:      clamp(1.25rem, 1.7vw, 1.625rem);
@@ -173,7 +173,12 @@ section { position: relative; }
   border-bottom: 1px solid var(--line);
   margin-bottom: var(--s6);
 }
-.sec-head .idx { flex: none; }
+.sec-head .idx { flex: none; display: inline-flex; align-items: center; gap: 8px; }
+.sec-head .idx svg { flex: none; }
+/* Each section states which discipline it belongs to, in that discipline's
+   colour, so the three never blur back together further down the page. */
+.idx--prod    { color: var(--ink-2); }
+.idx--digital { color: var(--mint-lo); }
 .sec-head h2 { flex: 1; }
 @media (max-width: 700px) {
   .sec-head { flex-direction: column; gap: var(--s2); padding-bottom: var(--s4); margin-bottom: var(--s5); }
@@ -331,10 +336,12 @@ section { position: relative; }
 .slate__eyebrow .rule { width: 44px; height: 1px; background: var(--ember); flex: none; }
 
 .slate h1 { margin-bottom: var(--s4); }
-.slate h1 .em { color: var(--ember); font-style: italic; }
-.slate h1 .mint { color: var(--mint); font-style: italic; }
+.slate h1 .em   { color: var(--ember); font-style: italic; }
+.slate h1 .mint { color: var(--mint);  font-style: italic; }
+.slate h1 .ink  { color: var(--ink);   font-style: italic; }
 
 /* Word-level reveal: each word rides up out of a clipping mask. */
+.hline { display: block; }
 .wordmask { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.1em; }
 .wordmask > span { display: inline-block; will-change: transform; }
 
@@ -447,70 +454,67 @@ section { position: relative; }
   -webkit-text-stroke: 0;
 }
 
-/* --- 10. Capabilities (pinned index) ------------------------------------- */
+/* --- 10. Disciplines (three pillars) ------------------------------------- */
 
-.caps__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: var(--s7); align-items: start; }
-@media (max-width: 1000px) { .caps__layout { grid-template-columns: 1fr; gap: var(--s5); } }
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s5); }
+@media (max-width: 1000px) { .pillars { grid-template-columns: 1fr; gap: var(--s7); } }
 
-.caps__list { display: flex; flex-direction: column; }
+/* Each pillar owns a colour and keeps it wherever it appears on the page. */
+.pillar {
+  --tone: var(--ink);
+  position: relative;
+  display: flex; flex-direction: column;
+  padding-top: var(--s4);
+  border-top: 2px solid var(--tone);
+}
+.pillar--brand   { --tone: var(--ember); }
+.pillar--digital { --tone: var(--mint); }
 
-/* Each entry is a real <button>, so the browser gives it keyboard focus and
-   a role for free — the reset below only removes the chrome, not the
-   semantics. */
-.cap {
-  display: grid; grid-template-columns: auto 1fr; gap: var(--s3);
-  padding: var(--s4) 0;
-  background: none;
-  border: 0; border-top: 1px solid var(--line);
-  text-align: left;
-  color: inherit;
-  cursor: pointer;
-  transition: opacity var(--dur) var(--ease);
+.pillar__mark {
+  width: 100%; max-width: 210px; height: auto;
+  color: var(--tone);
+  margin-bottom: var(--s4);
+  opacity: 0.9;
 }
-.cap:last-child { border-bottom: 1px solid var(--line); }
-.cap__num { font-family: var(--f-mono); font-size: var(--t-label); color: var(--ink-3); padding-top: 6px; }
-.cap h3 { transition: color var(--dur-fast) var(--ease); }
-.cap__body {
-  color: var(--ink-2); font-size: var(--t-sm); line-height: 1.65; max-width: 46ch;
-  display: grid; grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur) var(--ease), opacity var(--dur) var(--ease),
-              margin-top var(--dur) var(--ease);
-  opacity: 0; margin-top: 0;
-}
-.cap__body > * { overflow: hidden; }
-.cap.is-active { opacity: 1; }
-.cap.is-active h3 { color: var(--ember); }
-.cap.is-active .cap__num { color: var(--ember); }
-.cap.is-active .cap__body { grid-template-rows: 1fr; opacity: 1; margin-top: var(--s2); }
-.caps__list:hover .cap:not(:hover) { opacity: 0.55; }
-.caps__list .cap:hover { opacity: 1; }
 
-/* The paired visual. Sticky on desktop so the media tracks the index. */
-.caps__stage {
-  position: sticky; top: 96px;
-  aspect-ratio: 4 / 3;
-  border: 1px solid var(--line);
-  border-radius: var(--r3);
-  overflow: hidden;
-  background: var(--surface);
+.pillar__head { display: flex; align-items: baseline; gap: var(--s2); }
+.pillar__n { color: var(--tone); }
+.pillar__head h3 { font-size: clamp(1.5rem, 2.1vw, 2rem); }
+
+.pillar__line {
+  margin-top: var(--s2);
+  color: var(--ink-2);
+  font-size: var(--t-sm);
+  line-height: 1.62;
+  max-width: 36ch;
 }
-.caps__stage figure { position: absolute; inset: 0; opacity: 0; }
-.caps__stage::after {
-  content: ""; position: absolute; inset: auto 0 0 0; height: 45%;
-  background: linear-gradient(to top, rgba(11,10,12,0.88), transparent);
-  pointer-events: none; z-index: 2;
+
+.pillar__svcs {
+  list-style: none; padding: 0;
+  margin: var(--s4) 0 var(--s4);
+  display: grid; gap: 0;
 }
-.caps__stage img, .caps__stage video { width: 100%; height: 100%; object-fit: cover; }
-.caps__stage .bracket { color: rgba(244,241,236,0.35); margin: 14px; z-index: 3; }
-.caps__meta {
-  position: absolute; left: 16px; bottom: 14px; z-index: 3;
+.pillar__svc {
+  display: grid; grid-template-columns: auto 1fr; gap: var(--s2);
+  padding-block: var(--s3);
+  border-top: 1px solid var(--line);
+}
+.pillar__svc:last-child { border-bottom: 1px solid var(--line); }
+.pillar__ico { color: var(--tone); margin-top: 3px; flex: none; }
+.pillar__svc strong { display: block; font-weight: 500; font-size: var(--t-sm); }
+.pillar__detail {
+  display: block; margin-top: 2px;
+  font-size: 0.8125rem; line-height: 1.5; color: var(--ink-3);
+}
+
+.pillar__cta {
+  margin-top: auto;
+  display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--f-mono); font-size: var(--t-label);
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
-  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--tone); align-self: flex-start;
 }
-@media (max-width: 1000px) {
-  .caps__stage { position: relative; top: 0; order: -1; aspect-ratio: 16/10; }
-}
+.pillar__cta:hover { color: var(--tone); }
 
 /* --- 11. Work (horizontal, driven by vertical scroll) --------------------- */
 
@@ -549,15 +553,28 @@ section { position: relative; }
   width: 100%; height: 100%; object-fit: cover;
   transform: scale(1.04);
   transition: transform 700ms var(--ease), filter 700ms var(--ease);
-  filter: saturate(0.85) contrast(1.03);
+  filter: saturate(0.72) contrast(1.06) brightness(0.94);
 }
 .wcard:hover .wcard__media img, .wcard:hover .wcard__media video {
   transform: scale(1.0);
-  filter: saturate(1.05) contrast(1.05);
+  filter: saturate(1.02) contrast(1.05) brightness(1);
 }
+
+/* Warm wash over every still, lifted on hover — the frames stop looking like
+   six unrelated photographs and start looking graded. */
+.wcard__media::after {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(160deg, rgba(255, 92, 41, 0.16), transparent 55%),
+    linear-gradient(to top, rgba(11, 10, 12, 0.55), transparent 55%);
+  transition: opacity 700ms var(--ease);
+}
+.wcard:hover .wcard__media::after { opacity: 0.45; }
 .wcard__badge {
-  position: absolute; top: 10px; left: 10px; z-index: 2;
-  padding: 5px 10px; border-radius: var(--r-pill);
+  position: absolute; top: 10px; left: 10px; z-index: 3;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px 6px 10px; border-radius: var(--r-pill);
   background: rgba(11,10,12,0.62);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em;
@@ -565,6 +582,7 @@ section { position: relative; }
 }
 .wcard__row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s2); }
 .wcard__row h3 { font-size: var(--t-h3); }
+.wcard__badge svg { color: var(--ember); }
 .wcard__row .label { flex: none; }
 .wcard p { font-size: var(--t-sm); line-height: 1.62; color: var(--ink-2); max-width: 40ch; }
 .wcard__roster { display: block; color: var(--ember); font-size: 0.6875rem; }

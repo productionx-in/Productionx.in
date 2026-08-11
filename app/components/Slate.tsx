@@ -24,10 +24,12 @@ const FRAMES = [
  * own clipping box. The inter-word space is emitted *outside* the mask —
  * inside it, `overflow: hidden` clips the space and the words run together.
  */
-function Line({ text, accent }: { text: string; accent?: { word: string; tone: "em" | "mint" } }) {
+function Line({ text, accent }: { text: string; accent?: { word: string; tone: "em" | "mint" | "ink" } }) {
   const words = text.split(" ");
   return (
-    <>
+    // Block, not inline: three claims flowing into one paragraph is exactly
+    // the blurring this headline exists to undo.
+    <span className="hline">
       {words.map((w, i) => {
         const isAccent = accent && w.replace(/[^A-Za-z]/g, "") === accent.word;
         return (
@@ -39,7 +41,7 @@ function Line({ text, accent }: { text: string; accent?: { word: string; tone: "
           </span>
         );
       })}
-    </>
+    </span>
   );
 }
 
@@ -118,17 +120,20 @@ export default function Slate() {
               <span className="label">Hyderabad · Vizag · Pan India</span>
             </div>
 
-            {/* Two lines, each closing on an italic accent — the rhythm that
-                carried the first version, now saying the wider thing. */}
+            {/* One line per discipline, each closing on an italic accent in
+                that discipline's colour — ember for marketing, ink for
+                production, mint for digital. The colour code is set here and
+                held for the rest of the page. */}
             <h1>
-              <Line text="We build the brand." accent={{ word: "brand", tone: "em" }} />
-              <Line text="Then earn the audience." accent={{ word: "audience", tone: "mint" }} />
+              <Line text="Marketing that thinks." accent={{ word: "thinks", tone: "em" }} />
+              <Line text="Content that performs." accent={{ word: "performs", tone: "ink" }} />
+              <Line text="Sites that convert." accent={{ word: "convert", tone: "mint" }} />
             </h1>
 
             <p className="lead slate__lead">
-              ProductionX is a brand and marketing studio. Strategy, website, content,
-              social and paid — with the crew and the AI pipeline that make them, under
-              one roof and one monthly retainer.
+              Three disciplines under one roof: brand and marketing strategy,
+              content production with our own crew, and websites, search and AI
+              previsualisation. Take one of them, or all three on one retainer.
             </p>
 
             <div className="slate__foot">

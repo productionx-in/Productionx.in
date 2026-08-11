@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Arrow } from "./graphics";
+import { Arrow, Icon } from "./graphics";
 import { initGsap, prefersReducedMotion } from "../lib/motion";
 
 type Site = {
@@ -64,8 +64,8 @@ export default function WebWork() {
     <section className="band webwork" id="web" ref={root}>
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">04 — Websites</span>
-          <h2>The site the content points to.</h2>
+          <span className="label idx idx--digital"><Icon name="website" size={15} />03 — Digital · Websites &amp; search</span>
+          <h2>Sites built to convert, not just to look good.</h2>
         </header>
 
         <p className="lead" data-reveal style={{ marginBottom: "var(--s6)" }}>
