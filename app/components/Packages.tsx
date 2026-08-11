@@ -11,12 +11,18 @@ type Pack = {
 };
 
 /**
- * The studio's published retainers, carried over unchanged.
+ * The studio's published retainers, shown as a floor rather than a flat rate.
  *
- * A visitor weighing a marketing partner wants to know the order of magnitude
- * before they call; hiding it costs more enquiries than it protects. Confirm
- * these figures are current before the site goes live.
+ * A buyer weighing a marketing partner wants the order of magnitude before
+ * they call — hiding it costs more enquiries than it protects, and filters out
+ * the briefs that were never going to convert. "From" keeps that benefit
+ * without capping a larger scope: strategy, websites and previz sit outside
+ * these tiers and are quoted on top.
+ *
+ * To show flat prices instead, delete the `from` flag below. To remove pricing
+ * entirely, drop <Packages /> from app/page.tsx and the nav link in Chrome.tsx.
  */
+const SHOW_FROM = true;
 const PACKS: Pack[] = [
   {
     name: "Foundation",
@@ -71,8 +77,8 @@ export default function Packages() {
 
         <p className="lead" data-reveal style={{ marginBottom: "var(--s6)" }}>
           Monthly retainers with a three-month minimum and 50% advance to
-          initiate. Websites, search and previsualisation are quoted separately or
-          folded in — custom packages on request.
+          initiate. Brand strategy, websites, search and previsualisation are
+          scoped and quoted on top — or folded into a custom retainer.
         </p>
 
         <div className="packs__grid" data-reveal data-reveal-group>
@@ -82,6 +88,7 @@ export default function Packages() {
               <h3>{p.name}</h3>
               <p className="pack__note">{p.note}</p>
               <div className="pack__price">
+                {SHOW_FROM && <span className="pack__from label">From</span>}
                 {p.price}
                 <span className="label"> / month</span>
               </div>

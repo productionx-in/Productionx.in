@@ -3,12 +3,19 @@
 import { useEffect, useRef } from "react";
 import { initGsap, gsap, prefersReducedMotion } from "../lib/motion";
 
-/** The studio's own published record. */
+/**
+ * Three figures from the studio's published record, plus the response promise.
+ *
+ * "3+ years of experience" was the fourth published figure; it is dropped here
+ * because the founder block below states the same thing with far more weight,
+ * and because a small number of years argues against you with the kind of buyer
+ * this page is written for. The reply promise earns the slot instead.
+ */
 const STATS = [
   { n: 50, suffix: "+", l: "Brand films produced" },
   { n: 300, suffix: "+", l: "Reels edited" },
   { n: 8, suffix: "+", l: "Premium brands" },
-  { n: 3, suffix: "+", l: "Years of experience" },
+  { n: 24, suffix: "h", l: "Reply to every brief" },
 ];
 
 const CREDENTIALS = [

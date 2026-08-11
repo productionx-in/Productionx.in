@@ -425,16 +425,26 @@ section { position: relative; }
 .marquee__row span {
   display: inline-flex; align-items: center; gap: var(--s5);
   font-family: var(--f-display);
-  font-size: clamp(1.75rem, 3.6vw, 3.25rem);
-  line-height: 1.2;
+  font-size: clamp(1.875rem, 4.4vw, 4rem);
+  line-height: 1.25;
   letter-spacing: -0.008em;
   padding-left: var(--s5);
   white-space: nowrap;
-  color: var(--ink-2);
+  color: var(--ink);
+}
+
+/* Alternate solid and outlined so the band has its own cadence rather than
+   reading as one long grey sentence. The outline is set in italic, which is
+   where the display face has the most character. */
+.marquee__row span:nth-child(even) {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink-3);
+  font-style: italic;
 }
 .marquee__dot {
   width: 5px; height: 5px; border-radius: 50%;
   background: var(--ember); flex: none;
+  -webkit-text-stroke: 0;
 }
 
 /* --- 10. Capabilities (pinned index) ------------------------------------- */
@@ -745,7 +755,7 @@ section { position: relative; }
   padding: 3px 10px; border-radius: var(--r-pill);
   background: var(--ember); color: #0B0A0C; font-weight: 600;
 }
-.pack__note { font-size: var(--t-sm); color: var(--ink-2); max-width: 34ch; }
+.pack__note { font-size: var(--t-sm); color: var(--ink-2); max-width: 34ch; min-height: 3.2em; }
 .pack__price {
   font-family: var(--f-display);
   font-size: clamp(2.25rem, 3.6vw, 3rem);
@@ -754,6 +764,7 @@ section { position: relative; }
   margin-block: var(--s2) var(--s1);
 }
 .pack__price .label { color: var(--ink-3); }
+.pack__from { display: block; margin-bottom: 2px; }
 .pack__items { list-style: none; padding: 0; display: grid; gap: 10px; margin-block: var(--s2) var(--s4); }
 .pack__items li {
   display: grid; grid-template-columns: auto 1fr; gap: 10px;

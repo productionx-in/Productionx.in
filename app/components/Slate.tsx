@@ -118,10 +118,11 @@ export default function Slate() {
               <span className="label">Hyderabad · Vizag · Pan India</span>
             </div>
 
+            {/* Two lines, each closing on an italic accent — the rhythm that
+                carried the first version, now saying the wider thing. */}
             <h1>
-              <Line text="We build the brand," />
-              <Line text="then make it impossible" accent={{ word: "impossible", tone: "em" }} />
-              <Line text="to scroll past." />
+              <Line text="We build the brand." accent={{ word: "brand", tone: "em" }} />
+              <Line text="Then earn the audience." accent={{ word: "audience", tone: "mint" }} />
             </h1>
 
             <p className="lead slate__lead">
