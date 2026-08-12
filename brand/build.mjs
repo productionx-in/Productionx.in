@@ -114,35 +114,84 @@ function wordmarkSvg(L, x, baseline) {
   );
 }
 
+/* --- The logo matrix -------------------------------------------------------
+ * Three shapes x two themes x transparent or filled.
+ *
+ * The naming says where a file is meant to GO, not what colour it is, because
+ * "logo-light" is the single most misread filename in any brand folder — half
+ * the world reads it as "the light-coloured logo" and puts white on white.
+ *
+ *   -on-dark    artwork in Bone. Place it on a dark surface.
+ *   -on-light   artwork in Ink.  Place it on a light surface.
+ *   -filled     the matching background is baked in, for surfaces you do not
+ *               control — a partner's deck, a marketplace listing, a WhatsApp
+ *               profile that shows white behind a transparent PNG.
+ * -------------------------------------------------------------------------- */
+const THEMES = [
+  { key: "on-dark", ink: BONE, ground: INK },
+  { key: "on-light", ink: INK, ground: BONE },
+];
+
 async function buildLogos() {
-  // Icon only — favicon, app icon, social avatar, watermark.
-  const noFonts = { fonts: false };
-  writeFileSync(path.join(OUT, "mark.svg"), svg(100, 100, mark(BONE, EMBER), noFonts));
-  writeFileSync(path.join(OUT, "mark-light-bg.svg"), svg(100, 100, mark(INK, EMBER), noFonts));
-  // Single colour, for embroidery, foil, stamps and one-colour print.
-  writeFileSync(path.join(OUT, "mark-mono-bone.svg"), svg(100, 100, mark(BONE, BONE), noFonts));
-  writeFileSync(path.join(OUT, "mark-mono-ink.svg"), svg(100, 100, mark(INK, INK), noFonts));
+  const written = [];
+  const put = (name, data) => {
+    writeFileSync(path.join(OUT, `${name}.svg`), data);
+    written.push(name);
+  };
 
-  const H = 100;
-  const gap = H * 0.38; // clear space between mark and wordmark
+  for (const t of THEMES) {
+    /* Horizontal — the default. Mark and wordmark on one line. */
+    {
+      const H = 100;
+      const gap = H * 0.38;
+      const L = await lockup({ markH: H, ink: t.ink, accent: EMBER, align: "start" });
+      const x = MARK + gap;
+      const pad = H * 0.22;
+      const w = x + L.wA + L.sizeA * 0.16;
+      const body = mark(t.ink, EMBER) + wordmarkSvg(L, x, H * 0.5);
+      put(`px-horizontal-${t.key}`, svg(w, H, body));
+      // Filled needs breathing room, or the artwork runs into the trim.
+      put(
+        `px-horizontal-${t.key}-filled`,
+        svg(w + pad * 2, H + pad * 2, `<g transform="translate(${r(pad)} ${r(pad)})">${body}</g>`, { bg: t.ground })
+      );
+    }
 
-  for (const [name, ink] of [["logo-horizontal", BONE], ["logo-horizontal-light-bg", INK]]) {
-    const L = await lockup({ markH: H, ink, accent: EMBER, align: "start" });
-    const x = MARK + gap;
-    const body = mark(ink, EMBER) + wordmarkSvg(L, x, H * 0.5);
-    writeFileSync(path.join(OUT, `${name}.svg`), svg(x + L.wA + L.sizeA * 0.16, H, body));
+    /* Square — social posts, thumbnails, anywhere the frame is 1:1. */
+    {
+      const S = 1000;
+      const mh = 300;
+      const s = mh / MARK;
+      const L = await lockup({ markH: 250, ink: t.ink, accent: EMBER, align: "middle" });
+      const blockH = mh + 74 + L.sizeA * 0.42 + L.sizeB * 2.6;
+      const top = (S - blockH) / 2;
+      const body =
+        mark(t.ink, EMBER, S / 2 - (MARK * s) / 2, top, s) + wordmarkSvg(L, S / 2, top + mh + 74);
+      put(`px-square-${t.key}`, svg(S, S, body));
+      put(`px-square-${t.key}-filled`, svg(S, S, body, { bg: t.ground }));
+    }
+
+    /* Mark alone — avatars and app icons. Padded so a circular crop, which is
+       what most platforms apply, never clips the artwork. */
+    {
+      const S = 1000;
+      const ms = 640;
+      const s = ms / MARK;
+      const off = (S - ms) / 2;
+      const body = mark(t.ink, EMBER, off, off, s);
+      put(`px-mark-${t.key}`, svg(S, S, body, { fonts: false }));
+      put(`px-mark-${t.key}-filled`, svg(S, S, body, { bg: t.ground, fonts: false }));
+    }
   }
 
-  for (const [name, ink] of [["logo-stacked", BONE], ["logo-stacked-light-bg", INK]]) {
-    const mh = 84;
-    const L = await lockup({ markH: mh, ink, accent: EMBER, align: "middle" });
-    const w = Math.max(L.wA, MARK * (mh / MARK)) + L.sizeA * 0.32 + 40;
-    const cx = w / 2;
-    const s = mh / MARK;
-    const body = mark(ink, EMBER, cx - (MARK * s) / 2, 0, s) + wordmarkSvg(L, cx, mh + 26);
-    writeFileSync(path.join(OUT, `${name}.svg`), svg(w, mh + 26 + L.sizeA * 0.42 + L.sizeB * 2.6, body));
-  }
-  console.log("logos written");
+  /* One colour, for embroidery, foil, etching and single-ink print. */
+  put("px-mark-mono-bone", svg(100, 100, mark(BONE, BONE), { fonts: false }));
+  put("px-mark-mono-ink", svg(100, 100, mark(INK, INK), { fonts: false }));
+
+  /* The favicon and the in-app mark, tight to the artwork with no padding. */
+  writeFileSync(path.join(OUT, "mark.svg"), svg(100, 100, mark(BONE, EMBER), { fonts: false }));
+
+  console.log(`logos written (${written.length} + mark.svg)`);
 }
 
 /* --- Business card --------------------------------------------------------- */

@@ -49,7 +49,7 @@ const page = (n, title, body) => `
                 position:relative;page-break-after:always;overflow:hidden">
   <div style="display:flex;justify-content:space-between;align-items:baseline;
               border-bottom:1px solid rgba(244,241,236,.14);padding-bottom:8mm;margin-bottom:10mm">
-    <img src="${uri("logo-horizontal.svg")}" style="height:11mm">
+    <img src="${uri("px-horizontal-on-dark.svg")}" style="height:11mm">
     <div style="font-family:PXMono;font-size:8.5px;letter-spacing:.2em;color:${SLATE};text-transform:uppercase">
       ${title} · ${n}
     </div>
@@ -124,20 +124,20 @@ const P2 = page(
   )}
 
   <div style="background:${SURFACE};border-radius:6px;padding:9mm;margin-bottom:6mm">
-    <img src="${uri("logo-horizontal.svg")}" style="height:16mm;display:block;margin-bottom:8mm">
+    <img src="${uri("px-horizontal-on-dark.svg")}" style="height:16mm;display:block;margin-bottom:8mm">
     <div style="display:flex;gap:12mm;align-items:flex-end">
-      <img src="${uri("logo-stacked.svg")}" style="height:24mm">
-      <img src="${uri("mark.svg")}" style="height:16mm">
-      <img src="${uri("mark-mono-bone.svg")}" style="height:16mm">
-      <img src="${uri("mark.svg")}" style="height:8mm">
-      <img src="${uri("mark.svg")}" style="height:5mm">
+      <img src="${uri("px-square-on-dark.svg")}" style="height:24mm">
+      <img src="${uri("px-mark-on-dark.svg")}" style="height:16mm">
+      <img src="${uri("px-mark-mono-bone.svg")}" style="height:16mm">
+      <img src="${uri("px-mark-on-dark.svg")}" style="height:8mm">
+      <img src="${uri("px-mark-on-dark.svg")}" style="height:5mm">
     </div>
   </div>
   <div style="background:${BONE};border-radius:6px;padding:9mm;margin-bottom:8mm;display:flex;
               gap:12mm;align-items:center">
-    <img src="${uri("logo-horizontal-light-bg.svg")}" style="height:14mm">
-    <img src="${uri("mark-light-bg.svg")}" style="height:14mm">
-    <img src="${uri("mark-mono-ink.svg")}" style="height:14mm">
+    <img src="${uri("px-horizontal-on-light.svg")}" style="height:14mm">
+    <img src="${uri("px-mark-on-light.svg")}" style="height:14mm">
+    <img src="${uri("px-mark-mono-ink.svg")}" style="height:14mm">
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10mm">

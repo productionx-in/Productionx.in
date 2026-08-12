@@ -6,7 +6,7 @@
  */
 
 import { chromium } from "../node_modules/playwright-core/index.mjs";
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { FONT_CSS } from "./fonts.mjs";
@@ -26,15 +26,33 @@ const browser = await chromium.launch({
   args: ["--no-sandbox"],
 });
 
-/** Rasterise one SVG at an exact pixel size. */
-async function png(svgFile, w, h, out, { bg = null, pad = 0 } = {}) {
-  const p = await browser.newPage({ viewport: { width: w, height: h } });
+/**
+ * Rasterise one SVG at a target width, deriving the height from the artwork's
+ * own aspect ratio.
+ *
+ * Fixing both dimensions was wrong twice over: `max-width` cannot scale an SVG
+ * *up* past its intrinsic size, so a 345-unit-wide logo came out 345 px inside
+ * a 2400 px canvas; and forcing a ratio the artwork does not have crops it.
+ */
+function aspect(svgFile) {
+  const head = readFileSync(path.join(HERE, svgFile), "utf8").slice(0, 400);
+  const m = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(head);
+  if (!m) throw new Error(`no viewBox in ${svgFile}`);
+  return { w: parseFloat(m[1]), h: parseFloat(m[2]) };
+}
+
+async function png(svgFile, targetW, out, { bg = null, pad = 0 } = {}) {
+  const a = aspect(svgFile);
+  const innerW = targetW - pad * 2;
+  const h = Math.round((innerW * a.h) / a.w) + pad * 2;
+  const p = await browser.newPage({ viewport: { width: targetW, height: h } });
   await p.setContent(
-    `<body style="margin:0;width:${w}px;height:${h}px;background:${bg ?? "transparent"};
-      display:flex;align-items:center;justify-content:center;padding:${pad}px;box-sizing:border-box">
-      <img src="${uri(svgFile)}" style="max-width:100%;max-height:100%;display:block">
+    `<body style="margin:0;width:${targetW}px;height:${h}px;background:${bg ?? "transparent"};
+      padding:${pad}px;box-sizing:border-box">
+      <img src="${uri(svgFile)}" style="width:100%;height:100%;display:block">
     </body>`
   );
+  const w = targetW;
   await p.evaluate(() => document.fonts.ready);
   await p.waitForTimeout(250);
   const buf = await p.screenshot({ omitBackground: !bg });
@@ -67,22 +85,41 @@ function ico(pngBuf, out) {
   console.log("ico", path.relative(ROOT, out));
 }
 
-/* --- Icons and logo rasters ------------------------------------------------ */
-await png("mark.svg", 1024, 1024, path.join(HERE, "mark-1024.png"), { pad: 96 });
-await png("mark.svg", 512, 512, path.join(PUB, "logo.png"), { pad: 48 });
-await png("logo-horizontal.svg", 2400, 700, path.join(HERE, "logo-horizontal-2400.png"), { pad: 60 });
-await png("logo-horizontal-light-bg.svg", 2400, 700, path.join(HERE, "logo-horizontal-light-2400.png"), { pad: 60 });
+/* --- The logo matrix, rastered ---------------------------------------------
+ * A PNG beside every SVG. Plenty of places still refuse an SVG — WhatsApp
+ * profiles, older Office, most print shops' web uploaders, several directory
+ * listings — and the answer to "just send a PNG" should already be in the
+ * folder.
+ * -------------------------------------------------------------------------- */
+const PNG_DIR = path.join(HERE, "png");
+mkdirSync(PNG_DIR, { recursive: true });
+
+for (const theme of ["on-dark", "on-light"]) {
+  for (const fill of ["", "-filled"]) {
+    // Transparent variants get a little breathing room and keep their alpha;
+    // filled ones already carry their own ground and padding.
+    const opts = fill ? {} : { pad: 40 };
+    await png(`px-horizontal-${theme}${fill}.svg`, 2400, path.join(PNG_DIR, `px-horizontal-${theme}${fill}.png`), opts);
+    await png(`px-square-${theme}${fill}.svg`, 1024, path.join(PNG_DIR, `px-square-${theme}${fill}.png`), fill ? {} : { pad: 24 });
+    await png(`px-mark-${theme}${fill}.svg`, 1024, path.join(PNG_DIR, `px-mark-${theme}${fill}.png`), {});
+  }
+}
+await png("px-mark-mono-bone.svg", 1024, path.join(PNG_DIR, "px-mark-mono-bone.png"), { pad: 110 });
+await png("px-mark-mono-ink.svg", 1024, path.join(PNG_DIR, "px-mark-mono-ink.png"), { pad: 110 });
+
+/* --- Web icons -------------------------------------------------------------- */
+await png("mark.svg", 512, path.join(PUB, "logo.png"), { pad: 48 });
 
 // The favicon needs a solid ground: the mark is bone-on-nothing, which
 // disappears against a light browser chrome.
-const fav = await png("mark.svg", 32, 32, path.join(HERE, "favicon-32.png"), { bg: INK, pad: 3 });
+const fav = await png("mark.svg", 32, path.join(HERE, "favicon-32.png"), { bg: INK, pad: 3 });
 ico(fav, path.join(PUB, "favicon.ico"));
-await png("mark.svg", 180, 180, path.join(PUB, "apple-touch-icon.png"), { bg: INK, pad: 22 });
+await png("mark.svg", 180, path.join(PUB, "apple-touch-icon.png"), { bg: INK, pad: 22 });
 
 /* --- Business card, at 300 dpi and as a press-ready PDF -------------------- */
-// 96 x 60 mm including bleed -> 1134 x 709 px at 300 dpi.
-await png("card-front.svg", 1134, 709, path.join(HERE, "card-front-300dpi.png"));
-await png("card-back.svg", 1134, 709, path.join(HERE, "card-back-300dpi.png"));
+// 96 x 60 mm including bleed -> 1134 px wide at 300 dpi.
+await png("card-front.svg", 1134, path.join(HERE, "card-front-300dpi.png"));
+await png("card-back.svg", 1134, path.join(HERE, "card-back-300dpi.png"));
 
 {
   const p = await browser.newPage();
@@ -114,7 +151,7 @@ await png("card-back.svg", 1134, 709, path.join(HERE, "card-back-300dpi.png"));
   await p.setContent(`<style>${FONT_CSS}</style>
     <body style="margin:0;width:1200px;height:630px;background:${INK};position:relative;
       display:flex;flex-direction:column;justify-content:center;padding:0 90px;box-sizing:border-box">
-      <img src="${uri("logo-horizontal.svg")}" style="width:500px;display:block;margin-bottom:44px">
+      <img src="${uri("px-horizontal-on-dark.svg")}" style="width:500px;display:block;margin-bottom:44px">
       <div style="font-family:PXDisplay,serif;color:${BONE};font-size:64px;line-height:1.18;
                   letter-spacing:-0.01em;max-width:950px">
         Marketing that <i style="color:${EMBER}">thinks</i>.<br>

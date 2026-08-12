@@ -50,18 +50,34 @@ down rather than reprinting at once — but do not order more.
 
 ## Files
 
-### Logo
-| File | Use |
-| --- | --- |
-| `logo-horizontal.svg` | default lockup, dark backgrounds |
-| `logo-horizontal-light-bg.svg` | default lockup, light backgrounds |
-| `logo-stacked.svg` / `-light-bg.svg` | square crops, narrow columns |
-| `mark.svg` / `mark-light-bg.svg` | icon only — avatars, app icons, watermarks |
-| `mark-mono-bone.svg` / `mark-mono-ink.svg` | one colour: embroidery, foil, stamps, etching |
-| `logo-horizontal-2400.png` | raster, for anything that will not take SVG |
+### `01-logo/`
 
-Every SVG has its fonts embedded, so it renders identically in a browser, in
-Illustrator, and at a print bureau with nothing installed.
+Three shapes, two themes, transparent or filled. **The name says where the file
+goes, not what colour it is** — `logo-light` is the most misread filename in any
+brand folder; half the world reads it as "the light-coloured logo" and puts
+white on white.
+
+- **`-on-dark`** — artwork in Bone. Put it **on** a dark surface.
+- **`-on-light`** — artwork in Ink. Put it **on** a light surface.
+- **`-filled`** — the matching background is baked in. For surfaces you do not
+  control: a partner's deck, a marketplace listing, a WhatsApp profile that
+  shows white behind a transparent PNG.
+
+| | Transparent | Filled |
+| --- | --- | --- |
+| **Horizontal** — the default | `px-horizontal-on-dark` · `-on-light` | `…-filled` |
+| **Square** — posts, thumbnails, 1:1 frames | `px-square-on-dark` · `-on-light` | `…-filled` |
+| **Mark** — avatars, app icons | `px-mark-on-dark` · `-on-light` | `…-filled` |
+| **Mono** — embroidery, foil, etching, one ink | `px-mark-mono-bone` · `px-mark-mono-ink` | — |
+
+Every one exists as **SVG** (`svg/`) and **PNG** (`png/`). Use the SVG wherever
+it is accepted — it stays sharp at any size and carries its own fonts, so it
+opens correctly on a machine that has never installed Inter. The PNGs are there
+for the places that still refuse an SVG: WhatsApp profiles, older Office, most
+print shops' web uploaders.
+
+The mark variants are padded so a **circular crop** — which is what nearly every
+platform applies to an avatar — never clips the artwork.
 
 ### Business card
 | File | Use |
