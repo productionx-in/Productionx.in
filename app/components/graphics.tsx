@@ -114,6 +114,24 @@ export function ArtDeliver({ className }: P) {
   );
 }
 
+/**
+ * The ProductionX mark.
+ *
+ * Geometry traced from the original artwork, so this is the same silhouette
+ * the studio has always used — only the counterform's colour has moved from
+ * gold to ember, to sit with the rest of the palette. Masters and print files
+ * live in /brand.
+ */
+export function Mark({ className, size = 20 }: P & { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" className={className} aria-hidden="true">
+      <path fill="currentColor" d="M16.2 16.8 H38.4 L61.8 53.6 L37.1 90.8 H8.7 L32.7 47.9 Z" />
+      <path fill="var(--ember)" d="M57.0 3.5 H93.1 L65.4 47.6 L48.8 21.4 Z" />
+      <path fill="var(--ember)" d="M66.2 59.8 L80.0 82.0 H51.7 Z" />
+    </svg>
+  );
+}
+
 /** Small inline tick used in bullet lists. */
 export function Tick({ className }: P) {
   return (

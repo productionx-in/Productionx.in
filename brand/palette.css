@@ -1,0 +1,55 @@
+/* ==========================================================================
+   ProductionX — locked brand palette
+   --------------------------------------------------------------------------
+   These seven values are the whole palette. Nothing on the website, the logo,
+   print, social or signage uses a colour that is not on this list.
+
+   Every foreground here is verified against every ground at WCAG AA (4.5:1)
+   or better; the ratios are stated so they can be re-checked, not trusted.
+
+   The decision worth knowing about: the mark's gold has been replaced by
+   Ember. Gold-on-black was the exact register the studio moved away from, and
+   carrying two accents — gold for the logo, ember for everything the logo sits
+   on — would have meant the identity fighting itself on every page. One accent,
+   used everywhere.
+   ========================================================================== */
+
+:root {
+  /* --- Grounds ---------------------------------------------------------- */
+  --px-ink:      #0B0A0C;  /* primary ground. Not pure black: it smears on
+                              OLED and goes cold under warm accents. */
+  --px-surface:  #141216;  /* raised panels, cards, the second plane */
+  --px-raised:   #1C191F;  /* the third plane — use sparingly */
+
+  /* --- Inks ------------------------------------------------------------- */
+  --px-bone:     #F4F1EC;  /* primary text and the logo's chevron. 17.5:1 on ink */
+  --px-ash:      #A9A39B;  /* secondary text.                       7.9:1 on ink */
+  --px-slate:    #8B8592;  /* labels and metadata only.             5.0:1 on ink */
+
+  /* --- Accents ---------------------------------------------------------- */
+  --px-ember:    #FF5C29;  /* THE brand accent. Logo counterform, CTAs,
+                              marketing.                            6.4:1 on ink */
+  --px-mint:     #7FE0CF;  /* second accent, reserved for digital and AI
+                              work only.                           12.7:1 on ink */
+
+  /* --- Lines ------------------------------------------------------------ */
+  --px-line:     rgba(244, 241, 236, 0.10);
+  --px-line-2:   rgba(244, 241, 236, 0.18);
+}
+
+/*
+  Print values
+  ------------
+  Ember and Mint are both outside CMYK gamut — they will print duller than
+  they appear on screen. Use a spot colour wherever the budget allows, and
+  treat the CMYK builds below as the four-colour fallback.
+
+    Ink      #0B0A0C   rich black  60/40/40/100     (do not use 0/0/0/100 —
+                                                     it prints thin and grey)
+    Bone     #F4F1EC   3/3/5/0     or leave unprinted on a warm-white stock
+    Ember    #FF5C29   0/76/88/0   nearest common spot: Pantone Orange 021 C
+    Mint     #7FE0CF   45/0/25/0   nearest common spot: Pantone 3248 C
+
+  Both Pantone references are the closest common match by eye, not a measured
+  conversion. Check them against a physical guide before committing a print run.
+*/

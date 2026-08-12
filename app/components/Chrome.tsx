@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
-import { GRAIN_URI, Arrow } from "./graphics";
+import { GRAIN_URI, Arrow, Mark } from "./graphics";
 import { initGsap, revealAll, gsap, ScrollTrigger, prefersReducedMotion } from "../lib/motion";
 
 const LINKS = [
@@ -84,7 +84,7 @@ export default function Chrome() {
 
       <nav ref={navRef} className={`nav${stuck ? " is-stuck" : ""}`} aria-label="Primary">
         <a href="#top" className="nav__mark" aria-label="ProductionX, back to top">
-          <span className="nav__dot" aria-hidden="true" />
+          <Mark size={19} className="nav__mark-svg" />
           <span className="nav__word">ProductionX</span>
         </a>
 

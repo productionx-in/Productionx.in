@@ -53,7 +53,13 @@ export const metadata: Metadata = {
     "ProductionX",
   ],
   alternates: { canonical: siteUrl },
-  icons: { icon: "/favicon.ico", apple: "/logo.png" },
+  icons: {
+    icon: [
+      { url: "/mark.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title,
     description,

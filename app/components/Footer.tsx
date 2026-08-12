@@ -1,3 +1,5 @@
+import { Mark } from "./graphics";
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -7,7 +9,7 @@ export default function Footer() {
         <div className="footer__top">
           <div style={{ maxWidth: "34ch" }}>
             <div className="nav__mark" style={{ marginBottom: "var(--s2)" }}>
-              <span className="nav__dot" aria-hidden="true" />
+              <Mark size={19} className="nav__mark-svg" />
               <span className="nav__word">ProductionX</span>
             </div>
             <p className="muted" style={{ fontSize: "var(--t-sm)" }}>
