@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { FAQ } from "./lib/faq";
 
 /**
  * Three voices, each with a job.
@@ -95,6 +96,17 @@ export const metadata: Metadata = {
   },
 };
 
+/** Each service with a sentence of its own — a bare name gives an answer
+ *  engine nothing to quote back. */
+const SERVICES: [string, string][] = [
+  ["Brand strategy and positioning", "Discovery, competitor study, positioning and a twelve-month roadmap agreed before any production begins."],
+  ["Content production", "Brand and ad films, reels, product and fashion shoots, events and podcasts, filmed and edited by an in-house crew."],
+  ["Social media management", "Content calendar, captions, scheduling, community, growth, competitor tracking, monthly analytics and paid integration."],
+  ["Website design, build and SEO", "Websites built to convert the audience the content earns, with keywords, Google Business Profile and local ranking handled before launch."],
+  ["AI content generation", "Generated footage, product scenes and concept frames for work with no budget or no time for a full unit."],
+  ["Real-estate previsualisation", "Walkthroughs and hero frames of property that is still a drawing, so sales can begin before construction finishes."],
+];
+
 /**
  * Structured data so search and AI answer engines describe the studio in its
  * own words instead of guessing from a stray stock image, which is how the
@@ -123,18 +135,46 @@ const jsonLd = {
   email: "info@productionx.in",
   telephone: "+91-93919-26846",
   address: { "@type": "PostalAddress", addressLocality: "Hyderabad", addressRegion: "Telangana", addressCountry: "IN" },
-  sameAs: ["https://instagram.com/productionx.in"],
+  logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/logo.png`,
+        width: 512,
+        height: 512,
+      },
+      sameAs: ["https://instagram.com/productionx.in"],
+      knowsAbout: [
+        "Brand strategy",
+        "Content production",
+        "Brand film production",
+        "Social media management",
+        "Website design and SEO",
+        "AI content generation",
+        "Real estate previsualisation",
+      ],
   slogan: "Every frame earns its place.",
-  founder: { "@type": "Person", name: "Kiran Basa" },
+  founder: {
+        "@type": "Person",
+        name: "Kiran Basa",
+        jobTitle: "Founder & Creative Director",
+        worksFor: { "@id": `${siteUrl}/#studio` },
+        knowsAbout: ["Brand marketing", "Content production", "Creative direction"],
+        description:
+          "Spent three years brand-side before founding ProductionX — Content Producer at Mercedes-Benz across AP & Telangana, and Head of Creative & Marketing at Ujwala Group.",
+      },
   areaServed: "Hyderabad",
-  makesOffer: [
-    "Brand strategy and positioning",
-    "Content production",
-    "Social media management",
-    "Website design, build and SEO",
-    "AI content generation",
-    "Real-estate previsualisation",
-  ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+  makesOffer: SERVICES.map(([name, description]) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name, description, provider: { "@id": `${siteUrl}/#studio` }, areaServed: "Hyderabad" },
+      })),
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}/#faq`,
+      mainEntity: FAQ.map(({ q, a }) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
     },
   ],
 };

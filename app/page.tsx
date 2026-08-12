@@ -7,13 +7,14 @@ import WebWork from "./components/WebWork";
 import Previz from "./components/Previz";
 import Process from "./components/Process";
 import Proof from "./components/Proof";
+import Faq from "./components/Faq";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 /**
  * Ordered the way a brand-building enquiry actually forms: who you are → who
  * trusts you → what you do → proof you have done it → how it runs → who is
- * behind it → how to start.
+ * behind it → what people always ask → how to start.
  */
 export default function Page() {
   return (
@@ -29,6 +30,7 @@ export default function Page() {
         <Previz />
         <Process />
         <Proof />
+        <Faq />
         <Contact />
       </main>
       <Footer />

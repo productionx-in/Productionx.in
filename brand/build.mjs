@@ -248,7 +248,7 @@ async function cardBack() {
     ["+91 93919 26846", "phone"],
     ["www.productionx.in", "globe"],
     ["info@productionx.in", "mail"],
-    ["Kondapur, Hyderabad", "pin"],
+    ["Hyderabad, India", "pin"],
   ];
   let y = BLEED + 27.5;
   for (const [text, kind] of rows) {

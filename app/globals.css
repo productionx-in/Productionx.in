@@ -764,6 +764,34 @@ section { position: relative; }
 .creds li:last-child { border-bottom: 1px solid var(--line); }
 .creds__role { font-family: var(--f-display); font-size: var(--t-h3); line-height: 1.25; }
 
+/* --- 14d. Questions ------------------------------------------------------- */
+
+.faq__list { display: grid; gap: 0; margin: 0; }
+.faq__row {
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--s5);
+  padding-block: var(--s4);
+  border-top: 1px solid var(--line);
+}
+.faq__row:last-child { border-bottom: 1px solid var(--line); }
+@media (max-width: 860px) {
+  .faq__row { grid-template-columns: 1fr; gap: var(--s2); padding-block: var(--s3); }
+}
+.faq__row dt {
+  font-family: var(--f-display);
+  font-size: var(--t-h3);
+  line-height: 1.28;
+  letter-spacing: -0.004em;
+  color: var(--ink);
+}
+.faq__row dd {
+  margin: 0;
+  font-size: var(--t-sm);
+  line-height: 1.68;
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+
 /* --- 15. Contact --------------------------------------------------------- */
 
 .contact { background: var(--surface); }

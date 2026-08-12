@@ -55,7 +55,7 @@ export default function Contact() {
     <section className="band contact" id="contact">
       <div className="shell wrap">
         <header className="sec-head" data-reveal>
-          <span className="label idx">07 — Start</span>
+          <span className="label idx">08 — Start</span>
           <h2>
             Let&rsquo;s build something your audience <span className="em">remembers</span>.
           </h2>
@@ -76,7 +76,7 @@ export default function Contact() {
               <a className="ulink" href="https://wa.me/919391926846" target="_blank" rel="noopener noreferrer">
                 WhatsApp the studio
               </a>
-              <span className="label" style={{ marginTop: "var(--s3)" }}>Kondapur, Hyderabad</span>
+              <span className="label" style={{ marginTop: "var(--s3)" }}>Hyderabad, India</span>
             </div>
           </div>
 

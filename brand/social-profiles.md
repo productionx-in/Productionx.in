@@ -5,7 +5,7 @@ Ready to paste. Character counts are verified against each platform's limit.
 **Two rules that matter more than the words:**
 
 1. **Keep the name, address and phone identical everywhere** — `ProductionX`,
-   `Kondapur, Hyderabad`, `+91 93919 26846`. Google builds its picture of a
+   `Hyderabad, India`, `+91 93919 26846`. Google builds its picture of a
    business by matching those three strings across the web. A "Production X"
    here and a "ProductionX Creative Studio" there splits the entity in two and
    weakens both.
@@ -41,7 +41,7 @@ ProductionX · Brand & Content
 ```
 Brand · Content · Digital — one studio.
 Films, reels, social & sites that convert.
-Kondapur, Hyderabad
+Hyderabad, India
 ↓ Free 30-min strategy call
 ```
 
@@ -57,7 +57,7 @@ Brand-side experience: Mercedes-Benz, 1UJ
 **Category:** Advertising/Marketing
 **Link:** `productionx.in`
 **Contact buttons:** Call `+91 93919 26846` · Email `info@productionx.in`
-**Address:** Kondapur, Hyderabad
+**Address:** Hyderabad, India
 
 **Story highlights** — name them after the three disciplines so the grid says
 what the studio does before anyone reads a caption:
@@ -84,7 +84,7 @@ We make brand films, ad films, reels, product and fashion shoots, event coverage
 
 50+ brand films. 8+ premium brands. Every frame earns its place.
 
-Based in Kondapur, Hyderabad.
+Based in Hyderabad, India.
 info@productionx.in · +91 93919 26846 · productionx.in
 ```
 
@@ -161,7 +161,7 @@ silently dropped. Everything below is clean.
 **Description** (750 max)
 
 ```
-ProductionX is a brand and marketing studio in Kondapur, Hyderabad.
+ProductionX is a brand and marketing studio in Hyderabad, India.
 
 Three disciplines under one roof. Brand and marketing: strategy, positioning, competitor research, social media management, paid campaigns and monthly reporting. Content production: brand films, ad films, reels, product and fashion shoots, event coverage and podcasts, shot and edited by our own crew. Digital and AI: websites, local search, AI content, and previsualisation that lets buyers walk a property before it is built.
 
