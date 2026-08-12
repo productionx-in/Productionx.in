@@ -45,7 +45,7 @@ Hyderabad, India
 ↓ Free 30-min strategy call
 ```
 
-*Alternative, leading with the credential:*
+*Alternative, leading with the credential:* (150 max)
 
 ```
 We make brands impossible to scroll past.
@@ -73,22 +73,13 @@ what the studio does before anyone reads a caption:
 Brand, content & digital under one roof. Films, social media, websites. Hyderabad.
 ```
 
-**About / description**
+**About — short description** (255 max)
 
 ```
-ProductionX is a brand and marketing studio in Hyderabad.
-
-Three disciplines under one roof: brand and marketing strategy, content production with our own crew, and websites, search and AI previsualisation. Take one, or all three on a single monthly retainer.
-
-We make brand films, ad films, reels, product and fashion shoots, event coverage and podcasts — and we manage the social presence they feed. We build the websites that convert the audience the content earns. And where a camera cannot go, we generate it: AI content, and previsualisation that lets buyers walk a property before it is built.
-
-50+ brand films. 8+ premium brands. Every frame earns its place.
-
-Based in Hyderabad, India.
-info@productionx.in · +91 93919 26846 · productionx.in
+ProductionX is a brand and marketing studio in Hyderabad. Three disciplines under one roof: brand and marketing strategy, content production with our own crew, and websites, search and AI previsualisation. One team, one monthly retainer.
 ```
 
-**Our Story** — the longer narrative field
+**Our Story** (2,000 max — Facebook allows far more, but nobody reads past this)
 
 ```
 We were on your side of the table.
@@ -97,7 +88,13 @@ Kiran Basa spent three years brand-side before starting ProductionX — as Conte
 
 That is the whole idea behind the studio. He knows what a brand manager actually needs, what frustrates them about agencies, and the difference between content that looks good and content that performs.
 
+We make brand films, ad films, reels, product and fashion shoots, event coverage and podcasts — and we manage the social presence they feed. We build the websites that convert the audience the content earns. And where a camera cannot go, we generate it: AI content, and previsualisation that lets buyers walk a property before it is built.
+
 So we don't just shoot and deliver. We think like the brand, plan like the strategist, and execute like the studio — brief and discovery, strategy and planning, production, edit and review, delivery. Simple, transparent, always delivered.
+
+50+ brand films. 8+ premium brands. Every frame earns its place.
+
+Hyderabad, India · info@productionx.in · +91 93919 26846 · productionx.in
 ```
 
 ---
@@ -113,37 +110,38 @@ Brand strategy, content production and digital — one studio, one retainer. Bas
 **About / Overview** (2,000 max)
 
 ```
-Most brands buy strategy, content and web from three different suppliers, then spend their own time translating between them. ProductionX puts all three in one studio.
+Most brands buy strategy, content and web from three suppliers, then spend their own time translating between them. ProductionX puts all three in one studio.
 
 WHAT WE DO
 
-Brand & marketing — discovery, competitor study, positioning and a twelve-month roadmap. Social media management end to end: content calendar, captions, scheduling, community, growth, monthly analytics and paid integration.
+Brand & marketing — discovery, competitor study, positioning and a twelve-month roadmap. Social media end to end: content calendar, captions, scheduling, community, growth, monthly analytics and paid integration.
 
-Content production — brand and ad films, reels and social video, product and fashion shoots, events and podcasts. Our own crew, our own kit, our own edit suite. Nothing subcontracted.
+Content production — brand and ad films, reels and social video, product and fashion shoots, events and podcasts. Own crew, own kit, own edit suite. Nothing subcontracted.
 
-Digital & AI — websites built to convert the audience the content earns, with the search work handled before launch rather than after. Plus AI content generation, and real-estate previsualisation that lets a sales team walk buyers through a building while the site is still soil.
+Digital & AI — websites built to convert the audience the content earns, with search handled before launch rather than after. Plus AI content generation, and real-estate previsualisation that lets sales walk buyers through a building while the site is still soil.
 
 WHY US
 
-Kiran Basa spent three years brand-side before founding the studio — Content Producer at Mercedes-Benz across AP & Telangana, and Head of Creative & Marketing at Ujwala Group, building the visual language for 1UJ Fashion and 1UJ Lifestyle. He also works as an international production partner with media agencies in the UK.
+Kiran Basa spent three years brand-side before founding the studio — Content Producer at Mercedes-Benz across AP & Telangana, and Head of Creative & Marketing at Ujwala Group, building the visual language for 1UJ Fashion and 1UJ Lifestyle. He is also an international production partner with UK media agencies.
 
-That perspective is what the studio is built on. We know what a brand manager needs, what frustrates them about agencies, and what makes marketing perform rather than merely look good.
+That perspective is what the studio is built on — we know what a brand manager needs, and what makes marketing perform rather than merely look good.
 
-50+ brand films produced. 8+ premium brands. Verticals across automotive, fashion and lifestyle, hospitality, food and beverage, corporate and events.
+50+ brand films produced. 8+ premium brands. Verticals: automotive, fashion and lifestyle, hospitality, food and beverage, corporate and events.
 
 HOW IT RUNS
 
-Brief and discovery. Strategy and planning. Production. Edit and review. Delivery. Simple, transparent, always delivered — with a monthly analytics report behind it.
+Brief and discovery. Strategy and planning. Production. Edit and review. Delivery — simple, transparent, with a monthly analytics report behind it.
 
-Send a brief and we reply within 24 hours to schedule a free 30-minute discovery call. You will get a direction, a rough number, and an honest read on whether we are the right studio — including when we are not.
+Send a brief and we reply within 24 hours to book a free 30-minute discovery call — with a direction, a rough number, and an honest read on whether we are the right studio, including when we are not.
 
 info@productionx.in · +91 93919 26846 · productionx.in
 ```
 
-**Specialties** — LinkedIn indexes this field, so use the words buyers search
+**Specialties** (256 max across the whole field, 20 entries max — LinkedIn
+indexes it, so these are the words buyers actually search)
 
 ```
-Brand Strategy, Content Production, Brand Films, Ad Films, Social Media Management, Content Marketing, Video Production, Reels, Product Photography, Fashion Photography, Event Coverage, Website Design, SEO, AI Content, Real Estate Previsualisation, Digital Marketing, Hyderabad
+Brand Strategy, Content Production, Brand Films, Ad Films, Social Media Management, Video Production, Product Photography, Fashion Photography, Event Coverage, Website Design, SEO, AI Content, Real Estate Previsualisation, Hyderabad
 ```
 
 **Industry:** Advertising Services

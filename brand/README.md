@@ -9,6 +9,8 @@ drifts.
 npm run build          # required first — the font files come from the Next build
 node brand/build.mjs   # SVG masters
 node brand/export.mjs  # PNG / ICO / PDF, and the files in /public
+node brand/guide.mjs   # the two-page brand guide
+node brand/check-profiles.mjs   # verifies social-profiles.md against platform limits
 ```
 
 ---
