@@ -53,6 +53,24 @@ export const metadata: Metadata = {
     "ProductionX",
   ],
   alternates: { canonical: siteUrl },
+
+  /*
+   * Without max-image-preview:large, Google is permitted to show only a
+   * thumbnail — or none — which is part of why a stray stock photo could stand
+   * in for the page at all. max-snippet:-1 lifts the description length cap so
+   * the real description is used instead of text Google picks itself.
+   */
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/mark.svg", type: "image/svg+xml" },
@@ -84,7 +102,20 @@ export const metadata: Metadata = {
  */
 const jsonLd = {
   "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "ProductionX",
+      alternateName: ["Production X", "Production X Creative Studio"],
+      description,
+      publisher: { "@id": `${siteUrl}/#studio` },
+      inLanguage: "en-IN",
+    },
+    {
   "@type": "ProfessionalService",
+  "@id": `${siteUrl}/#studio`,
   name: "ProductionX",
   description,
   url: siteUrl,
@@ -104,6 +135,8 @@ const jsonLd = {
     "AI content generation",
     "Real-estate previsualisation",
   ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+    },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
