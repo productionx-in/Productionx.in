@@ -52,7 +52,7 @@ export default function Footer() {
 
         <div className="footer__bar">
           <span className="label">© {year} ProductionX · Hyderabad, India</span>
-          <span className="label">Hyderabad · Vizag · Pan India</span>
+          <span className="label">Brand · Content · Digital</span>
         </div>
       </div>
     </footer>

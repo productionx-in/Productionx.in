@@ -36,7 +36,7 @@ const mono = JetBrains_Mono({
 const siteUrl = "https://productionx.in";
 const title = "ProductionX — Brand, Marketing & Content Studio, Hyderabad";
 const description =
-  "A brand and marketing studio in Hyderabad, Vizag and across India. Brand strategy, content production, social media management, websites and search, plus AI content and real-estate previsualisation — one team, one monthly retainer.";
+  "A brand and marketing studio in Hyderabad. Brand strategy, content production, social media management, websites and search, plus AI content and real-estate previsualisation — one team, one monthly retainer.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
     "social media management Hyderabad",
     "content production Hyderabad",
     "brand film production Hyderabad",
-    "digital marketing agency Vizag",
+    "video production company Hyderabad",
     "website design and SEO Hyderabad",
-    "AI previsualisation real estate India",
+    "real estate previsualisation Hyderabad",
     "ProductionX",
   ],
   alternates: { canonical: siteUrl },
@@ -126,7 +126,7 @@ const jsonLd = {
   sameAs: ["https://instagram.com/productionx.in"],
   slogan: "Every frame earns its place.",
   founder: { "@type": "Person", name: "Kiran Basa" },
-  areaServed: ["Hyderabad", "Visakhapatnam", "India"],
+  areaServed: "Hyderabad",
   makesOffer: [
     "Brand strategy and positioning",
     "Content production",

@@ -76,7 +76,7 @@ export default function Contact() {
               <a className="ulink" href="https://wa.me/919391926846" target="_blank" rel="noopener noreferrer">
                 WhatsApp the studio
               </a>
-              <span className="label" style={{ marginTop: "var(--s3)" }}>Hyderabad · Vizag · Pan India</span>
+              <span className="label" style={{ marginTop: "var(--s3)" }}>Kondapur, Hyderabad</span>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 # Productionx.in
 
-Official site for **Production X Creative** — a cinematic content studio in Hyderabad, serving automotive, hospitality, fashion and lifestyle brands across Hyderabad, Vizag and all India.
+Official site for **Production X Creative** — a brand and marketing studio in Hyderabad, serving automotive, hospitality, fashion and lifestyle brands.
 
 Next.js 15 (App Router) + TypeScript, deployed on Vercel at [productionx.in](https://productionx.in).
 

@@ -41,7 +41,7 @@ ProductionX · Brand & Content
 ```
 Brand · Content · Digital — one studio.
 Films, reels, social & sites that convert.
-Hyderabad · Vizag · Pan India
+Kondapur, Hyderabad
 ↓ Free 30-min strategy call
 ```
 
@@ -70,7 +70,7 @@ what the studio does before anyone reads a caption:
 **Bio** (101 max — the short line under the page name)
 
 ```
-Brand, content & digital under one roof. Films, social, websites. Hyderabad · Vizag · Pan India
+Brand, content & digital under one roof. Films, social media, websites. Hyderabad.
 ```
 
 **About / description**
@@ -84,7 +84,7 @@ We make brand films, ad films, reels, product and fashion shoots, event coverage
 
 50+ brand films. 8+ premium brands. Every frame earns its place.
 
-Serving Hyderabad, Vizag and clients across India.
+Based in Kondapur, Hyderabad.
 info@productionx.in · +91 93919 26846 · productionx.in
 ```
 
@@ -107,7 +107,7 @@ So we don't just shoot and deliver. We think like the brand, plan like the strat
 **Tagline** (120 max — appears under the company name everywhere)
 
 ```
-Brand strategy, content production and digital — one studio, one retainer. Hyderabad · Vizag · Pan India
+Brand strategy, content production and digital — one studio, one retainer. Based in Hyderabad.
 ```
 
 **About / Overview** (2,000 max)
@@ -143,7 +143,7 @@ info@productionx.in · +91 93919 26846 · productionx.in
 **Specialties** — LinkedIn indexes this field, so use the words buyers search
 
 ```
-Brand Strategy, Content Production, Brand Films, Ad Films, Social Media Management, Content Marketing, Video Production, Reels, Product Photography, Fashion Photography, Event Coverage, Website Design, SEO, AI Content, Real Estate Previsualisation, Digital Marketing, Hyderabad, Vizag
+Brand Strategy, Content Production, Brand Films, Ad Films, Social Media Management, Content Marketing, Video Production, Reels, Product Photography, Fashion Photography, Event Coverage, Website Design, SEO, AI Content, Real Estate Previsualisation, Digital Marketing, Hyderabad
 ```
 
 **Industry:** Advertising Services
@@ -161,7 +161,7 @@ silently dropped. Everything below is clean.
 **Description** (750 max)
 
 ```
-ProductionX is a brand and marketing studio in Kondapur, Hyderabad, serving Hyderabad, Vizag and clients across India.
+ProductionX is a brand and marketing studio in Kondapur, Hyderabad.
 
 Three disciplines under one roof. Brand and marketing: strategy, positioning, competitor research, social media management, paid campaigns and monthly reporting. Content production: brand films, ad films, reels, product and fashion shoots, event coverage and podcasts, shot and edited by our own crew. Digital and AI: websites, local search, AI content, and previsualisation that lets buyers walk a property before it is built.
 
@@ -200,7 +200,7 @@ We work in three disciplines: brand and marketing strategy, content production w
 
 On this channel: brand films and ad films we have produced, campaign and social work, behind the scenes from set, and AI previsualisation of property that is not built yet.
 
-Verticals: automotive, fashion and lifestyle, hospitality, food and beverage, corporate and events. 50+ brand films produced for premium brands across Hyderabad, Vizag and India.
+Verticals: automotive, fashion and lifestyle, hospitality, food and beverage, corporate and events. 50+ brand films produced for premium brands in Hyderabad.
 
 Founded by Kiran Basa — three years brand-side as Content Producer at Mercedes-Benz across AP & Telangana, and Head of Creative & Marketing at Ujwala Group.
 
@@ -215,7 +215,7 @@ Phone: +91 93919 26846
 **Links to add:** Website · Instagram · LinkedIn
 **Channel keywords:** brand film Hyderabad, ad film production, content studio
 Hyderabad, social media management Hyderabad, real estate previsualisation India,
-AI content creation, video production Vizag
+AI content creation, corporate video Hyderabad
 
 ---
 
