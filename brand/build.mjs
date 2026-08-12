@@ -67,9 +67,16 @@ const mark = (chev, accent, x = 0, y = 0, s = 1) =>
   `<path fill="${accent}" d="${WEDGE}"/>` +
   `<path fill="${accent}" d="${TRIANGLE}"/></g>`;
 
-const svg = (w, h, body, bg) =>
+/**
+ * Only files that actually set type carry the embedded fonts. The icon-only
+ * marks have no text at all, and shipping 127 kB of woff2 inside a favicon is
+ * a real cost paid on every page load for nothing.
+ */
+const svg = (w, h, body, { bg, fonts = true } = {}) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${r(w)} ${r(h)}" width="${r(w)}" height="${r(h)}">` +
-  `<style>${FONT_CSS}</style>${bg ? `<rect width="${r(w)}" height="${r(h)}" fill="${bg}"/>` : ""}${body}</svg>`;
+  (fonts ? `<style>${FONT_CSS}</style>` : "") +
+  (bg ? `<rect width="${r(w)}" height="${r(h)}" fill="${bg}"/>` : "") +
+  `${body}</svg>`;
 
 const r = (n) => Math.round(n * 100) / 100;
 
@@ -109,11 +116,12 @@ function wordmarkSvg(L, x, baseline) {
 
 async function buildLogos() {
   // Icon only — favicon, app icon, social avatar, watermark.
-  writeFileSync(path.join(OUT, "mark.svg"), svg(100, 100, mark(BONE, EMBER)));
-  writeFileSync(path.join(OUT, "mark-light-bg.svg"), svg(100, 100, mark(INK, EMBER)));
+  const noFonts = { fonts: false };
+  writeFileSync(path.join(OUT, "mark.svg"), svg(100, 100, mark(BONE, EMBER), noFonts));
+  writeFileSync(path.join(OUT, "mark-light-bg.svg"), svg(100, 100, mark(INK, EMBER), noFonts));
   // Single colour, for embroidery, foil, stamps and one-colour print.
-  writeFileSync(path.join(OUT, "mark-mono-bone.svg"), svg(100, 100, mark(BONE, BONE)));
-  writeFileSync(path.join(OUT, "mark-mono-ink.svg"), svg(100, 100, mark(INK, INK)));
+  writeFileSync(path.join(OUT, "mark-mono-bone.svg"), svg(100, 100, mark(BONE, BONE), noFonts));
+  writeFileSync(path.join(OUT, "mark-mono-ink.svg"), svg(100, 100, mark(INK, INK), noFonts));
 
   const H = 100;
   const gap = H * 0.38; // clear space between mark and wordmark
