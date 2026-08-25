@@ -53,6 +53,9 @@ export default function Footer() {
         <div className="footer__bar">
           <span className="label">© {year} ProductionX · Hyderabad, India</span>
           <span className="label">Brand · Content · Digital</span>
+          <a href="/admin" className="label" style={{ opacity: 0.5 }} aria-label="Studio admin">
+            Admin
+          </a>
         </div>
       </div>
     </footer>
