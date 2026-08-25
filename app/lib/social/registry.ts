@@ -1,22 +1,20 @@
 import type { PlatformAdapter } from "./types";
 import { facebookAdapter } from "./adapters/facebook";
 import { instagramAdapter } from "./adapters/instagram";
+import { youtubeAdapter } from "./adapters/youtube";
 import { makeStubAdapter } from "./adapters/stub";
 
 /**
- * Every platform the Social page knows about, in display order. Facebook and
- * Instagram are real adapters; the rest are honest stubs until each has its
- * own app credentials and an adapter implementing fetchPosts(). Adding a
- * platform later is: write an adapter module, add one line here.
+ * Every platform the Social page knows about, in display order. Facebook,
+ * Instagram and YouTube are real adapters; the rest are honest stubs until
+ * each has its own app credentials and an adapter implementing
+ * fetchPosts(). Adding a platform later is: write an adapter module, add
+ * one line here.
  */
 export const PLATFORM_REGISTRY: PlatformAdapter[] = [
   facebookAdapter,
   instagramAdapter,
-  makeStubAdapter(
-    "youtube",
-    "YouTube",
-    "Needs a Google Cloud project with the YouTube Data API enabled and OAuth credentials for the channel."
-  ),
+  youtubeAdapter,
   makeStubAdapter(
     "linkedin",
     "LinkedIn",
