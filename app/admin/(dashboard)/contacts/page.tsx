@@ -1,6 +1,9 @@
 import { supabaseServer } from "../../../lib/supabase/server";
 import { CsvImport, ContactForm, ContactRow } from "./ContactsClient";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function ContactsPage() {
   const supabase = await supabaseServer();
   const { data: contacts } = await supabase

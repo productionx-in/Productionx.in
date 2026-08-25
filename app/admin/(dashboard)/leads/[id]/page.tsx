@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { supabaseServer } from "../../../../lib/supabase/server";
 import { StatusControl, ConvertButton, NoteForm, EmailForm } from "./LeadClient";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function LeadDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const supabase = await supabaseServer();

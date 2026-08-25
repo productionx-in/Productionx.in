@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import Lenis from "lenis";
 import { GRAIN_URI, Arrow, Mark } from "./graphics";
 import { initGsap, revealAll, gsap, ScrollTrigger, prefersReducedMotion } from "../lib/motion";
 
 const LINKS = [
-  { href: "#capabilities", label: "Services" },
-  { href: "#work", label: "Work" },
-  { href: "#web", label: "Websites" },
-  { href: "#about", label: "About" },
+  { href: "/#capabilities", label: "Services" },
+  { href: "/#work", label: "Work" },
+  { href: "/#web", label: "Websites" },
+  { href: "/#about", label: "About" },
+  { href: "/blog", label: "Blog" },
 ];
 
 /**
@@ -46,11 +48,18 @@ export default function Chrome() {
     // Anchor links have to go through Lenis, otherwise native smooth scrolling
     // fights the inertia loop and the page jitters to a stop.
     const onClick = (e: MouseEvent) => {
-      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"], a[href^="/#"]');
       if (!a) return;
-      const id = a.getAttribute("href")!;
-      if (id === "#") return;
-      const target = document.querySelector(id);
+      let href = a.getAttribute("href")!;
+      // "/#section" links work from any page (a real navigation lands on the
+      // homepage then jumps to the hash). Only intercept them for Lenis when
+      // we're already on that page — otherwise let the browser navigate.
+      if (href.startsWith("/#")) {
+        if (window.location.pathname !== "/") return;
+        href = href.slice(1);
+      }
+      if (href === "#") return;
+      const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
       if (lenis) lenis.scrollTo(target as HTMLElement, { offset: -72 });
@@ -83,10 +92,10 @@ export default function Chrome() {
       <div className="grain" style={{ ["--grain-src" as string]: GRAIN_URI }} aria-hidden="true" />
 
       <nav ref={navRef} className={`nav${stuck ? " is-stuck" : ""}`} aria-label="Primary">
-        <a href="#top" className="nav__mark" aria-label="ProductionX, back to top">
+        <Link href="/" className="nav__mark" aria-label="ProductionX, back to top">
           <Mark size={19} className="nav__mark-svg" />
           <span className="nav__word">ProductionX</span>
-        </a>
+        </Link>
 
         <div className="nav__links">
           {LINKS.map((l) => (
@@ -95,10 +104,10 @@ export default function Chrome() {
         </div>
 
         <div className="nav__cta">
-          <a href="#contact" className="btn">
+          <Link href="/#contact" className="btn">
             Book a call
             <Arrow className="arrow" />
-          </a>
+          </Link>
         </div>
       </nav>
     </>

@@ -12,6 +12,8 @@ type Quote = {
   client_email: string | null;
   client_phone: string | null;
   client_address: string | null;
+  contact_id: string | null;
+  lead_id: string | null;
   items: QuoteItem[];
   tax_percent: number;
   currency: string;
@@ -20,12 +22,24 @@ type Quote = {
   total: number;
 };
 
-export function QuoteForm({ quote }: { quote: Quote }) {
+type Person = { id: string; name: string; email: string | null; phone: string | null };
+
+export function QuoteForm({
+  quote,
+  contacts,
+  leads,
+}: {
+  quote: Quote;
+  contacts: Person[];
+  leads: Person[];
+}) {
   const router = useRouter();
   const [clientName, setClientName] = useState(quote.client_name);
   const [clientEmail, setClientEmail] = useState(quote.client_email ?? "");
   const [clientPhone, setClientPhone] = useState(quote.client_phone ?? "");
   const [clientAddress, setClientAddress] = useState(quote.client_address ?? "");
+  const [contactId, setContactId] = useState(quote.contact_id ?? "");
+  const [leadId, setLeadId] = useState(quote.lead_id ?? "");
   const [items, setItems] = useState<QuoteItem[]>(
     quote.items && quote.items.length ? quote.items : [{ description: "", qty: 1, rate: 0 }]
   );
@@ -42,12 +56,36 @@ export function QuoteForm({ quote }: { quote: Quote }) {
     setItems((prev) => prev.map((it, idx) => (idx === i ? { ...it, ...patch } : it)));
   }
 
+  function pickContact(id: string) {
+    setContactId(id);
+    setLeadId("");
+    const c = contacts.find((p) => p.id === id);
+    if (c) {
+      setClientName(c.name);
+      setClientEmail(c.email ?? "");
+      setClientPhone(c.phone ?? "");
+    }
+  }
+
+  function pickLead(id: string) {
+    setLeadId(id);
+    setContactId("");
+    const l = leads.find((p) => p.id === id);
+    if (l) {
+      setClientName(l.name);
+      setClientEmail(l.email ?? "");
+      setClientPhone(l.phone ?? "");
+    }
+  }
+
   async function persist() {
     await updateQuotation(quote.id, {
       client_name: clientName,
       client_email: clientEmail,
       client_phone: clientPhone,
       client_address: clientAddress,
+      contact_id: contactId || null,
+      lead_id: leadId || null,
       items,
       tax_percent: Number(taxPercent),
       status,
@@ -106,6 +144,26 @@ export function QuoteForm({ quote }: { quote: Quote }) {
 
       <div className="panel">
         <h2 className="no-print">Client</h2>
+        <div className="form-grid no-print" style={{ marginBottom: 14 }}>
+          <div className="field">
+            <label>Fill from an existing contact</label>
+            <select value={contactId} onChange={(e) => (e.target.value ? pickContact(e.target.value) : setContactId(""))}>
+              <option value="">— choose a contact —</option>
+              {contacts.map((c) => (
+                <option key={c.id} value={c.id}>{c.name}{c.email ? ` (${c.email})` : ""}</option>
+              ))}
+            </select>
+          </div>
+          <div className="field">
+            <label>...or fill from an existing lead</label>
+            <select value={leadId} onChange={(e) => (e.target.value ? pickLead(e.target.value) : setLeadId(""))}>
+              <option value="">— choose a lead —</option>
+              {leads.map((l) => (
+                <option key={l.id} value={l.id}>{l.name}{l.email ? ` (${l.email})` : ""}</option>
+              ))}
+            </select>
+          </div>
+        </div>
         <div className="form-grid no-print">
           <div className="field">
             <label>Name</label>

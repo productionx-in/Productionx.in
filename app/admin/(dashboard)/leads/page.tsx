@@ -2,6 +2,9 @@ import Link from "next/link";
 import { supabaseServer } from "../../../lib/supabase/server";
 import { createLead } from "../../actions";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const STATUSES = ["new", "contacted", "qualified", "proposal_sent", "won", "lost"];
 
 export default async function LeadsPage({

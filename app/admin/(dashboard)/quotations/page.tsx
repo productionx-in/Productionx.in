@@ -2,6 +2,9 @@ import Link from "next/link";
 import { supabaseServer } from "../../../lib/supabase/server";
 import { createQuotation } from "../../actions";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function QuotationsPage() {
   const supabase = await supabaseServer();
   const { data: docs } = await supabase

@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { FAQ } from "./lib/faq";
+import { Analytics } from "./components/Analytics";
 
 const META_PIXEL_ID = "1604022628174348";
 
@@ -207,6 +208,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             alt=""
           />
         </noscript>
+        <Analytics />
         {children}
         <script
           type="application/ld+json"

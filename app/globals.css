@@ -900,3 +900,10 @@ section { position: relative; }
 .blog-article__body ul, .blog-article__body ol { padding-left: 1.4em; margin: 0 0 1.2em; }
 .blog-article__tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 40px; }
 .blog-article__tags span { border: 1px solid var(--line-2); border-radius: 999px; padding: 4px 12px; font-size: 0.78rem; color: var(--ink-2); }
+.blog-article__actions { margin: 0 0 28px; }
+.blog-share {
+  background: transparent; border: 1px solid var(--line-2); color: var(--ink-2);
+  border-radius: 999px; padding: 6px 16px; font-size: 0.8rem; cursor: pointer;
+  font-family: var(--f-sans);
+}
+.blog-share:hover { border-color: var(--mint); color: var(--mint); }

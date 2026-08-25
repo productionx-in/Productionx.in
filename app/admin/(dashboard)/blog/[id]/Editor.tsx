@@ -4,7 +4,8 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { uploadBlogMedia } from "../../../lib/upload";
 
 export function Editor({
   content,
@@ -32,16 +33,30 @@ export function Editor({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor]);
 
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
   if (!editor) return null;
 
   const addLink = () => {
     const url = window.prompt("Link URL");
     if (url) editor.chain().focus().setLink({ href: url }).run();
   };
-  const addImage = () => {
-    const url = window.prompt("Image URL (paste any hosted image or stock-footage still link)");
-    if (url) editor.chain().focus().setImage({ src: url }).run();
-  };
+
+  async function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const url = await uploadBlogMedia(file);
+      editor!.chain().focus().setImage({ src: url }).run();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  }
 
   return (
     <div className="editor-shell">
@@ -54,7 +69,10 @@ export function Editor({
         <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive("orderedList") ? "is-active" : ""}>1. List</button>
         <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive("blockquote") ? "is-active" : ""}>Quote</button>
         <button type="button" onClick={addLink}>Link</button>
-        <button type="button" onClick={addImage}>Image/footage</button>
+        <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading}>
+          {uploading ? "Uploading…" : "Upload image"}
+        </button>
+        <input ref={fileRef} type="file" accept="image/*" hidden onChange={onPickImage} />
         <button type="button" onClick={() => editor.chain().focus().undo().run()}>Undo</button>
         <button type="button" onClick={() => editor.chain().focus().redo().run()}>Redo</button>
       </div>

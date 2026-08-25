@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { supabaseServer } from "../../../../lib/supabase/server";
 import { PostForm } from "./PostForm";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function EditPost({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const supabase = await supabaseServer();

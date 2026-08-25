@@ -1,6 +1,9 @@
 import { supabaseServer } from "../../../lib/supabase/server";
 import { createCampaign, deleteCampaign } from "../../actions";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function CampaignsPage() {
   const supabase = await supabaseServer();
   const { data: campaigns } = await supabase

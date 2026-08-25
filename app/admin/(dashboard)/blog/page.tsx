@@ -2,6 +2,9 @@ import Link from "next/link";
 import { supabaseServer } from "../../../lib/supabase/server";
 import { createBlogDraft } from "../../actions";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function BlogAdminPage() {
   const supabase = await supabaseServer();
   const { data: posts } = await supabase

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { supabaseServer } from "../../lib/supabase/server";
+import { ShareButton } from "./ShareButton";
 
 export const revalidate = 3600;
 
@@ -65,6 +66,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         {post.author_name || "ProductionX"}
       </p>
       <h1>{post.title}</h1>
+      <div className="blog-article__actions">
+        <ShareButton title={post.title} url={`https://productionx.in/blog/${slug}`} />
+      </div>
       {post.cover_video_url ? (
         <video className="blog-article__cover" src={post.cover_video_url} controls playsInline />
       ) : post.cover_image_url ? (

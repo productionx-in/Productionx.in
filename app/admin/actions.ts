@@ -14,6 +14,13 @@ async function requireAdmin() {
   return { supabase, userId: user.id };
 }
 
+export async function updateOwnName(fullName: string) {
+  const { supabase, userId } = await requireAdmin();
+  await supabase.from("admin_users").update({ full_name: fullName }).eq("id", userId);
+  revalidatePath("/admin/settings");
+  revalidatePath("/admin");
+}
+
 export async function signOut() {
   const supabase = await supabaseServer();
   await supabase.auth.signOut();
@@ -250,6 +257,8 @@ export async function updateQuotation(id: string, patch: {
   client_email?: string;
   client_phone?: string;
   client_address?: string;
+  contact_id?: string | null;
+  lead_id?: string | null;
   items?: QuoteItem[];
   tax_percent?: number;
   currency?: string;

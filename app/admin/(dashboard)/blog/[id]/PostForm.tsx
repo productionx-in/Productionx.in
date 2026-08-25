@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Editor } from "./Editor";
 import { updateBlogPost, deleteBlogPost } from "../../../actions";
+import { uploadBlogMedia } from "../../../lib/upload";
 
 type Post = {
   id: string;
@@ -33,6 +34,38 @@ export function PostForm({ post }: { post: Post }) {
   const [seoDesc, setSeoDesc] = useState(post.seo_description ?? "");
   const [pending, start] = useTransition();
   const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  const coverFileRef = useRef<HTMLInputElement>(null);
+  const videoFileRef = useRef<HTMLInputElement>(null);
+
+  async function onPickCover(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingCover(true);
+    try {
+      setCover(await uploadBlogMedia(file));
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploadingCover(false);
+      if (coverFileRef.current) coverFileRef.current.value = "";
+    }
+  }
+
+  async function onPickVideo(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingVideo(true);
+    try {
+      setVideo(await uploadBlogMedia(file));
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploadingVideo(false);
+      if (videoFileRef.current) videoFileRef.current.value = "";
+    }
+  }
 
   function save(status?: "draft" | "published") {
     start(async () => {
@@ -98,12 +131,38 @@ export function PostForm({ post }: { post: Post }) {
           <input value={tags} onChange={(e) => setTags(e.target.value)} />
         </div>
         <div className="field">
-          <label>Cover image URL</label>
-          <input value={cover} onChange={(e) => setCover(e.target.value)} placeholder="https://…" />
+          <label>Cover image</label>
+          <div style={{ display: "flex", gap: 8 }}>
+            <input value={cover} onChange={(e) => setCover(e.target.value)} placeholder="https://… or upload" style={{ flex: 1 }} />
+            <button
+              type="button"
+              className="btn btn--ghost"
+              disabled={uploadingCover}
+              onClick={() => coverFileRef.current?.click()}
+            >
+              {uploadingCover ? "…" : "Upload"}
+            </button>
+            <input ref={coverFileRef} type="file" accept="image/*" hidden onChange={onPickCover} />
+          </div>
+          {cover && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={cover} alt="" style={{ marginTop: 8, maxHeight: 90, borderRadius: 6 }} />
+          )}
         </div>
         <div className="field">
-          <label>Cover video URL (optional)</label>
-          <input value={video} onChange={(e) => setVideo(e.target.value)} placeholder="https://…mp4" />
+          <label>Cover video (optional, shown instead of the image)</label>
+          <div style={{ display: "flex", gap: 8 }}>
+            <input value={video} onChange={(e) => setVideo(e.target.value)} placeholder="https://…mp4 or upload" style={{ flex: 1 }} />
+            <button
+              type="button"
+              className="btn btn--ghost"
+              disabled={uploadingVideo}
+              onClick={() => videoFileRef.current?.click()}
+            >
+              {uploadingVideo ? "…" : "Upload"}
+            </button>
+            <input ref={videoFileRef} type="file" accept="video/*" hidden onChange={onPickVideo} />
+          </div>
         </div>
         <div className="field field--full">
           <label>Excerpt (shows on the blog index)</label>

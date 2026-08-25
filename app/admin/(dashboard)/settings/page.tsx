@@ -1,7 +1,15 @@
 import { supabaseServer } from "../../../lib/supabase/server";
+import { AccountForm } from "./AccountClient";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function SettingsPage() {
   const supabase = await supabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const { data: me } = await supabase.from("admin_users").select("full_name").eq("id", user!.id).maybeSingle();
 
   const monthStart = new Date();
   monthStart.setDate(1);
@@ -25,6 +33,8 @@ export default async function SettingsPage() {
     <>
       <h1>Settings &amp; this month&apos;s report</h1>
       <p className="admin-main__sub">Month-to-date numbers, connection status, and who has admin access.</p>
+
+      <AccountForm email={user!.email!} fullName={me?.full_name ?? null} />
 
       <div className="panel no-print">
         <h2>{monthStart.toLocaleDateString("en-IN", { month: "long", year: "numeric" })} so far</h2>

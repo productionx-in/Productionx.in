@@ -3,14 +3,33 @@ import Link from "next/link";
 import { supabaseServer } from "../../lib/supabase/server";
 import { signOut } from "../actions";
 
-const NAV = [
-  { href: "/admin", label: "Dashboard" },
-  { href: "/admin/leads", label: "Leads" },
-  { href: "/admin/contacts", label: "Contacts" },
-  { href: "/admin/blog", label: "Blog" },
-  { href: "/admin/quotations", label: "Quotations & invoices" },
-  { href: "/admin/campaigns", label: "Campaigns" },
-  { href: "/admin/settings", label: "Settings" },
+const NAV_GROUPS = [
+  {
+    label: null,
+    items: [{ href: "/admin", label: "Dashboard" }],
+  },
+  {
+    label: "CRM",
+    items: [
+      { href: "/admin/leads", label: "Leads" },
+      { href: "/admin/contacts", label: "Contacts" },
+    ],
+  },
+  {
+    label: "Sales",
+    items: [{ href: "/admin/quotations", label: "Quotations & invoices" }],
+  },
+  {
+    label: "Marketing",
+    items: [
+      { href: "/admin/blog", label: "Blog" },
+      { href: "/admin/campaigns", label: "Campaigns" },
+    ],
+  },
+  {
+    label: null,
+    items: [{ href: "/admin/settings", label: "Settings" }],
+  },
 ];
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -38,10 +57,15 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <div className="admin-shell">
       <nav className="admin-nav no-print">
         <div className="admin-nav__brand">ProductionX — Admin</div>
-        {NAV.map((item) => (
-          <Link key={item.href} href={item.href}>
-            {item.label}
-          </Link>
+        {NAV_GROUPS.map((group, gi) => (
+          <div key={gi} className="admin-nav__group">
+            {group.label && <div className="admin-nav__group-label">{group.label}</div>}
+            {group.items.map((item) => (
+              <Link key={item.href} href={item.href}>
+                {item.label}
+              </Link>
+            ))}
+          </div>
         ))}
         <div className="admin-nav__footer">
           {admin.full_name || admin.email}
