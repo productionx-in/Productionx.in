@@ -49,11 +49,14 @@ down to ~5 hours and content up to ~3.5. Right now, survival first.
 
 ---
 
-## Content — you as the face
+## Content — you as the face, ProductionX as the brand
 
-You already said you'll be the face. That's the right call: it's the
-differentiator competitors with bigger teams can't copy, and it's what the
-original strategy flagged as the single highest-ROI channel currently unused.
+You're the presenter — the differentiator competitors with bigger teams can't
+copy, and the original strategy's single highest-ROI channel currently
+unused. But every account, caption and CTA stays branded to **ProductionX**,
+not to a personal profile. That's what makes stepping aside in a year
+possible: the equity has to sit with the company, not with you individually.
+See `content-topic-bank.md`'s voice rule for how that plays out in captions.
 
 **Two platforms, different jobs:**
 

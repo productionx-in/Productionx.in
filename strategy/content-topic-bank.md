@@ -5,6 +5,18 @@ blank page each day. Every idea is built from confirmed, real material: what
 follows the pillar name is the platform it fits best and the funnel job it
 does (see `content-plan-100-days.md` for the reach/trust/lead framework).
 
+**The voice rule — this is what makes stepping aside in a year possible.**
+This is ProductionX content, not a personal brand. You're the presenter — the
+face on camera, the voice in the caption — because someone has to be, and it
+works better with a real person than a logo. But the equity built has to sit
+with **ProductionX**, not with "Kiran Basa" as an individual brand. A personal
+brand leaves when the person does; a company brand doesn't. Practically:
+every account is already ProductionX-branded, never a personal profile
+(`brand/social-profiles.md` is built this way). Captions attribute to the
+studio — "we learned this running Silver Star's content," not "I used to..."
+as a standalone personal story. Your history is used as **evidence of how
+ProductionX thinks**, not as a biography people follow you for.
+
 ---
 
 ## Source of truth — the corrected founder story
@@ -24,25 +36,31 @@ Get this right once, reuse it everywhere:
   Pit Stop Group, Hole in the Wall, Krishna Motors, European Wellness,
   Coastal Star, Silver Star Hyderabad.
 
-**The real story is stronger than what's currently published:** you've sat on
-both sides of the table *twice* — as the vendor pitching for the business,
-and as the in-house person deciding who to hire, at two different
-organisations. That's rarer than plain "brand-side experience" and worth
-being the anchor of the founder-journey pillar below.
+**The real story is stronger than what's currently published:** ProductionX's
+founder sat on both sides of the table *twice* — as the vendor pitching for
+the business, and as the in-house person deciding who to hire, at two
+different organisations. That's rarer than plain "brand-side experience," and
+it's the anchor of Pillar 1 below — used as proof of how the studio operates,
+not as a personal biography.
 
 *Site and social-profile copy still need a combined correction pass — noted,
 not done yet, per your call to hold it for one clean edit.*
 
 ---
 
-## Pillar 1 — Founder journey (LinkedIn-led, trust-building)
+## Pillar 1 — Why ProductionX works this way (LinkedIn-led, trust-building)
 
-1. "I used to be the vendor in the room, pitching. Then I was the person deciding who to hire. Here's what changed about how I see agencies."
-2. What Silver Star Hyderabad taught you about how a dealership actually judges content — the metric nobody outside ever sees.
-3. What Ujwala Group / 1UJ taught you about building a visual language for a fashion brand from scratch.
-4. The moment you decided to found ProductionX instead of staying employed — what was the actual trigger?
-5. "Three seats at the table, one studio built from all three" — vendor, in-house producer, in-house creative head, now founder.
-6. A mistake an agency made with you when you were the client-side decision-maker — and how it shaped how ProductionX works now.
+Voice check for every post in this pillar: it's telling the audience something
+about *the studio's* judgment, using the founder's history as evidence — not
+inviting them to follow a person. If a caption would still make sense with
+"ProductionX" swapped in for "I," it's framed right.
+
+1. "ProductionX's founder was the vendor in the room, pitching. Then the person deciding who to hire. That's why the studio runs the way it does."
+2. What running content at Silver Star Hyderabad taught the studio about how a dealership actually judges what's working — the metric nobody outside ever sees.
+3. What building the 1UJ visual language at Ujwala Group taught the studio about creating a brand language from scratch.
+4. Why ProductionX exists — the gap between agency work and in-house reality that founding the studio was built to close.
+5. "Vendor, in-house producer, in-house creative head, then studio" — why that path is the reason ProductionX is structured as three disciplines in one team.
+6. A mistake an agency made with a client-side decision-maker — and the rule it became inside how ProductionX operates.
 7. Why "brand & marketing, content production, digital & AI" became one studio instead of three separate offers.
 
 ## Pillar 2 — Case studies & proof (Instagram-led, trust + lead)
