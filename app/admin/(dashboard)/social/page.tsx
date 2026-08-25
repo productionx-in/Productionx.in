@@ -157,6 +157,28 @@ export default async function SocialPage({
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {posts.map((post) => (
                 <div key={post.id} style={{ borderBottom: "1px solid var(--line)", paddingBottom: 12 }}>
+                  {post.media && post.media.length > 0 && (
+                    <div className="social-media-grid">
+                      {post.media.slice(0, 4).map((m, i) => {
+                        const overflow = post.media!.length - 4;
+                        const showOverflow = i === 3 && overflow > 0;
+                        return (
+                          <a
+                            key={i}
+                            href={m.sourceUrl || post.permalinkUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="social-media-thumb"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={m.previewUrl} alt="" loading="lazy" />
+                            {m.kind === "video" && <span className="social-media-thumb__play">▶</span>}
+                            {showOverflow && <span className="social-media-thumb__more">+{overflow}</span>}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  )}
                   <p style={{ fontSize: 13.5, whiteSpace: "pre-wrap", margin: "0 0 6px", maxHeight: 90, overflow: "hidden" }}>
                     {post.message || <em style={{ color: "var(--slate)" }}>(no caption)</em>}
                   </p>

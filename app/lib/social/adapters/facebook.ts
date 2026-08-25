@@ -27,6 +27,7 @@ export const facebookAdapter: PlatformAdapter = {
         message: p.message,
         createdAt: p.created_time,
         permalinkUrl: p.permalink_url,
+        media: p.media.map((m) => ({ kind: m.kind, previewUrl: m.previewUrl, sourceUrl: m.sourceUrl })),
       }));
     } catch (err) {
       if (err instanceof FacebookApiError) {

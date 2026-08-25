@@ -285,6 +285,51 @@
 .admin-tab__dot--connected { background: #7fe08f; }
 .admin-tab__dot--issue { background: var(--ember); }
 
+.social-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+  max-width: 420px;
+}
+.social-media-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+.social-media-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.social-media-thumb__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  background: rgba(11, 10, 12, 0.15);
+}
+.social-media-thumb__more {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  background: rgba(11, 10, 12, 0.6);
+}
+
 .toolbar {
   display: flex;
   gap: 10px;

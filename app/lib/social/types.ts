@@ -1,10 +1,17 @@
 export type PlatformKey = "facebook" | "instagram" | "youtube" | "linkedin" | "google_business" | "tiktok";
 
+export type SocialMedia = {
+  kind: "image" | "video" | "other";
+  previewUrl: string;
+  sourceUrl?: string;
+};
+
 export type SocialPost = {
   id: string;
   message?: string;
   createdAt: string;
   permalinkUrl?: string;
+  media?: SocialMedia[];
 };
 
 /**

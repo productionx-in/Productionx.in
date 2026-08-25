@@ -10,7 +10,8 @@ export const dynamic = "force-dynamic";
  * The Page access token lives only in server environment variables
  * (META_PAGE_ACCESS_TOKEN) and is never included in the JSON returned to the
  * browser — only the fields the frontend actually needs (id, message,
- * created_time, permalink_url) pass through.
+ * created_time, permalink_url, plus parsed media preview URLs) pass through.
+ * Media preview URLs are Meta's own CDN links, not signed with our token.
  *
  * Admin-gated: this calls out on the studio's own Meta app quota and returns
  * business data, so it follows the same signed-in-admin check as every other
