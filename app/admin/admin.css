@@ -251,6 +251,40 @@
 .badge--scheduled { color: var(--mint); border-color: var(--mint); }
 .badge--overdue { color: var(--ember); border-color: var(--ember); }
 
+.admin-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.admin-tab {
+  padding: 9px 14px;
+  font-size: 13.5px;
+  color: var(--ash);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.admin-tab:hover { color: var(--bone); }
+.admin-tab--active {
+  color: var(--bone);
+  border-bottom-color: var(--ember);
+  font-weight: 600;
+}
+.admin-tab__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--slate);
+  flex: none;
+}
+.admin-tab__dot--connected { background: #7fe08f; }
+.admin-tab__dot--issue { background: var(--ember); }
+
 .toolbar {
   display: flex;
   gap: 10px;
