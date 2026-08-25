@@ -66,6 +66,7 @@ ${FAQ.map(({ q, a }) => `### ${q}\n\n${a}`).join("\n\n")}
 ## Links
 
 - Site: ${SITE}
+- Blog: ${SITE}/blog
 - Instagram: https://instagram.com/productionx.in
 - Sitemap: ${SITE}/sitemap.xml
 `;
