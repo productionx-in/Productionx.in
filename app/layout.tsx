@@ -4,6 +4,7 @@ import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { FAQ } from "./lib/faq";
 import { Analytics } from "./components/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const META_PIXEL_ID = "1604022628174348";
 
@@ -210,6 +211,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </noscript>
         <Analytics />
         {children}
+        <VercelAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
