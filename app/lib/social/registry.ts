@@ -1,20 +1,17 @@
 import type { PlatformAdapter } from "./types";
 import { facebookAdapter } from "./adapters/facebook";
+import { instagramAdapter } from "./adapters/instagram";
 import { makeStubAdapter } from "./adapters/stub";
 
 /**
- * Every platform the Social page knows about, in display order. Facebook is
- * the only real adapter today; the rest are honest stubs until each has its
+ * Every platform the Social page knows about, in display order. Facebook and
+ * Instagram are real adapters; the rest are honest stubs until each has its
  * own app credentials and an adapter implementing fetchPosts(). Adding a
  * platform later is: write an adapter module, add one line here.
  */
 export const PLATFORM_REGISTRY: PlatformAdapter[] = [
   facebookAdapter,
-  makeStubAdapter(
-    "instagram",
-    "Instagram",
-    "Needs an Instagram Business account linked to the Meta app, plus the instagram_basic and instagram_content_publish permissions."
-  ),
+  instagramAdapter,
   makeStubAdapter(
     "youtube",
     "YouTube",
