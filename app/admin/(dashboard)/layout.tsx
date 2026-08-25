@@ -24,6 +24,7 @@ const NAV_GROUPS = [
     items: [
       { href: "/admin/blog", label: "Blog" },
       { href: "/admin/campaigns", label: "Campaigns" },
+      { href: "/admin/social", label: "Social media" },
     ],
   },
   {

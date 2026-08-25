@@ -81,17 +81,13 @@ export default async function SettingsPage() {
       <div className="panel">
         <h2>Social media</h2>
         <p className="note">
-          Not wired up yet — each platform (Instagram, Facebook, LinkedIn, Google Business Profile) needs its own
-          API app review and access token, which only the account owner can approve. Once you approve API access
-          per platform, this panel becomes a live feed of comments, DMs and post performance instead of a set of
-          links. For now:
+          Facebook is connected and live. Instagram, LinkedIn and Google Business Profile still need their own
+          app setup and, for LinkedIn&apos;s Company Page and Google Business Profile, a manual approval from
+          that platform first.
         </p>
-        <div style={{ display: "flex", gap: 10, marginTop: 10, flexWrap: "wrap" }}>
-          <a className="btn btn--ghost" href="https://instagram.com/productionx.in" target="_blank" rel="noreferrer">Instagram ↗</a>
-          <a className="btn btn--ghost" href="https://business.facebook.com" target="_blank" rel="noreferrer">Meta Business Suite ↗</a>
-          <a className="btn btn--ghost" href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-          <a className="btn btn--ghost" href="https://business.google.com" target="_blank" rel="noreferrer">Google Business Profile ↗</a>
-        </div>
+        <a className="btn" href="/admin/social" style={{ marginTop: 10, display: "inline-block" }}>
+          Open Social media →
+        </a>
       </div>
 
       <div className="panel">
