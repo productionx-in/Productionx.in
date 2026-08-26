@@ -16,7 +16,10 @@ export async function fetchInstagramAccountInsights(): Promise<AccountInsightSna
 
   const [fields, insights] = await Promise.all([
     metaGet(igUserId, { fields: "followers_count" }),
-    fetchMetricsWithFallback(`${igUserId}/insights`, ACCOUNT_METRICS, { period: "day" }),
+    // metric_type=total_value is required by Meta's current API for these
+    // account-level "day"-period metrics — omitting it is what produced
+    // "should be specified with parameter metric_type=total_value".
+    fetchMetricsWithFallback(`${igUserId}/insights`, ACCOUNT_METRICS, { period: "day", metric_type: "total_value" }),
   ]);
 
   const followers = fields.followers_count as number | undefined;

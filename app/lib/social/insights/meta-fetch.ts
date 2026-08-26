@@ -46,35 +46,30 @@ export async function metaGet(path: string, params: Record<string, string>): Pro
 
 /**
  * Insights metric names get deprecated/renamed by Meta more often than the
- * rest of the Graph API. Rather than hard-fail a whole snapshot because one
- * metric in the batch is no longer valid, this requests the full candidate
- * list, and on a "must be one of the following values" style error, drops
- * whatever it can identify as invalid and retries once. Anything still
- * rejected after that is simply omitted — the caller gets back a metrics
- * object with only the keys Meta actually returned, never a guess.
+ * rest of the Graph API, and Meta's rejection messages for an invalid or
+ * misconfigured metric don't follow one consistent, parseable format (a
+ * generic "must be a valid insights metric" for some, a "should be
+ * specified with parameter metric_type=..." for others). Rather than try to
+ * parse the message, this requests each candidate metric individually and
+ * keeps whatever Meta actually accepts — one bad or misconfigured metric
+ * just doesn't appear in the result, instead of failing the whole snapshot.
  */
 export async function fetchMetricsWithFallback(
   path: string,
   candidateMetrics: string[],
   extraParams: Record<string, string> = {}
 ): Promise<{ data: { name: string; values?: { value: unknown }[] }[] }> {
-  let metrics = [...candidateMetrics];
+  const results: { name: string; values?: { value: unknown }[] }[] = [];
 
-  for (let attempt = 0; attempt < 2 && metrics.length > 0; attempt++) {
+  for (const metric of candidateMetrics) {
     try {
-      const body = await metaGet(path, { metric: metrics.join(","), ...extraParams });
-      return body as { data: { name: string; values?: { value: unknown }[] }[] };
-    } catch (err) {
-      if (!(err instanceof MetaInsightsError) || attempt === 1) throw err;
-      // Meta's error message names the field, e.g. "metric[2] must be one of
-      // the following values: [reach, impressions, ...]" — anything named
-      // in our candidate list but absent from that allowed-values list gets
-      // dropped before the retry.
-      const allowed = err.message.match(/\[([a-z0-9_,\s]+)\]/i)?.[1]?.split(",").map((s) => s.trim());
-      if (!allowed) throw err;
-      metrics = metrics.filter((m) => allowed.includes(m));
-      if (metrics.length === 0) return { data: [] };
+      const body = await metaGet(path, { metric, ...extraParams });
+      const rows = (body as { data?: typeof results }).data ?? [];
+      results.push(...rows);
+    } catch {
+      // Not valid for this account/media type/period combination — skip it.
     }
   }
-  return { data: [] };
+
+  return { data: results };
 }

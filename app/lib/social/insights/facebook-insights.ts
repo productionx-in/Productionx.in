@@ -13,7 +13,11 @@ export async function fetchFacebookAccountInsights(): Promise<AccountInsightSnap
 
   const [fields, insights] = await Promise.all([
     metaGet(pageId, { fields: "fan_count,followers_count" }),
-    fetchMetricsWithFallback(`${pageId}/insights`, PAGE_METRICS, { period: "day" }),
+    // metric_type=total_value matches what Instagram's equivalent call
+    // needs for "day"-period account metrics on the current API version —
+    // applying it here too rather than waiting to see the same class of
+    // error on Facebook. Harmless if a given metric doesn't need it.
+    fetchMetricsWithFallback(`${pageId}/insights`, PAGE_METRICS, { period: "day", metric_type: "total_value" }),
   ]);
 
   const followers = (fields.followers_count as number) ?? (fields.fan_count as number);
