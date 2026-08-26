@@ -7,8 +7,13 @@ import { metricValue, type AccountInsightSnapshot, type ContentInsight } from ".
 const ACCOUNT_METRICS = ["reach", "profile_views", "website_clicks"];
 // media_product_type-dependent (FEED vs REELS vs STORY) — the fallback
 // helper narrows this per media item since not every metric applies to
-// every type.
-const MEDIA_METRICS = ["reach", "saved", "shares", "total_interactions", "plays"];
+// every type. Both "views" and "plays" are requested for video view count:
+// live testing against real Reels showed "plays" consistently rejected on
+// the current API version (Meta's 2024 Insights update replaced it with a
+// unified "views" metric for IMAGE/VIDEO/CAROUSEL_ALBUM) — kept as a
+// fallback rather than removed outright in case an older media item still
+// only supports it.
+const MEDIA_METRICS = ["reach", "saved", "shares", "total_interactions", "views", "plays"];
 
 export async function fetchInstagramAccountInsights(): Promise<AccountInsightSnapshot> {
   const igUserId = process.env.META_IG_USER_ID;
@@ -54,7 +59,7 @@ export async function fetchInstagramContentInsights(mediaId: string): Promise<Co
   const saves = metricValue(insights.data, "saved");
   const shares = metricValue(insights.data, "shares");
   const totalInteractions = metricValue(insights.data, "total_interactions");
-  const videoViews = metricValue(insights.data, "plays");
+  const videoViews = metricValue(insights.data, "views") ?? metricValue(insights.data, "plays");
 
   return {
     externalId: mediaId,
