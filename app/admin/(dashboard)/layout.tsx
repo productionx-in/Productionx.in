@@ -22,6 +22,16 @@ const NAV_GROUPS = [
   {
     label: "Marketing",
     items: [
+      { href: "/admin/marketing/overview", label: "Overview" },
+      { href: "/admin/marketing/organic", label: "Organic" },
+      { href: "/admin/marketing/paid", label: "Paid Ads" },
+      { href: "/admin/marketing/attribution", label: "Attribution" },
+      { href: "/admin/marketing/reports", label: "Reports" },
+    ],
+  },
+  {
+    label: "Content",
+    items: [
       { href: "/admin/blog", label: "Blog" },
       { href: "/admin/campaigns", label: "Campaigns" },
       { href: "/admin/social", label: "Social media" },
