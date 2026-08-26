@@ -282,6 +282,7 @@ export type PaidTotals = {
   revenue?: number;
   clicks?: number;
   impressions?: number;
+  reach?: number;
   hasData: boolean;
 };
 
@@ -289,7 +290,7 @@ export type PaidTotals = {
 export async function paidTotals(supabase: SupabaseClient, start: string, end: string): Promise<PaidTotals> {
   const { data } = await supabase
     .from("ad_metric_snapshots")
-    .select("spend, leads, conversions, revenue, clicks, impressions")
+    .select("spend, leads, conversions, revenue, clicks, impressions, reach")
     .eq("scope", "campaign")
     .gte("period_start", start)
     .lte("period_end", end);
@@ -304,6 +305,143 @@ export async function paidTotals(supabase: SupabaseClient, start: string, end: s
     revenue: sumIfAny(rows, "revenue"),
     clicks: sumIfAny(rows, "clicks"),
     impressions: sumIfAny(rows, "impressions"),
+    reach: sumIfAny(rows, "reach"),
     hasData: true,
   };
+}
+
+export type PaidDailyPoint = { date: string; spend: number; impressions: number; clicks: number; leads: number };
+
+/** Account-wide daily totals (summed across every campaign) for the Paid
+ *  Ads spend/impressions/clicks/leads-over-time charts. */
+export async function paidDailySeries(supabase: SupabaseClient, start: string, end: string): Promise<PaidDailyPoint[]> {
+  const { data } = await supabase
+    .from("ad_metric_snapshots")
+    .select("period_start, spend, impressions, clicks, leads")
+    .eq("scope", "campaign")
+    .gte("period_start", start)
+    .lte("period_end", end)
+    .order("period_start", { ascending: true });
+
+  const byDate = new Map<string, PaidDailyPoint>();
+  for (const r of data ?? []) {
+    const key = r.period_start as string;
+    const existing = byDate.get(key) ?? { date: key, spend: 0, impressions: 0, clicks: 0, leads: 0 };
+    existing.spend += r.spend ?? 0;
+    existing.impressions += r.impressions ?? 0;
+    existing.clicks += r.clicks ?? 0;
+    existing.leads += r.leads ?? 0;
+    byDate.set(key, existing);
+  }
+  return [...byDate.values()].sort((a, b) => a.date.localeCompare(b.date));
+}
+
+export type CampaignPerformance = {
+  id: string;
+  name: string;
+  status: string | null;
+  spend: number;
+  reach: number;
+  impressions: number;
+  clicks: number;
+  ctr: number | null;
+  cpc: number | null;
+  leads: number;
+  costPerLead: number | null;
+};
+
+/** Per-campaign totals for the period — feeds the campaign table, the
+ *  campaign-comparison bar chart, and best/worst-performer callouts. */
+export async function campaignPerformance(supabase: SupabaseClient, start: string, end: string): Promise<CampaignPerformance[]> {
+  const { data: campaigns } = await supabase.from("ad_campaigns").select("id, name, status");
+  if (!campaigns || campaigns.length === 0) return [];
+
+  const { data: rows } = await supabase
+    .from("ad_metric_snapshots")
+    .select("scope_id, spend, reach, impressions, clicks, leads")
+    .eq("scope", "campaign")
+    .gte("period_start", start)
+    .lte("period_end", end);
+
+  const totals = new Map<string, { spend: number; reach: number; impressions: number; clicks: number; leads: number }>();
+  for (const r of rows ?? []) {
+    const t = totals.get(r.scope_id) ?? { spend: 0, reach: 0, impressions: 0, clicks: 0, leads: 0 };
+    t.spend += r.spend ?? 0;
+    t.reach += r.reach ?? 0;
+    t.impressions += r.impressions ?? 0;
+    t.clicks += r.clicks ?? 0;
+    t.leads += r.leads ?? 0;
+    totals.set(r.scope_id, t);
+  }
+
+  return campaigns
+    .map((c) => {
+      const t = totals.get(c.id) ?? { spend: 0, reach: 0, impressions: 0, clicks: 0, leads: 0 };
+      return {
+        id: c.id,
+        name: c.name,
+        status: c.status,
+        spend: t.spend,
+        reach: t.reach,
+        impressions: t.impressions,
+        clicks: t.clicks,
+        ctr: t.impressions > 0 ? Number(((t.clicks / t.impressions) * 100).toFixed(2)) : null,
+        cpc: t.clicks > 0 ? Number((t.spend / t.clicks).toFixed(2)) : null,
+        leads: t.leads,
+        costPerLead: t.leads > 0 ? Number((t.spend / t.leads).toFixed(2)) : null,
+      };
+    })
+    .filter((c) => c.spend > 0 || c.impressions > 0 || c.clicks > 0);
+}
+
+export type AdPerformance = CampaignPerformance & {
+  creativePreviewUrl: string | null;
+  creativeLinkUrl: string | null;
+};
+
+/** Same shape as campaignPerformance, at the individual ad level, with the
+ *  creative thumbnail and link Meta provides — feeds the ad table and the
+ *  best/worst-performer callouts. */
+export async function adPerformance(supabase: SupabaseClient, start: string, end: string): Promise<AdPerformance[]> {
+  const { data: ads } = await supabase.from("ads").select("id, name, status, creative_preview_url, creative_link_url");
+  if (!ads || ads.length === 0) return [];
+
+  const { data: rows } = await supabase
+    .from("ad_metric_snapshots")
+    .select("scope_id, spend, reach, impressions, clicks, leads")
+    .eq("scope", "ad")
+    .gte("period_start", start)
+    .lte("period_end", end);
+
+  const totals = new Map<string, { spend: number; reach: number; impressions: number; clicks: number; leads: number }>();
+  for (const r of rows ?? []) {
+    const t = totals.get(r.scope_id) ?? { spend: 0, reach: 0, impressions: 0, clicks: 0, leads: 0 };
+    t.spend += r.spend ?? 0;
+    t.reach += r.reach ?? 0;
+    t.impressions += r.impressions ?? 0;
+    t.clicks += r.clicks ?? 0;
+    t.leads += r.leads ?? 0;
+    totals.set(r.scope_id, t);
+  }
+
+  return ads
+    .map((a) => {
+      const t = totals.get(a.id) ?? { spend: 0, reach: 0, impressions: 0, clicks: 0, leads: 0 };
+      return {
+        id: a.id,
+        name: a.name,
+        status: a.status,
+        spend: t.spend,
+        reach: t.reach,
+        impressions: t.impressions,
+        clicks: t.clicks,
+        ctr: t.impressions > 0 ? Number(((t.clicks / t.impressions) * 100).toFixed(2)) : null,
+        cpc: t.clicks > 0 ? Number((t.spend / t.clicks).toFixed(2)) : null,
+        leads: t.leads,
+        costPerLead: t.leads > 0 ? Number((t.spend / t.leads).toFixed(2)) : null,
+        creativePreviewUrl: a.creative_preview_url,
+        creativeLinkUrl: a.creative_link_url,
+      };
+    })
+    .filter((a) => a.spend > 0 || a.impressions > 0 || a.clicks > 0);
 }
